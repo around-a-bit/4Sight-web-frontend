@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Calculator, FileSearch, LineChart, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../ui/ThemeToggle';
 import './Header.css';
@@ -10,6 +10,13 @@ const navLinks = [
     { path: '/knowledge', label: 'Knowledge' },
     { path: '/product', label: 'Product' },
     { path: '/community', label: 'Community' },
+];
+
+const calculatorTools = [
+    { path: '/community/roi-calculator', label: 'ROI Calculator', icon: Calculator },
+    { path: '/community/seo-analyzer', label: 'SEO Analyzer', icon: FileSearch },
+    { path: '/community/trend-tracker', label: 'Trend Tracker', icon: LineChart },
+    { path: '/community/ai-assistant', label: 'AI Assistant', icon: Bot },
 ];
 
 const Header = () => {

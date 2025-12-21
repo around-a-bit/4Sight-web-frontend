@@ -7,8 +7,13 @@ import {
   KnowledgeBasePage,
   ArticleDetailPage,
   CommunityPage,
+  ROICalculatorPage,
+  SEOAnalyzerPage,
+  TrendTrackerPage,
+  AIAssistantPage,
 } from './pages';
 import './styles/index.css';
+
 
 function App() {
   return (
@@ -21,6 +26,10 @@ function App() {
             <Route path="knowledge" element={<KnowledgeBasePage />} />
             <Route path="knowledge/:slug" element={<ArticleDetailPage />} />
             <Route path="community" element={<CommunityPage />} />
+            <Route path="community/roi-calculator" element={<ROICalculatorPage />} />
+            <Route path="community/seo-analyzer" element={<SEOAnalyzerPage />} />
+            <Route path="community/trend-tracker" element={<TrendTrackerPage />} />
+            <Route path="community/ai-assistant" element={<AIAssistantPage />} />
           </Route>
         </Routes>
       </Router>

@@ -1,9 +1,16 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Users, BookOpen, Calculator, FileSearch, LineChart, Bot } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
 import './HeroSection.css';
+
+const calculatorTools = [
+    { path: '/community/roi-calculator', label: 'ROI Calculator', icon: Calculator },
+    { path: '/community/seo-analyzer', label: 'SEO Analyzer', icon: FileSearch },
+    { path: '/community/trend-tracker', label: 'Trend Tracker', icon: LineChart },
+    { path: '/community/ai-assistant', label: 'AI Assistant', icon: Bot },
+];
 
 const HeroSection = () => {
     const containerRef = useRef(null);
@@ -21,6 +28,26 @@ const HeroSection = () => {
             <div className="hero-grid-bg">
                 <div className="grid-lines"></div>
             </div>
+
+            {/* Calculator Tools - Top Right */}
+            <motion.div
+                className="hero-calculator-tools"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+            >
+                {calculatorTools.map((tool) => (
+                    <Link
+                        key={tool.path}
+                        to={tool.path}
+                        className="hero-calc-icon"
+                        title={tool.label}
+                    >
+                        <tool.icon size={20} />
+                        <span className="hero-calc-tooltip">{tool.label}</span>
+                    </Link>
+                ))}
+            </motion.div>
 
             {/* Floating Orbs */}
             <div className="hero-orbs">
@@ -110,11 +137,24 @@ const HeroSection = () => {
                             Explore Product
                         </Button>
                     </Link>
-                    <Link to="/#contact">
-                        <Button variant="outline" size="lg">
-                            Contact Us
+                    <Link to="/community">
+                        <Button size="lg" icon={<Users size={18} />} iconPosition="right">
+                            Join Community
                         </Button>
                     </Link>
+                    <Link to="/knowledge">
+                        <Button size="lg" icon={<BookOpen size={18} />} iconPosition="right">
+                            Knowledge Base
+                        </Button>
+                    </Link>
+                    <a href="#contact" onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                    }}>
+                        <Button size="lg">
+                            Contact Us
+                        </Button>
+                    </a>
                 </motion.div>
 
                 {/* Stats */}

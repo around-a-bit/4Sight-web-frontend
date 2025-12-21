@@ -35,21 +35,21 @@ const tools = [
         name: 'ROI Calculator',
         description: 'Calculate the potential return on investment from implementing automation.',
         icon: Calculator,
-        url: '#',
+        url: '/community/roi-calculator',
     },
     {
         id: 2,
         name: 'SEO Analyzer',
         description: 'Analyze your website SEO performance and get actionable recommendations.',
         icon: FileSearch,
-        url: '#',
+        url: '/community/seo-analyzer',
     },
     {
         id: 3,
         name: 'Trend Tracker',
         description: 'Track industry trends and benchmark your performance.',
         icon: LineChart,
-        url: '#',
+        url: '/community/trend-tracker',
         comingSoon: true,
     },
     {
@@ -57,7 +57,7 @@ const tools = [
         name: 'AI Assistant',
         description: 'Get personalized guidance from our AI-powered assistant.',
         icon: Bot,
-        url: '#',
+        url: '/community/ai-assistant',
         comingSoon: true,
     },
 ];

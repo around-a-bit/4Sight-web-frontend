@@ -3,3 +3,7 @@ export { default as ProductPage } from './ProductPage';
 export { default as KnowledgeBasePage } from './KnowledgeBasePage';
 export { default as ArticleDetailPage } from './ArticleDetailPage';
 export { default as CommunityPage } from './CommunityPage';
+export { default as ROICalculatorPage } from './ROICalculatorPage';
+export { default as SEOAnalyzerPage } from './SEOAnalyzerPage';
+export { default as TrendTrackerPage } from './TrendTrackerPage';
+export { default as AIAssistantPage } from './AIAssistantPage';
