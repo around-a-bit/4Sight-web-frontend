@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Calculator, FileSearch, LineChart, Bot } from 'lucide-react';
+import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../ui/ThemeToggle';
+import { useAuth } from '../../context/AuthContext';
 import './Header.css';
 
 const navLinks = [
@@ -12,18 +13,12 @@ const navLinks = [
     { path: '/community', label: 'Community' },
 ];
 
-const calculatorTools = [
-    { path: '/community/roi-calculator', label: 'ROI Calculator', icon: Calculator },
-    { path: '/community/seo-analyzer', label: 'SEO Analyzer', icon: FileSearch },
-    { path: '/community/trend-tracker', label: 'Trend Tracker', icon: LineChart },
-    { path: '/community/ai-assistant', label: 'AI Assistant', icon: Bot },
-];
-
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
     const location = useLocation();
+    const { user, isAuthenticated, logout, openAuthModal } = useAuth();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -50,6 +45,11 @@ const Header = () => {
 
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false);
+    };
+
+    const handleLogout = () => {
+        logout();
+        closeMobileMenu();
     };
 
     return (
@@ -80,8 +80,42 @@ const Header = () => {
                     ))}
                 </nav>
 
-                {/* Theme Toggle & Mobile Menu */}
+                {/* Actions: Auth + Theme Toggle + Mobile Menu */}
                 <div className="header-actions">
+                    {/* Auth Buttons */}
+                    {isAuthenticated ? (
+                        <div className="header-user">
+                            <div className="header-user-info">
+                                <User size={16} />
+                                <span className="header-user-name">{user?.name?.split(' ')[0]}</span>
+                            </div>
+                            <button
+                                className="header-auth-btn header-logout-btn"
+                                onClick={handleLogout}
+                                title="Log out"
+                            >
+                                <LogOut size={16} />
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="header-auth-buttons">
+                            <button
+                                className="header-auth-btn header-login-btn"
+                                onClick={() => openAuthModal('login')}
+                            >
+                                <LogIn size={16} />
+                                <span>Login</span>
+                            </button>
+                            <button
+                                className="header-auth-btn header-signup-btn"
+                                onClick={() => openAuthModal('signup')}
+                            >
+                                Sign Up
+                            </button>
+                        </div>
+                    )}
+
                     <ThemeToggle />
 
                     {/* Mobile Menu Button */}
@@ -122,6 +156,52 @@ const Header = () => {
                                 </Link>
                             </motion.div>
                         ))}
+
+                        {/* Mobile Auth */}
+                        <motion.div
+                            className="mobile-auth-section"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: navLinks.length * 0.1 }}
+                        >
+                            {isAuthenticated ? (
+                                <>
+                                    <div className="mobile-user-info">
+                                        <User size={18} />
+                                        <span>{user?.name}</span>
+                                    </div>
+                                    <button
+                                        className="mobile-auth-btn"
+                                        onClick={handleLogout}
+                                    >
+                                        <LogOut size={18} />
+                                        Logout
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <button
+                                        className="mobile-auth-btn mobile-login-btn"
+                                        onClick={() => {
+                                            closeMobileMenu();
+                                            openAuthModal('login');
+                                        }}
+                                    >
+                                        <LogIn size={18} />
+                                        Login
+                                    </button>
+                                    <button
+                                        className="mobile-auth-btn mobile-signup-btn"
+                                        onClick={() => {
+                                            closeMobileMenu();
+                                            openAuthModal('signup');
+                                        }}
+                                    >
+                                        Sign Up
+                                    </button>
+                                </>
+                            )}
+                        </motion.div>
                     </motion.nav>
                 )}
             </AnimatePresence>

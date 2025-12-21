@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArticleFeed } from '../components/knowledge';
+import { AuthGuard } from '../components/auth';
 import './KnowledgeBasePage.css';
 
 const KnowledgeBasePage = () => {
@@ -31,7 +32,13 @@ const KnowledgeBasePage = () => {
 
             <section className="knowledge-content">
                 <div className="knowledge-content-container">
-                    <ArticleFeed />
+                    <AuthGuard
+                        title="Unlock Knowledge Base"
+                        message="Sign in to access all articles, guides, and resources"
+                        actionType="knowledge_access"
+                    >
+                        <ArticleFeed />
+                    </AuthGuard>
                 </div>
             </section>
         </div>

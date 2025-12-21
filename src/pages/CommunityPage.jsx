@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Calculator, LineChart, FileSearch, Wrench, Bot, Database } from 'lucide-react';
 import { PollCard, ToolCard, ResourceCard } from '../components/community';
+import { AuthGuard } from '../components/auth';
 import './CommunityPage.css';
 
 // Mock data - would come from backend in production
@@ -132,17 +133,23 @@ const CommunityPage = () => {
                         <p className="section-subtitle">See what the community is thinking</p>
                     </motion.div>
 
-                    <div className="polls-grid">
-                        {polls.map((poll, index) => (
-                            <PollCard
-                                key={poll.id}
-                                question={poll.question}
-                                options={poll.options}
-                                totalVotes={poll.totalVotes}
-                                index={index}
-                            />
-                        ))}
-                    </div>
+                    <AuthGuard
+                        title="Join the Discussion"
+                        message="Sign in to participate in community polls and share your insights"
+                        actionType="poll_vote"
+                    >
+                        <div className="polls-grid">
+                            {polls.map((poll, index) => (
+                                <PollCard
+                                    key={poll.id}
+                                    question={poll.question}
+                                    options={poll.options}
+                                    totalVotes={poll.totalVotes}
+                                    index={index}
+                                />
+                            ))}
+                        </div>
+                    </AuthGuard>
                 </div>
             </section>
 

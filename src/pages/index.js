@@ -7,3 +7,5 @@ export { default as ROICalculatorPage } from './ROICalculatorPage';
 export { default as SEOAnalyzerPage } from './SEOAnalyzerPage';
 export { default as TrendTrackerPage } from './TrendTrackerPage';
 export { default as AIAssistantPage } from './AIAssistantPage';
+export { default as LoginPage } from './LoginPage';
+export { default as SignupPage } from './SignupPage';
