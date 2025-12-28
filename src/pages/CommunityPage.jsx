@@ -1,62 +1,23 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calculator, LineChart, FileSearch, Wrench, Bot, Database } from 'lucide-react';
+import { Gauge, Bot } from 'lucide-react';
 import { PollCard, ToolCard, ResourceCard } from '../components/community';
-import { AuthGuard } from '../components/auth';
+import { getPollData, savePollData, getUserVotes, recordUserVote, calculateTotalVotes } from '../services/pollService';
 import './CommunityPage.css';
-
-// Mock data - would come from backend in production
-const polls = [
-    {
-        id: 1,
-        question: 'What is your biggest challenge with SEO automation?',
-        options: [
-            { text: 'Getting started / setup', votes: 234 },
-            { text: 'Integration with existing tools', votes: 189 },
-            { text: 'Measuring ROI', votes: 156 },
-            { text: 'Content quality concerns', votes: 98 },
-        ],
-        totalVotes: 677,
-    },
-    {
-        id: 2,
-        question: 'How often do you review your automation workflows?',
-        options: [
-            { text: 'Weekly', votes: 312 },
-            { text: 'Monthly', votes: 456 },
-            { text: 'Quarterly', votes: 187 },
-            { text: 'Rarely', votes: 89 },
-        ],
-        totalVotes: 1044,
-    },
-];
 
 const tools = [
     {
         id: 1,
-        name: 'ROI Calculator',
-        description: 'Calculate the potential return on investment from implementing automation.',
-        icon: Calculator,
-        url: '/community/roi-calculator',
-    },
-    {
-        id: 2,
-        name: 'SEO Analyzer',
-        description: 'Analyze your website SEO performance and get actionable recommendations.',
-        icon: FileSearch,
-        url: '/community/seo-analyzer',
-    },
-    {
-        id: 3,
-        name: 'Trend Tracker',
-        description: 'Track industry trends and benchmark your performance.',
-        icon: LineChart,
-        url: '/community/trend-tracker',
+        name: 'SEO Maturity Grader',
+        description: 'Assess your SEO maturity level and get a personalized roadmap for improvement.',
+        icon: Gauge,
+        url: '/community/seo-maturity-grader',
         comingSoon: true,
     },
     {
-        id: 4,
+        id: 2,
         name: 'AI Assistant',
-        description: 'Get personalized guidance from our AI-powered assistant.',
+        description: 'Get personalized SEO guidance and answers from our AI-powered assistant.',
         icon: Bot,
         url: '/community/ai-assistant',
         comingSoon: true,
@@ -95,6 +56,44 @@ const resources = [
 ];
 
 const CommunityPage = () => {
+    const [polls, setPolls] = useState([]);
+    const [userVotes, setUserVotes] = useState({});
+
+    // Load poll data and user votes on mount
+    useEffect(() => {
+        const pollData = getPollData();
+        const votes = getUserVotes();
+        setPolls(pollData);
+        setUserVotes(votes);
+    }, []);
+
+    // Handle voting
+    const handleVote = (pollId, optionIndex) => {
+        // Update polls state
+        setPolls(prevPolls => {
+            const updatedPolls = prevPolls.map(poll => {
+                if (poll.id === pollId) {
+                    const updatedOptions = poll.options.map((option, idx) => {
+                        if (idx === optionIndex) {
+                            return { ...option, votes: option.votes + 1 };
+                        }
+                        return option;
+                    });
+                    return { ...poll, options: updatedOptions };
+                }
+                return poll;
+            });
+
+            // Save to localStorage
+            savePollData(updatedPolls);
+            return updatedPolls;
+        });
+
+        // Record user vote
+        recordUserVote(pollId, optionIndex);
+        setUserVotes(prev => ({ ...prev, [pollId]: optionIndex }));
+    };
+
     return (
         <div className="community-page">
             {/* Hero */}
@@ -119,7 +118,7 @@ const CommunityPage = () => {
                 </div>
             </section>
 
-            {/* Polls Section */}
+            {/* Polls Section - Open to all (no AuthGuard) */}
             <section className="community-section">
                 <div className="community-section-container">
                     <motion.div
@@ -130,26 +129,23 @@ const CommunityPage = () => {
                         transition={{ duration: 0.5 }}
                     >
                         <h2 className="section-title">Community Polls</h2>
-                        <p className="section-subtitle">See what the community is thinking</p>
+                        <p className="section-subtitle">Share your thoughts and see what the community is thinking</p>
                     </motion.div>
 
-                    <AuthGuard
-                        title="Join the Discussion"
-                        message="Sign in to participate in community polls and share your insights"
-                        actionType="poll_vote"
-                    >
-                        <div className="polls-grid">
-                            {polls.map((poll, index) => (
-                                <PollCard
-                                    key={poll.id}
-                                    question={poll.question}
-                                    options={poll.options}
-                                    totalVotes={poll.totalVotes}
-                                    index={index}
-                                />
-                            ))}
-                        </div>
-                    </AuthGuard>
+                    <div className="polls-grid">
+                        {polls.map((poll, index) => (
+                            <PollCard
+                                key={poll.id}
+                                pollId={poll.id}
+                                question={poll.question}
+                                options={poll.options}
+                                totalVotes={calculateTotalVotes(poll)}
+                                userVotedOption={userVotes[poll.id]}
+                                onVote={handleVote}
+                                index={index}
+                            />
+                        ))}
+                    </div>
                 </div>
             </section>
 

@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
-import { ProductDemoVideo, FeatureGrid, TestimonialsSection } from '../components/product';
+// TODO: Re-enable TestimonialsSection when real customer testimonials are available
+// import { ProductDemoVideo, FeatureGrid, TestimonialsSection } from '../components/product';
+import { ProductDemoVideo, FeatureGrid } from '../components/product';
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { ArrowRight } from 'lucide-react';
@@ -33,7 +35,21 @@ const ProductPage = () => {
 
             <ProductDemoVideo />
             <FeatureGrid />
-            <TestimonialsSection />
+
+            {/* 
+             * =================================================================
+             * TESTIMONIALS SECTION - TEMPORARILY HIDDEN
+             * =================================================================
+             * Re-enable this when real customer testimonials are available.
+             * 
+             * To re-enable:
+             * 1. Uncomment the import at the top of this file
+             * 2. Uncomment the <TestimonialsSection /> component below
+             * 3. Update testimonials data in: 
+             *    src/components/product/TestimonialsSection.jsx
+             * =================================================================
+             */}
+            {/* <TestimonialsSection /> */}
 
             {/* CTA Section */}
             <section className="product-cta-section">

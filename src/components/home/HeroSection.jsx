@@ -165,18 +165,18 @@ const HeroSection = () => {
                     transition={{ duration: 0.6, delay: 0.4 }}
                 >
                     <div className="stat">
-                        <span className="stat-value">10x</span>
-                        <span className="stat-label">Faster Insights</span>
+                        <span className="stat-value">50+</span>
+                        <span className="stat-label">SEO Health Markers</span>
                     </div>
                     <div className="stat-divider" />
                     <div className="stat">
-                        <span className="stat-value">99.9%</span>
-                        <span className="stat-label">Accuracy</span>
+                        <span className="stat-value">100%</span>
+                        <span className="stat-label">Transparency on SEO Program</span>
                     </div>
                     <div className="stat-divider" />
                     <div className="stat">
-                        <span className="stat-value">500+</span>
-                        <span className="stat-label">Enterprises</span>
+                        <span className="stat-value">10+</span>
+                        <span className="stat-label">Clients</span>
                     </div>
                 </motion.div>
             </motion.div>

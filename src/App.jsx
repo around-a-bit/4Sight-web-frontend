@@ -36,11 +36,7 @@ function App() {
               <Route index element={<HomePage />} />
               <Route path="product" element={<ProductPage />} />
               <Route path="knowledge" element={<KnowledgeBasePage />} />
-              <Route path="knowledge/:slug" element={
-                <ProtectedRoute>
-                  <ArticleDetailPage />
-                </ProtectedRoute>
-              } />
+              <Route path="knowledge/:slug" element={<ArticleDetailPage />} />
               <Route path="community" element={<CommunityPage />} />
 
               {/* Protected Calculator Routes */}

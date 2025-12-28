@@ -1,45 +1,33 @@
 import { motion } from 'framer-motion';
-import { Target, Rocket, Shield, TrendingUp, BarChart3, Layers } from 'lucide-react';
+import { BrainCircuit, Wrench, Eye, LineChart } from 'lucide-react';
 import FeatureCard from './FeatureCard';
 import './FeatureGrid.css';
 
-// SIGO Framework + Analytics & Integration
+// Core Value Propositions
 const features = [
     {
         id: 1,
-        icon: Target,
-        title: 'Strategy',
-        description: 'Define your vision and roadmap with data-driven strategic planning. Align your SEO objectives with business goals through comprehensive market analysis and competitive intelligence.',
+        icon: BrainCircuit,
+        title: 'Data Driven Intelligence',
+        description: 'Transform raw information into strategic insights with our AI-powered analytics engine. Make confident decisions backed by real-time market data, competitor analysis, and performance metrics that matter.',
     },
     {
         id: 2,
-        icon: Rocket,
-        title: 'Implementation',
-        description: 'Execute your strategy with precision using our cutting-edge automation tools. From keyword research to content optimization, deploy changes seamlessly across your digital ecosystem.',
+        icon: Wrench,
+        title: 'DIY',
+        description: 'Take control of your digital strategy with intuitive self-service tools. No coding required—configure campaigns, analyze results, and optimize performance on your own terms with our user-friendly interface.',
     },
     {
         id: 3,
-        icon: Shield,
-        title: 'Governance',
-        description: 'Ensure compliance and maintain control with comprehensive audit trails and approval workflows. Monitor policy adherence and manage access with enterprise-grade security protocols.',
+        icon: Eye,
+        title: 'Transparent & Business Contextual',
+        description: 'Every recommendation comes with clear reasoning aligned to your business goals. Understand the "why" behind each insight, ensuring strategies resonate with your unique market position and objectives.',
     },
     {
         id: 4,
-        icon: TrendingUp,
-        title: 'Optimization',
-        description: 'Continuously improve performance through AI-powered insights and real-time analytics. Identify opportunities, refine strategies, and maximize ROI with iterative optimization cycles.',
-    },
-    {
-        id: 5,
-        icon: BarChart3,
-        title: 'Analytics',
-        description: 'Transform raw data into actionable intelligence with advanced reporting and visualization. Track KPIs, measure campaign effectiveness, and uncover hidden patterns in your data.',
-    },
-    {
-        id: 6,
-        icon: Layers,
-        title: 'Integration',
-        description: 'Connect seamlessly with your existing tools and platforms through our extensive API ecosystem. Unify your tech stack and enable smooth data flow across all your systems.',
+        icon: LineChart,
+        title: 'Predictive Forecasting',
+        description: 'Stay ahead of market shifts with intelligent trend prediction and scenario modeling. Anticipate opportunities, mitigate risks, and plan strategically with confidence using advanced forecasting algorithms.',
     },
 ];
 
