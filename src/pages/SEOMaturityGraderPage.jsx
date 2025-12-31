@@ -24,7 +24,7 @@ import {
 import './SEOMaturityGraderPage.css';
 
 // API configuration
-const API_BASE_URL = import.meta.env.VITE_SEO_GRADER_API_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_SEO_GRADER_API_URL || 'https://foursightbackend.onrender.com';
 
 // Questionnaire questions with deterministic IDs
 const QUESTIONS = [
