@@ -9,3 +9,4 @@ export { default as TrendTrackerPage } from './TrendTrackerPage';
 export { default as AIAssistantPage } from './AIAssistantPage';
 export { default as LoginPage } from './LoginPage';
 export { default as SignupPage } from './SignupPage';
+export { default as SEOMaturityGraderPage } from './SEOMaturityGraderPage';

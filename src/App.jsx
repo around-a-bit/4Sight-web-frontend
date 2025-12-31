@@ -15,6 +15,7 @@ import {
   AIAssistantPage,
   LoginPage,
   SignupPage,
+  SEOMaturityGraderPage,
 } from './pages';
 import './styles/index.css';
 
@@ -60,6 +61,9 @@ function App() {
                   <AIAssistantPage />
                 </ProtectedRoute>
               } />
+
+              {/* SEO Maturity Grader - Public route */}
+              <Route path="community/seo-maturity-grader" element={<SEOMaturityGraderPage />} />
             </Route>
           </Routes>
         </Router>

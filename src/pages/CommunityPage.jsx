@@ -12,7 +12,7 @@ const tools = [
         description: 'Assess your SEO maturity level and get a personalized roadmap for improvement.',
         icon: Gauge,
         url: '/community/seo-maturity-grader',
-        comingSoon: true,
+        comingSoon: false,
     },
     {
         id: 2,

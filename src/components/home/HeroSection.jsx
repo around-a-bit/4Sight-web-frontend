@@ -1,15 +1,13 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles, Users, BookOpen, Calculator, FileSearch, LineChart, Bot } from 'lucide-react';
+import { ArrowRight, Sparkles, Users, BookOpen, MessageSquare, ClipboardCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
 import './HeroSection.css';
 
-const calculatorTools = [
-    { path: '/community/roi-calculator', label: 'ROI Calculator', icon: Calculator },
-    { path: '/community/seo-analyzer', label: 'SEO Analyzer', icon: FileSearch },
-    { path: '/community/trend-tracker', label: 'Trend Tracker', icon: LineChart },
-    { path: '/community/ai-assistant', label: 'AI Assistant', icon: Bot },
+const heroTools = [
+    { path: '/community/ai-assistant', label: 'AI Chat Assistant', icon: MessageSquare },
+    { path: '/seo-grader', label: 'SEO Maturity Grader', icon: ClipboardCheck },
 ];
 
 const HeroSection = () => {
@@ -29,14 +27,14 @@ const HeroSection = () => {
                 <div className="grid-lines"></div>
             </div>
 
-            {/* Calculator Tools - Top Right */}
+            {/* Quick Tools - Top Right */}
             <motion.div
                 className="hero-calculator-tools"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
             >
-                {calculatorTools.map((tool) => (
+                {heroTools.map((tool) => (
                     <Link
                         key={tool.path}
                         to={tool.path}
@@ -178,6 +176,20 @@ const HeroSection = () => {
                         <span className="stat-value">10+</span>
                         <span className="stat-label">Clients</span>
                     </div>
+                </motion.div>
+
+                {/* SEO Grader Quick Access - Below Stats */}
+                <motion.div
+                    className="hero-grader-cta"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                >
+                    <Link to="/seo-grader" className="grader-quick-link">
+                        <ClipboardCheck size={18} />
+                        <span>Check your SEO Maturity Score</span>
+                        <ArrowRight size={16} />
+                    </Link>
                 </motion.div>
             </motion.div>
 
