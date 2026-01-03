@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Clock, User, Calendar } from 'lucide-react';
+import { ArrowLeft, Clock, User, Calendar, ThumbsUp, ThumbsDown, MessageCircle } from 'lucide-react';
 import './ArticleDetail.css';
 
 const ArticleDetail = ({ article, loading = false, error = null }) => {
@@ -117,6 +117,40 @@ const ArticleDetail = ({ article, loading = false, error = null }) => {
                         className="article-body"
                         dangerouslySetInnerHTML={{ __html: article.content }}
                     />
+
+                    {/* Engagement Section */}
+                    <div className="article-engagement">
+                        <div className="engagement-votes">
+                            <button className="vote-btn upvote" title="Upvote this article">
+                                <ThumbsUp size={20} />
+                                <span>0</span>
+                            </button>
+                            <button className="vote-btn downvote" title="Downvote this article">
+                                <ThumbsDown size={20} />
+                                <span>0</span>
+                            </button>
+                        </div>
+                        <div className="engagement-comments">
+                            <MessageCircle size={20} />
+                            <span>0 Comments</span>
+                        </div>
+                    </div>
+
+                    {/* Comments Section */}
+                    <div className="article-comments">
+                        <h3 className="comments-title">Comments</h3>
+                        <div className="comment-input-wrapper">
+                            <textarea
+                                className="comment-input"
+                                placeholder="Share your thoughts..."
+                                rows={3}
+                            ></textarea>
+                            <button className="comment-submit-btn">Post Comment</button>
+                        </div>
+                        <div className="comments-list">
+                            <p className="no-comments">No comments yet. Be the first to share your thoughts!</p>
+                        </div>
+                    </div>
                 </article>
             </div>
         </motion.div>
