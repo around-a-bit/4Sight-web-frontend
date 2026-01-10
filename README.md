@@ -104,3 +104,10 @@ The design system is defined in `src/styles/index.css` with CSS variables for:
 ## License
 
 Private - All rights reserved.
+
+## API Connection
+
+This frontend is configured to connect to the dedicated backend:
+- **Default Backend URL**: `https://foursightbackend.onrender.com`
+- **Environment Variable**: `VITE_SEO_GRADER_API_URL` (Overrides default)
+
