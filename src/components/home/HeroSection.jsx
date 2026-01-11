@@ -185,7 +185,7 @@ const HeroSection = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.5 }}
                 >
-                    <Link to="community/seo-maturity-grader" className="grader-quick-link">
+                    <Link to="/community/seo-maturity-grader" className="grader-quick-link">
                         <ClipboardCheck size={18} />
                         <span>Check your SEO Maturity Score</span>
                         <ArrowRight size={16} />
