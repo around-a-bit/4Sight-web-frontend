@@ -7,7 +7,7 @@ import './HeroSection.css';
 
 const heroTools = [
     { path: '/community/ai-assistant', label: 'AI Chat Assistant', icon: MessageSquare },
-    { path: '/seo-grader', label: 'SEO Maturity Grader', icon: ClipboardCheck },
+    { path: '/community/seo-maturity-grader', label: 'SEO Maturity Grader', icon: ClipboardCheck },
 ];
 
 const HeroSection = () => {
