@@ -33,6 +33,28 @@ const ProductPage = () => {
                 </div>
             </section>
 
+            {/* Onboard to 4Sight Button */}
+            <section className="product-onboard-section">
+                <motion.div
+                    className="product-onboard-container"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <Link to="#">
+                        <Button
+                            size="lg"
+                            icon={<ArrowRight size={18} />}
+                            iconPosition="right"
+                            className="onboard-button"
+                        >
+                            Onboard to 4Sight
+                        </Button>
+                    </Link>
+                </motion.div>
+            </section>
+
             <ProductDemoVideo />
             <FeatureGrid />
 
