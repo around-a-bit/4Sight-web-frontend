@@ -795,4 +795,166 @@
     .grader-score-value {
         font-size: 4rem;
     }
+
+    /* Progress indicator - make dots smaller on tablet */
+    .grader-progress-line {
+        width: 40px;
+    }
+
+    /* Raw signals 2 columns on tablet */
+    .raw-signals-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Critical alert banner stack on smaller screens */
+    .critical-alert-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+    .seo-grader-hero {
+        padding: var(--space-12) var(--space-4);
+    }
+
+    .seo-grader-title {
+        font-size: var(--font-size-2xl);
+    }
+
+    .seo-grader-icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+
+    .seo-grader-content {
+        padding: var(--space-6) var(--space-4) var(--space-12);
+    }
+
+    .seo-grader-card {
+        padding: var(--space-4);
+    }
+
+    /* Progress indicator - compact on mobile */
+    .grader-progress {
+        gap: var(--space-2);
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .grader-progress-dot {
+        width: 28px;
+        height: 28px;
+        font-size: var(--font-size-xs);
+    }
+
+    .grader-progress-line {
+        width: 24px;
+    }
+
+    /* Question styling */
+    .question-text {
+        font-size: var(--font-size-base);
+    }
+
+    .question-number {
+        width: 28px;
+        height: 28px;
+        font-size: var(--font-size-xs);
+    }
+
+    /* Score card */
+    .grader-score-card {
+        padding: var(--space-6);
+    }
+
+    .grader-score-value {
+        font-size: 3rem;
+    }
+
+    .grader-stage-badge {
+        font-size: var(--font-size-base);
+        padding: var(--space-2) var(--space-4);
+    }
+
+    /* Dimension sections */
+    .dimension-section {
+        padding: var(--space-4);
+    }
+
+    .dimension-section-title {
+        font-size: var(--font-size-base);
+    }
+
+    /* Risks */
+    .risks-section {
+        padding: var(--space-4);
+    }
+
+    /* Navigation buttons stack */
+    .grader-nav-buttons {
+        flex-direction: column;
+    }
+
+    .grader-nav-buttons button {
+        width: 100%;
+    }
+
+    /* Error actions stack */
+    .grader-error-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .grader-error-actions button {
+        width: 100%;
+    }
+}
+
+/* Very small screens (320px) */
+@media (max-width: 360px) {
+    .seo-grader-hero {
+        padding: var(--space-10) var(--space-3);
+    }
+
+    .seo-grader-title {
+        font-size: var(--font-size-xl);
+    }
+
+    .seo-grader-subtitle {
+        font-size: var(--font-size-sm);
+    }
+
+    .seo-grader-content {
+        padding: var(--space-4) var(--space-3) var(--space-10);
+    }
+
+    .seo-grader-card {
+        padding: var(--space-3);
+    }
+
+    .grader-score-value {
+        font-size: 2.5rem;
+    }
+
+    /* Raw signals single column on very small */
+    .raw-signals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .raw-signal-item {
+        padding: var(--space-2);
+    }
+
+    /* Gap indicator */
+    .gap-indicator {
+        padding: var(--space-4);
+    }
+
+    .gap-text {
+        font-size: var(--font-size-base);
+    }
 }

@@ -337,4 +337,39 @@
     .header-user {
         display: none;
     }
+
+    /* Hide calculator icons on tablets/mobile */
+    .calculator-icons {
+        display: none;
+    }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+    .header-container {
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .header-logo {
+        font-size: var(--font-size-xl);
+    }
+
+    .mobile-nav {
+        padding: var(--space-4);
+    }
+
+    .mobile-nav-link {
+        font-size: var(--font-size-base);
+        padding: var(--space-3);
+    }
+
+    .mobile-auth-section {
+        padding-top: var(--space-3);
+    }
+
+    .mobile-auth-btn {
+        padding: var(--space-3);
+        width: 100%;
+        justify-content: center;
+    }
 }

@@ -340,4 +340,83 @@
     .hero-title {
         font-size: var(--font-size-3xl);
     }
+
+    .hero-subtitle {
+        font-size: var(--font-size-base);
+    }
+
+    /* Hide calculator tools on mobile - awkward in top-right on small screens */
+    .hero-calculator-tools {
+        display: none;
+    }
+
+    /* Full-width CTA buttons for better touch targets */
+    .hero-cta {
+        width: 100%;
+    }
+
+    .hero-cta a,
+    .hero-cta button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Improved touch target for grader link */
+    .grader-quick-link {
+        padding: var(--space-4) var(--space-6);
+        font-size: var(--font-size-base);
+    }
+
+    /* Smaller orbs on mobile to reduce visual noise */
+    .orb-1,
+    .orb-2,
+    .orb-3 {
+        width: 100px;
+        height: 100px;
+        filter: blur(50px);
+    }
+
+    /* Adjust hero badge for small screens */
+    .hero-badge {
+        font-size: var(--font-size-xs);
+        padding: var(--space-1) var(--space-3);
+    }
+
+    /* Stats adjustments */
+    .hero-stats {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .stat-value {
+        font-size: var(--font-size-2xl);
+    }
+
+    .stat-label {
+        font-size: var(--font-size-xs);
+    }
+}
+
+/* Very small screens (320px) */
+@media (max-width: 360px) {
+    .hero {
+        padding: var(--space-12) var(--space-3);
+    }
+
+    .hero-title {
+        font-size: var(--font-size-2xl);
+    }
+
+    .hero-subtitle {
+        font-size: var(--font-size-sm);
+    }
+
+    .hero-cta {
+        gap: var(--space-3);
+    }
+
+    .grader-quick-link {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-2);
+    }
 }
