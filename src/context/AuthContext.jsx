@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     const login = useCallback(async (email, password) => {
         setLoading(true);
         try {
-            const authenticatedUser = authService.authenticate(email, password);
+            const authenticatedUser = await authService.authenticate(email, password);
             setUser(authenticatedUser);
             return authenticatedUser;
         } finally {
@@ -60,14 +60,10 @@ export const AuthProvider = ({ children }) => {
     const signup = useCallback(async (email, password, name) => {
         setLoading(true);
         try {
-            // Create user
-            const newUser = authService.createUser(email, password, name);
-
-            // Auto-login after signup
-            const authenticatedUser = authService.authenticate(email, password);
-            setUser(authenticatedUser);
-
-            return authenticatedUser;
+            // Create user - this also logs them in and returns user
+            const newUser = await authService.createUser(email, password, name);
+            setUser(newUser);
+            return newUser;
         } finally {
             setLoading(false);
         }

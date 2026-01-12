@@ -1,90 +1,69 @@
 /**
  * Authentication Service
  * 
- * ⚠️ POC IMPLEMENTATION WARNING ⚠️
- * This service uses localStorage to simulate JSON file-based user storage.
- * Password encoding uses base64 which is NOT secure for production.
- * 
- * For production migration:
- * - Replace localStorage calls with REST API calls
- * - Implement proper bcrypt password hashing on backend
- * - Add JWT token management
- * - This service interface remains the same (zero UI rewrite needed)
+ * Handles user authentication via the 4Sight Backend API.
+ * Stores JWT token in localStorage for session management.
  */
 
-const STORAGE_KEY = 'foresight_auth_data';
+import { API_BASE_URL, apiRequest } from './apiConfig';
+
+const TOKEN_KEY = 'foresight_auth_token';
+const USER_KEY = 'foresight_user';
+const INTENDED_ACTION_KEY = 'foresight_intended_action';
 
 // ============================================
-// STORAGE HELPERS (Simulating JSON file)
+// TOKEN MANAGEMENT
 // ============================================
 
 /**
- * Get all stored auth data from localStorage
- * @returns {Object} Auth data with users array and currentSession
+ * Store JWT token in localStorage
+ * @param {string} token - JWT access token
  */
-const getAuthData = () => {
+const setToken = (token) => {
+    localStorage.setItem(TOKEN_KEY, token);
+};
+
+/**
+ * Get JWT token from localStorage
+ * @returns {string|null}
+ */
+const getToken = () => {
+    return localStorage.getItem(TOKEN_KEY);
+};
+
+/**
+ * Remove JWT token from localStorage
+ */
+const removeToken = () => {
+    localStorage.removeItem(TOKEN_KEY);
+};
+
+/**
+ * Store user data in localStorage for quick access
+ * @param {Object} user - User object
+ */
+const setStoredUser = (user) => {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+};
+
+/**
+ * Get stored user from localStorage
+ * @returns {Object|null}
+ */
+const getStoredUser = () => {
     try {
-        const data = localStorage.getItem(STORAGE_KEY);
-        if (!data) {
-            return { users: [], currentSession: null };
-        }
-        return JSON.parse(data);
-    } catch (error) {
-        console.error('Error reading auth data:', error);
-        return { users: [], currentSession: null };
+        const stored = localStorage.getItem(USER_KEY);
+        return stored ? JSON.parse(stored) : null;
+    } catch {
+        return null;
     }
 };
 
 /**
- * Save auth data to localStorage
- * @param {Object} data - Auth data to save
+ * Remove stored user from localStorage
  */
-const saveAuthData = (data) => {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    } catch (error) {
-        console.error('Error saving auth data:', error);
-        throw new Error('Failed to save authentication data');
-    }
-};
-
-// ============================================
-// PASSWORD HANDLING (POC - NOT PRODUCTION SAFE)
-// ============================================
-
-/**
- * Encode password for storage (POC only - NOT SECURE)
- * ⚠️ Replace with bcrypt hashing on backend for production
- * @param {string} password - Plain text password
- * @returns {string} Encoded password
- */
-const encodePasswordPoC = (password) => {
-    // Simple base64 encoding - NOT SECURE, for PoC demonstration only
-    return btoa(password + '_foresight_salt_poc');
-};
-
-/**
- * Verify password against stored hash (POC only)
- * @param {string} password - Plain text password to verify
- * @param {string} storedHash - Stored encoded password
- * @returns {boolean} Whether password matches
- */
-const verifyPasswordPoC = (password, storedHash) => {
-    return encodePasswordPoC(password) === storedHash;
-};
-
-// ============================================
-// USER ID GENERATION
-// ============================================
-
-/**
- * Generate a unique user ID
- * @returns {string} Unique user ID
- */
-const generateUserId = () => {
-    const timestamp = Date.now();
-    const randomPart = Math.random().toString(36).substring(2, 8);
-    return `user_${timestamp}_${randomPart}`;
+const removeStoredUser = () => {
+    localStorage.removeItem(USER_KEY);
 };
 
 // ============================================
@@ -92,68 +71,37 @@ const generateUserId = () => {
 // ============================================
 
 /**
- * Get all registered users
- * @returns {Array} Array of user objects (without passwords)
- */
-export const getUsers = () => {
-    const { users } = getAuthData();
-    // Return users without password hashes for safety
-    return users.map(({ passwordHash, ...user }) => user);
-};
-
-/**
- * Find a user by email
- * @param {string} email - User email to find
- * @returns {Object|null} User object or null if not found
- */
-export const findUserByEmail = (email) => {
-    const { users } = getAuthData();
-    return users.find(user => user.email.toLowerCase() === email.toLowerCase()) || null;
-};
-
-/**
- * Create a new user
+ * Create a new user (signup)
  * @param {string} email - User email
  * @param {string} password - User password
- * @param {string} name - User display name
- * @returns {Object} Created user object (without password)
+ * @param {string} name - User display name (username)
+ * @returns {Object} Created user object with token
  */
-export const createUser = (email, password, name) => {
-    const authData = getAuthData();
+export const createUser = async (email, password, name) => {
+    const response = await fetch(`${API_BASE_URL}/auth/signup`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email.toLowerCase().trim(),
+            password,
+            username: name.trim(),
+        }),
+    });
 
-    // Check for existing user
-    const existingUser = findUserByEmail(email);
-    if (existingUser) {
-        throw new Error('An account with this email already exists');
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.detail || 'Failed to create account');
     }
 
-    // Validate inputs
-    if (!email || !email.includes('@')) {
-        throw new Error('Please enter a valid email address');
-    }
-    if (!password || password.length < 6) {
-        throw new Error('Password must be at least 6 characters');
-    }
-    if (!name || name.trim().length < 2) {
-        throw new Error('Please enter your name');
-    }
+    const data = await response.json();
 
-    const now = new Date().toISOString();
-    const newUser = {
-        id: generateUserId(),
-        email: email.toLowerCase().trim(),
-        name: name.trim(),
-        passwordHash: encodePasswordPoC(password),
-        createdAt: now,
-        lastLogin: now,
-    };
+    // Store token and user
+    setToken(data.access_token);
+    setStoredUser(data.user);
 
-    authData.users.push(newUser);
-    saveAuthData(authData);
-
-    // Return user without password hash
-    const { passwordHash, ...safeUser } = newUser;
-    return safeUser;
+    return data.user;
 };
 
 // ============================================
@@ -166,88 +114,87 @@ export const createUser = (email, password, name) => {
  * @param {string} password - User password
  * @returns {Object} Authenticated user object
  */
-export const authenticate = (email, password) => {
-    const authData = getAuthData();
-    const user = authData.users.find(
-        u => u.email.toLowerCase() === email.toLowerCase()
-    );
+export const authenticate = async (email, password) => {
+    const response = await fetch(`${API_BASE_URL}/auth/signin`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email.toLowerCase().trim(),
+            password,
+        }),
+    });
 
-    if (!user) {
-        throw new Error('No account found with this email');
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.detail || 'Invalid email or password');
     }
 
-    if (!verifyPasswordPoC(password, user.passwordHash)) {
-        throw new Error('Incorrect password');
-    }
+    const data = await response.json();
 
-    // Update last login
-    user.lastLogin = new Date().toISOString();
+    // Store token and user
+    setToken(data.access_token);
+    setStoredUser(data.user);
 
-    // Create session (expires in 24 hours)
-    const sessionExpiry = new Date();
-    sessionExpiry.setHours(sessionExpiry.getHours() + 24);
-
-    authData.currentSession = {
-        userId: user.id,
-        expiresAt: sessionExpiry.toISOString(),
-    };
-
-    saveAuthData(authData);
-
-    // Return user without password hash
-    const { passwordHash, ...safeUser } = user;
-    return safeUser;
+    return data.user;
 };
 
 /**
- * Get the currently logged-in user from session
+ * Get the currently logged-in user
+ * First checks localStorage, then verifies with backend if token exists
  * @returns {Object|null} Current user or null if not logged in
  */
 export const getCurrentUser = () => {
-    const authData = getAuthData();
-
-    if (!authData.currentSession) {
+    const token = getToken();
+    if (!token) {
         return null;
     }
 
-    // Check if session is expired
-    const expiresAt = new Date(authData.currentSession.expiresAt);
-    if (expiresAt < new Date()) {
-        // Session expired, clear it
-        logout();
+    // Return cached user for quick access
+    // The token will be verified on actual API calls
+    return getStoredUser();
+};
+
+/**
+ * Verify current session with backend
+ * @returns {Object|null} Verified user or null
+ */
+export const verifySession = async () => {
+    const token = getToken();
+    if (!token) {
         return null;
     }
 
-    // Find the user
-    const user = authData.users.find(
-        u => u.id === authData.currentSession.userId
-    );
+    try {
+        const response = await apiRequest('/auth/me');
 
-    if (!user) {
-        // User not found, clear session
-        logout();
-        return null;
+        if (!response.ok) {
+            // Token is invalid, clear session
+            logout();
+            return null;
+        }
+
+        const user = await response.json();
+        setStoredUser(user);
+        return user;
+    } catch (error) {
+        console.error('Session verification failed:', error);
+        return getStoredUser(); // Fall back to cached user
     }
-
-    // Return user without password hash
-    const { passwordHash, ...safeUser } = user;
-    return safeUser;
 };
 
 /**
  * Log out the current user
  */
 export const logout = () => {
-    const authData = getAuthData();
-    authData.currentSession = null;
-    saveAuthData(authData);
+    removeToken();
+    removeStoredUser();
 };
 
 // ============================================
 // INTENDED ACTION TRACKING (Post-login resume)
 // ============================================
-
-const INTENDED_ACTION_KEY = 'foresight_intended_action';
 
 /**
  * Store the intended action before redirecting to login
@@ -280,18 +227,42 @@ export const getAndClearIntendedAction = () => {
 };
 
 // ============================================
+// LEGACY COMPATIBILITY (for existing code)
+// ============================================
+
+/**
+ * Find a user by email (legacy - not needed with backend)
+ * @deprecated Use authenticate() instead
+ */
+export const findUserByEmail = () => {
+    console.warn('findUserByEmail is deprecated with backend authentication');
+    return null;
+};
+
+/**
+ * Get all users (legacy - not available with backend)
+ * @deprecated Not available in production
+ */
+export const getUsers = () => {
+    console.warn('getUsers is not available with backend authentication');
+    return [];
+};
+
+// ============================================
 // EXPORTS
 // ============================================
 
 const authService = {
-    getUsers,
-    findUserByEmail,
     createUser,
     authenticate,
     getCurrentUser,
+    verifySession,
     logout,
     storeIntendedAction,
     getAndClearIntendedAction,
+    findUserByEmail,
+    getUsers,
+    getToken,
 };
 
 export default authService;
