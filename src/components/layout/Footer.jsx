@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Twitter, Linkedin, MessageCircle } from 'lucide-react';
+import { Twitter, Linkedin, MessageCircle, MapPin, Phone } from 'lucide-react';
 import './Footer.css';
 
 const footerLinks = {
@@ -42,6 +42,19 @@ const Footer = () => {
                         <p className="footer-tagline">
                             Data-led business process automation. Enhancing transparency in governance and strategy.
                         </p>
+
+                        {/* Contact Info */}
+                        <div className="footer-contact">
+                            <div className="contact-item">
+                                <MapPin size={16} />
+                                <span>Eastern High, Block AG 1, Major Arterial Road, Action Area 1, New Town, North 24 Parganas, West Bengal-700156</span>
+                            </div>
+                            <div className="contact-item">
+                                <Phone size={16} />
+                                <span>+91 98300 50939</span>
+                            </div>
+                        </div>
+
                         <div className="footer-social">
                             {socialLinks.map((social) => (
                                 <a
