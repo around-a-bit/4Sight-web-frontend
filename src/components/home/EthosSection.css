@@ -218,6 +218,30 @@
     gap: var(--space-4);
 }
 
+/* Dashboard Image Container (for actual screenshots) */
+.dashboard-image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+.dashboard-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    transition: transform 0.3s ease;
+}
+
+.flip-card:hover .dashboard-image {
+    transform: scale(1.05);
+}
+
 .dashboard-chart-placeholder {
     flex: 1;
     display: flex;

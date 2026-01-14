@@ -32,10 +32,17 @@
 .header-logo {
     display: flex;
     align-items: center;
+    gap: var(--space-2);
     font-size: var(--font-size-2xl);
     font-weight: var(--font-bold);
     text-decoration: none;
     letter-spacing: var(--tracking-tight);
+}
+
+.logo-image {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
 }
 
 .logo-text {

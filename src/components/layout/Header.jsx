@@ -6,6 +6,9 @@ import ThemeToggle from '../ui/ThemeToggle';
 import { useAuth } from '../../context/AuthContext';
 import './Header.css';
 
+// Logo
+import logo4Sight from '../../assets/4sight-logo.png';
+
 const navLinks = [
     { path: '/', label: 'Home' },
     { path: '/knowledge', label: 'Knowledge' },
@@ -56,8 +59,8 @@ const Header = () => {
         <header className={`header ${isHidden ? 'header-hidden' : ''}`}>
             <div className="header-container">
                 <Link to="/" className="header-logo" onClick={closeMobileMenu}>
-                    <span className="logo-text">4</span>
-                    <span className="logo-text-gradient">Sight</span>
+                    <img src={logo4Sight} alt="4Sight" className="logo-image" />
+                    <span className="logo-text-gradient">4Sight</span>
                 </Link>
 
                 {/* Desktop Navigation */}

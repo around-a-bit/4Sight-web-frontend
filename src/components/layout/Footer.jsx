@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import { Twitter, Linkedin, MessageCircle, MapPin, Phone } from 'lucide-react';
 import './Footer.css';
 
+// Logo
+import logo4Sight from '../../assets/4sight-logo.png';
+
 const footerLinks = {
     product: [
         { label: 'Features', path: '/product' },
@@ -36,8 +39,8 @@ const Footer = () => {
                     {/* Brand Section */}
                     <div className="footer-brand">
                         <Link to="/" className="footer-logo">
-                            <span className="logo-text">4</span>
-                            <span className="logo-text-gradient">Sight</span>
+                            <img src={logo4Sight} alt="4Sight" className="logo-image" />
+                            <span className="logo-text-gradient">4Sight</span>
                         </Link>
                         <p className="footer-tagline">
                             Data-led business process automation. Enhancing transparency in governance and strategy.

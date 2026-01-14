@@ -2,6 +2,10 @@ import { motion } from 'framer-motion';
 import { Target, Rocket, Shield, TrendingUp, ExternalLink } from 'lucide-react';
 import './EthosSection.css';
 
+// Import dashboard screenshots
+import strategyDashboardImg from '../../assets/strategy-dashboard.png';
+import governanceDashboardImg from '../../assets/governance-dashboard.png';
+
 // SIGO Framework - Strategy, Implementation, Governance, Optimization
 const ethosStatements = [
     {
@@ -10,6 +14,7 @@ const ethosStatements = [
         title: 'Strategy',
         description: 'Strategic workbench that combines a Diagnostic Dashboard for current health check with a data driven workspace for Goal oriented planning to address health issues related to search visibility and drive sustainable keyword led growth.',
         dashboardLabel: 'Strategy Dashboard',
+        dashboardImage: strategyDashboardImg,
     },
     {
         id: 2,
@@ -24,6 +29,7 @@ const ethosStatements = [
         title: 'Governance',
         description: 'Real time governance of SEO implementation by 24×7 monitoring of Search Engine Markers and providing real time alerts for performance degradation. Additionally it provides Target Vs Achievement metrics in terms of SEO action plan finalized in the strategy phase.',
         dashboardLabel: 'Governance Dashboard',
+        dashboardImage: governanceDashboardImg,
     },
     {
         id: 4,
@@ -76,29 +82,42 @@ const FlipCard = ({ statement }) => {
                             <statement.icon size={20} />
                             <span>{statement.dashboardLabel}</span>
                         </div>
-                        <div className="dashboard-placeholder">
-                            {/* Placeholder dashboard elements */}
-                            <div className="dashboard-chart-placeholder">
-                                <div className="chart-bar" style={{ height: '40%' }}></div>
-                                <div className="chart-bar" style={{ height: '65%' }}></div>
-                                <div className="chart-bar" style={{ height: '45%' }}></div>
-                                <div className="chart-bar" style={{ height: '80%' }}></div>
-                                <div className="chart-bar" style={{ height: '55%' }}></div>
+
+                        {/* Show actual dashboard image if available, otherwise show placeholder */}
+                        {statement.dashboardImage ? (
+                            <div className="dashboard-image-container">
+                                <img
+                                    src={statement.dashboardImage}
+                                    alt={`${statement.title} Dashboard`}
+                                    className="dashboard-image"
+                                />
                             </div>
-                            <div className="dashboard-stats">
-                                <div className="stat-box">
-                                    <span className="stat-number">--</span>
-                                    <span className="stat-text">KPIs</span>
+                        ) : (
+                            <div className="dashboard-placeholder">
+                                {/* Placeholder dashboard elements */}
+                                <div className="dashboard-chart-placeholder">
+                                    <div className="chart-bar" style={{ height: '40%' }}></div>
+                                    <div className="chart-bar" style={{ height: '65%' }}></div>
+                                    <div className="chart-bar" style={{ height: '45%' }}></div>
+                                    <div className="chart-bar" style={{ height: '80%' }}></div>
+                                    <div className="chart-bar" style={{ height: '55%' }}></div>
                                 </div>
-                                <div className="stat-box">
-                                    <span className="stat-number">--</span>
-                                    <span className="stat-text">Metrics</span>
+                                <div className="dashboard-stats">
+                                    <div className="stat-box">
+                                        <span className="stat-number">--</span>
+                                        <span className="stat-text">KPIs</span>
+                                    </div>
+                                    <div className="stat-box">
+                                        <span className="stat-number">--</span>
+                                        <span className="stat-text">Metrics</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
+
                         <div className="dashboard-cta">
                             <ExternalLink size={14} />
-                            <span>Coming Soon</span>
+                            <span>{statement.dashboardImage ? 'View Dashboard' : 'Coming Soon'}</span>
                         </div>
                     </div>
                 </div>
