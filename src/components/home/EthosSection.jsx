@@ -4,7 +4,9 @@ import './EthosSection.css';
 
 // Import dashboard screenshots
 import strategyDashboardImg from '../../assets/strategy-dashboard.png';
+import implementationDashboardImg from '../../assets/implementation-dashboard.png';
 import governanceDashboardImg from '../../assets/governance-dashboard.png';
+import optimizationDashboardImg from '../../assets/optimization-dashboard.png';
 
 // SIGO Framework - Strategy, Implementation, Governance, Optimization
 const ethosStatements = [
@@ -22,6 +24,7 @@ const ethosStatements = [
         title: 'Implementation',
         description: 'AI enabled toolset to generate artifacts like Blogs, FAQs, Meta Tags etc., needed to boost SEO performance.',
         dashboardLabel: 'Implementation Dashboard',
+        dashboardImage: implementationDashboardImg,
     },
     {
         id: 3,
@@ -37,6 +40,7 @@ const ethosStatements = [
         title: 'Optimization',
         description: 'Strategic workbench to optimize SEO performance by providing insights related to ecosystem, competition & keyword universe.',
         dashboardLabel: 'Optimization Dashboard',
+        dashboardImage: optimizationDashboardImg,
     },
 ];
 
