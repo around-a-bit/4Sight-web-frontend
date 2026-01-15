@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
-import { Target, Rocket, Shield, TrendingUp, ExternalLink } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { Target, Rocket, Shield, TrendingUp, ExternalLink, X, ZoomIn } from 'lucide-react';
 import './EthosSection.css';
 
 // Import dashboard screenshots
@@ -66,7 +67,39 @@ const itemVariants = {
     },
 };
 
-const FlipCard = ({ statement }) => {
+// Lightbox Modal Component
+const ImageLightbox = ({ image, title, onClose }) => {
+    if (!image) return null;
+
+    return (
+        <motion.div
+            className="lightbox-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+        >
+            <motion.div
+                className="lightbox-content"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <button className="lightbox-close" onClick={onClose}>
+                    <X size={24} />
+                </button>
+                <div className="lightbox-header">
+                    <h3>{title}</h3>
+                </div>
+                <img src={image} alt={title} className="lightbox-image" />
+            </motion.div>
+        </motion.div>
+    );
+};
+
+const FlipCard = ({ statement, onImageClick }) => {
     return (
         <div className="flip-card">
             <div className="flip-card-inner">
@@ -89,12 +122,22 @@ const FlipCard = ({ statement }) => {
 
                         {/* Show actual dashboard image if available, otherwise show placeholder */}
                         {statement.dashboardImage ? (
-                            <div className="dashboard-image-container">
+                            <div
+                                className="dashboard-image-container clickable"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onImageClick(statement.dashboardImage, statement.dashboardLabel);
+                                }}
+                            >
                                 <img
                                     src={statement.dashboardImage}
                                     alt={`${statement.title} Dashboard`}
                                     className="dashboard-image"
                                 />
+                                <div className="image-zoom-hint">
+                                    <ZoomIn size={20} />
+                                    <span>Click to enlarge</span>
+                                </div>
                             </div>
                         ) : (
                             <div className="dashboard-placeholder">
@@ -131,6 +174,19 @@ const FlipCard = ({ statement }) => {
 };
 
 const EthosSection = () => {
+    const [lightboxImage, setLightboxImage] = useState(null);
+    const [lightboxTitle, setLightboxTitle] = useState('');
+
+    const openLightbox = (image, title) => {
+        setLightboxImage(image);
+        setLightboxTitle(title);
+    };
+
+    const closeLightbox = () => {
+        setLightboxImage(null);
+        setLightboxTitle('');
+    };
+
     return (
         <section className="ethos-section">
             <div className="ethos-container">
@@ -158,13 +214,25 @@ const EthosSection = () => {
                 >
                     {ethosStatements.map((statement) => (
                         <motion.div key={statement.id} variants={itemVariants}>
-                            <FlipCard statement={statement} />
+                            <FlipCard statement={statement} onImageClick={openLightbox} />
                         </motion.div>
                     ))}
                 </motion.div>
             </div>
+
+            {/* Lightbox Modal */}
+            <AnimatePresence>
+                {lightboxImage && (
+                    <ImageLightbox
+                        image={lightboxImage}
+                        title={lightboxTitle}
+                        onClose={closeLightbox}
+                    />
+                )}
+            </AnimatePresence>
         </section>
     );
 };
 
 export default EthosSection;
+
