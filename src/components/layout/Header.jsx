@@ -4,10 +4,12 @@ import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../ui/ThemeToggle';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 import './Header.css';
 
-// Logo
-import logo4Sight from '../../assets/4sight-logo.png';
+// Logos for dark and light mode
+import logoDark from '../../assets/foresight-logo-dark.png';
+import logoLight from '../../assets/foresight-logo-light.jpg';
 
 const navLinks = [
     { path: '/', label: 'Home' },
@@ -22,6 +24,8 @@ const Header = () => {
     const [lastScrollY, setLastScrollY] = useState(0);
     const location = useLocation();
     const { user, isAuthenticated, logout, openAuthModal } = useAuth();
+    const { theme } = useTheme();
+    const currentLogo = theme === 'dark' ? logoDark : logoLight;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -59,7 +63,7 @@ const Header = () => {
         <header className={`header ${isHidden ? 'header-hidden' : ''}`}>
             <div className="header-container">
                 <Link to="/" className="header-logo" onClick={closeMobileMenu}>
-                    <img src={logo4Sight} alt="4Sight" className="logo-image" />
+                    <img src={currentLogo} alt="Foresight" className="logo-image" />
                     <span className="logo-text-gradient">4Sight</span>
                 </Link>
 

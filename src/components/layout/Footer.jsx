@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Twitter, Linkedin, MessageCircle, MapPin, Phone } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 import './Footer.css';
 
-// Logo
-import logo4Sight from '../../assets/4sight-logo.png';
+// Logos for dark and light mode
+import logoDark from '../../assets/foresight-logo-dark.png';
+import logoLight from '../../assets/foresight-logo-light.jpg';
 
 const footerLinks = {
     product: [
@@ -31,6 +33,8 @@ const socialLinks = [
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+    const { theme } = useTheme();
+    const currentLogo = theme === 'dark' ? logoDark : logoLight;
 
     return (
         <footer className="footer">
@@ -39,7 +43,7 @@ const Footer = () => {
                     {/* Brand Section */}
                     <div className="footer-brand">
                         <Link to="/" className="footer-logo">
-                            <img src={logo4Sight} alt="4Sight" className="logo-image" />
+                            <img src={currentLogo} alt="Foresight" className="logo-image" />
                             <span className="logo-text-gradient">4Sight</span>
                         </Link>
                         <p className="footer-tagline">
