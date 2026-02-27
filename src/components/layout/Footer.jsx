@@ -10,18 +10,14 @@ import logoLight from '../../assets/foresight-logo-light.jpg';
 const footerLinks = {
     product: [
         { label: 'Features', path: '/product' },
-        { label: 'Pricing', path: '/product#pricing' },
-        { label: 'Demo', path: '/product#demo' },
     ],
     resources: [
         { label: 'Knowledge Base', path: '/knowledge' },
         { label: 'Community', path: '/community' },
-        { label: 'Documentation', path: '/docs' },
     ],
     company: [
         { label: 'About', path: '/about' },
         { label: 'Contact', path: '/#contact' },
-        { label: 'Careers', path: '/careers' },
     ],
 };
 

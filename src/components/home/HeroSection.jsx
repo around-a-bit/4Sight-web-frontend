@@ -108,10 +108,8 @@ const HeroSection = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                 >
-                    Data-Driven
-                    <span className="hero-title-gradient"> Automation</span>
-                    <br />
-                    for Modern Enterprises
+                    Data-driven decision making
+                    <span className="hero-title-gradient"> for marketing functions.</span>
                 </motion.h1>
 
                 <motion.p
