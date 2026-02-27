@@ -57,6 +57,13 @@
     background-clip: text;
 }
 
+/* Slight cursive treatment for the brand name */
+.logo-text-cursive {
+    font-style: italic;
+    font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    letter-spacing: 0.5px;
+}
+
 /* Desktop Navigation */
 .header-nav {
     display: flex;
@@ -200,6 +207,20 @@
 .mobile-nav-link-active {
     color: var(--accent-primary);
     background: rgba(99, 102, 241, 0.1);
+}
+
+/* Free-text nav-style auth buttons */
+.header-auth-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    font-family: inherit;
+    font-weight: var(--font-medium);
+    color: #ffffff;
 }
 
 /* ========================================

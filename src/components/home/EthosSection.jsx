@@ -1,13 +1,36 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { Target, Rocket, Shield, TrendingUp, ExternalLink, X, ZoomIn } from 'lucide-react';
+import { Target, Rocket, Shield, TrendingUp, ExternalLink, X, ZoomIn, LayoutDashboard } from 'lucide-react';
 import './EthosSection.css';
+
+// Import marketing dashboard screenshot
+import marketingDashboardImg from '../../assets/marketing-dashboard.jpeg';
 
 // Import dashboard screenshots
 import strategyDashboardImg from '../../assets/strategy-dashboard.png';
 import implementationDashboardImg from '../../assets/implementation-dashboard.png';
 import governanceDashboardImg from '../../assets/governance-dashboard.png';
 import optimizationDashboardImg from '../../assets/optimization-dashboard.png';
+
+// Marketing Dashboard featured card
+const marketingDashboardStatement = {
+    id: 0,
+    icon: LayoutDashboard,
+    title: 'Marketing Dashboard',
+    description: (
+        <>
+            A unified command centre with a left-side navigator spanning all four pillars:
+            <ul className="md-nav-list">
+                <li><strong>Strategy</strong> — Goals &amp; Research</li>
+                <li><strong>Implementation</strong> — Content Production &amp; Media</li>
+                <li><strong>Governance</strong> — Monitoring &amp; Alerts</li>
+                <li><strong>Optimization</strong> — Ecosystem &amp; Competitive Insights</li>
+            </ul>
+        </>
+    ),
+    dashboardLabel: 'Marketing Dashboard',
+    dashboardImage: marketingDashboardImg,
+};
 
 // SIGO Framework - Strategy, Implementation, Governance, Optimization
 const ethosStatements = [
@@ -109,7 +132,7 @@ const FlipCard = ({ statement, onImageClick }) => {
                         <statement.icon size={28} />
                     </div>
                     <h3 className="ethos-card-title">{statement.title}</h3>
-                    <p className="ethos-card-description">{statement.description}</p>
+                    <div className="ethos-card-description">{statement.description}</div>
                 </div>
 
                 {/* Back Side - Dashboard Preview */}
@@ -188,6 +211,22 @@ const EthosSection = () => {
     };
 
     return (
+        <>
+        {/* Marketing Dashboard Featured Flip Card */}
+        <section className="marketing-dashboard-section">
+            <div className="marketing-dashboard-container">
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, ease: 'easeOut' }}
+                    className="marketing-flip-card-wrapper"
+                >
+                    <FlipCard statement={marketingDashboardStatement} onImageClick={openLightbox} />
+                </motion.div>
+            </div>
+        </section>
+
         <section className="ethos-section">
             <div className="ethos-container">
                 <motion.div
@@ -231,6 +270,7 @@ const EthosSection = () => {
                 )}
             </AnimatePresence>
         </section>
+        </>
     );
 };
 

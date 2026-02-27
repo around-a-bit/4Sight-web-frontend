@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ThemeToggle from '../ui/ThemeToggle';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import './Header.css';
@@ -64,7 +63,7 @@ const Header = () => {
             <div className="header-container">
                 <Link to="/" className="header-logo" onClick={closeMobileMenu}>
                     <img src={currentLogo} alt="Foresight" className="logo-image" />
-                    <span className="logo-text-gradient">4Sight</span>
+                    <span className="logo-text-gradient logo-text-cursive">Marketing 4Sight</span>
                 </Link>
 
                 {/* Desktop Navigation */}
@@ -97,7 +96,7 @@ const Header = () => {
                                 <span className="header-user-name">{user?.name?.split(' ')[0]}</span>
                             </div>
                             <button
-                                className="header-auth-btn header-logout-btn"
+                                className="nav-link header-auth-nav-btn"
                                 onClick={handleLogout}
                                 title="Log out"
                             >
@@ -108,22 +107,20 @@ const Header = () => {
                     ) : (
                         <div className="header-auth-buttons">
                             <button
-                                className="header-auth-btn header-login-btn"
+                                className="nav-link header-auth-nav-btn"
                                 onClick={() => openAuthModal('login')}
                             >
                                 <LogIn size={16} />
                                 <span>Login</span>
                             </button>
                             <button
-                                className="header-auth-btn header-signup-btn"
+                                className="nav-link header-auth-nav-btn"
                                 onClick={() => openAuthModal('signup')}
                             >
                                 Sign Up
                             </button>
                         </div>
                     )}
-
-                    <ThemeToggle />
 
                     {/* Mobile Menu Button */}
                     <button
