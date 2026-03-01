@@ -21,10 +21,10 @@ const marketingDashboardStatement = {
         <>
             A unified command centre with a left-side navigator spanning all four pillars:
             <ul className="md-nav-list">
-                <li><strong>Strategy</strong> — Goals &amp; Research</li>
-                <li><strong>Implementation</strong> — Content Production &amp; Media</li>
-                <li><strong>Governance</strong> — Monitoring &amp; Alerts</li>
-                <li><strong>Optimization</strong> — Ecosystem &amp; Competitive Insights</li>
+                <li><strong>Strategy</strong> — Strategic workbench combining a Diagnostic Dashboard for current health checks with a data-driven workspace for goal-oriented planning to address visibility gaps and drive sustainable growth across SEO, content funnel, and media channels.</li>
+                <li><strong>Implementation</strong> — AI-enabled toolset generates lifecycle-specific artifacts—like keyword content, funnel nurtures, media creatives, and metadata—to boost performance end-to-end.</li>
+                <li><strong>Governance</strong> — Real-time governance of lifecycle execution via 24×7 monitoring of channel markers, with degradation alerts and Target vs. Achievement metrics linked to strategy action plans.</li>
+                <li><strong>Optimization</strong> — Strategic workbench optimizes lifecycle performance through insights into ecosystem dynamics, competitive landscapes, and keyword/content/media opportunity universes.</li>
             </ul>
         </>
     ),
