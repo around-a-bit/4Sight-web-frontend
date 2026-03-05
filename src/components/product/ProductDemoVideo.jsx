@@ -6,7 +6,7 @@ import './ProductDemoVideo.css';
 const ProductDemoVideo = ({
     posterUrl = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=675&fit=crop',
     videoUrl,
-    title = 'See 4Sight in Action',
+    title = 'See Marketing 4Sight in Action',
 }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [videoLoaded, setVideoLoaded] = useState(false);
@@ -35,7 +35,7 @@ const ProductDemoVideo = ({
                         Product <span className="text-gradient">Demo</span>
                     </h2>
                     <p className="demo-subtitle">
-                        Watch how 4Sight transforms your business operations with intelligent automation
+                        Watch how Marketing 4Sight transforms your marketing operations with intelligent automation
                     </p>
                 </motion.div>
 

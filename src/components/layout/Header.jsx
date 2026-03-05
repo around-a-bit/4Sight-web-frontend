@@ -8,7 +8,9 @@ import './Header.css';
 
 // Logos for dark and light mode
 import logoDark from '../../assets/foresight-logo-dark.png';
-import logoLight from '../../assets/foresight-logo-light.jpg';
+import logoLight from '../../assets/foresight-logo-light.png';
+import wordmarkDark from '../../assets/marketing4Sight_dark.png';
+import wordmarkLight from '../../assets/marketing4Sight_light.png';
 
 const navLinks = [
     { path: '/', label: 'Home' },
@@ -25,6 +27,7 @@ const Header = () => {
     const { user, isAuthenticated, logout, openAuthModal } = useAuth();
     const { theme } = useTheme();
     const currentLogo = theme === 'dark' ? logoDark : logoLight;
+    const currentWordmark = theme === 'dark' ? wordmarkDark : wordmarkLight;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -63,7 +66,7 @@ const Header = () => {
             <div className="header-container">
                 <Link to="/" className="header-logo" onClick={closeMobileMenu}>
                     <img src={currentLogo} alt="Foresight" className="logo-image" />
-                    <span className="logo-text-gradient logo-text-cursive">Marketing 4Sight</span>
+                    <img src={currentWordmark} alt="Marketing 4Sight" className="logo-wordmark" />
                 </Link>
 
                 {/* Desktop Navigation */}

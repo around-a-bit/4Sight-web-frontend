@@ -34,7 +34,7 @@ const resources = [
     },
     {
         id: 2,
-        title: 'Getting Started with 4Sight',
+        title: 'Getting Started with Marketing 4Sight',
         description: 'Video walkthrough of setting up your first automation workflow.',
         type: 'video',
         url: '#',
@@ -113,7 +113,7 @@ const CommunityPage = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
                     >
-                        Connect, learn, and grow with the 4Sight community
+                        Connect, learn, and grow with the Marketing 4Sight community
                     </motion.p>
                 </div>
             </section>

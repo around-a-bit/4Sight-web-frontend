@@ -7,7 +7,7 @@ import './TestimonialsSection.css';
 const testimonials = [
     {
         id: 1,
-        quote: "4Sight has completely transformed how we approach SEO. The automation features have saved us countless hours while improving our results by 300%.",
+        quote: "Marketing 4Sight has completely transformed how we approach SEO. The automation features have saved us countless hours while improving our results by 300%.",
         name: "Sarah Chen",
         role: "Head of Marketing",
         company: "TechFlow Inc.",
@@ -68,7 +68,7 @@ const TestimonialsSection = () => {
                         Happy <span className="text-gradient">Customers</span>
                     </h2>
                     <p className="testimonials-subtitle">
-                        See what industry leaders are saying about 4Sight
+                        See what industry leaders are saying about Marketing 4Sight
                     </p>
                 </motion.div>
 

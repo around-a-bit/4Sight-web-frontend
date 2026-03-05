@@ -29,6 +29,10 @@ html {
   --bg-tertiary: #1a1a25;
   --bg-elevated: #22222f;
 
+  /* Header */
+  --header-bg: rgba(10, 10, 15, 0.85);
+  --header-text: #ffffff;
+
   /* Accent Colors */
   --accent-primary: #6366f1;
   --accent-secondary: #8b5cf6;
@@ -152,6 +156,10 @@ html {
   --bg-secondary: #f8fafc;
   --bg-tertiary: #f1f5f9;
   --bg-elevated: #e2e8f0;
+
+  /* Header */
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --header-text: #0f172a;
 
   /* Accent Colors - Keep vibrant for Gen Z feel */
   --accent-primary: #6366f1;
