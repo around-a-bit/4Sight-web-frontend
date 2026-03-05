@@ -5,7 +5,9 @@ import './Footer.css';
 
 // Logos for dark and light mode
 import logoDark from '../../assets/foresight-logo-dark.png';
-import logoLight from '../../assets/foresight-logo-light.jpg';
+import logoLight from '../../assets/foresight-logo-light.png';
+import wordmarkDark from '../../assets/marketing4Sight_dark.png';
+import wordmarkLight from '../../assets/marketing4Sight_light.png';
 
 const footerLinks = {
     product: [
@@ -31,6 +33,7 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
     const { theme } = useTheme();
     const currentLogo = theme === 'dark' ? logoDark : logoLight;
+    const currentWordmark = theme === 'dark' ? wordmarkDark : wordmarkLight;
 
     return (
         <footer className="footer">
@@ -40,7 +43,7 @@ const Footer = () => {
                     <div className="footer-brand">
                         <Link to="/" className="footer-logo">
                             <img src={currentLogo} alt="Foresight" className="logo-image" />
-                            <span className="logo-text-gradient">4Sight</span>
+                            <img src={currentWordmark} alt="Marketing 4Sight" className="logo-wordmark" />
                         </Link>
                         <p className="footer-tagline">
                             Data-led business process automation. Enhancing transparency in governance and strategy.
@@ -118,7 +121,7 @@ const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="footer-bottom">
                     <p className="footer-copyright">
-                        © {currentYear} 4Sight. All rights reserved.
+                        © {currentYear} Marketing 4Sight. All rights reserved.
                     </p>
                     <div className="footer-legal">
                         <Link to="/privacy" className="footer-legal-link">Privacy Policy</Link>

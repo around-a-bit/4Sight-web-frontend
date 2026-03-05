@@ -4,20 +4,20 @@ const ThemeContext = createContext(undefined);
 
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState(() => {
-        // Check localStorage first, then system preference
-        const saved = localStorage.getItem('4sight-theme');
-        if (saved) return saved;
-
-        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-            return 'light';
-        }
-        return 'dark';
+        // Light is default; dark only if OS is explicitly dark
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     });
 
+    // Reactively follow system preference changes in real time
     useEffect(() => {
-        // Apply theme to document
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = (e) => setTheme(e.matches ? 'dark' : 'light');
+        mediaQuery.addEventListener('change', handleChange);
+        return () => mediaQuery.removeEventListener('change', handleChange);
+    }, []);
+
+    useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('4sight-theme', theme);
     }, [theme]);
 
     const toggleTheme = () => {

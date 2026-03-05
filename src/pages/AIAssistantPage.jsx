@@ -54,7 +54,7 @@ const AIAssistantPage = () => {
                     >
                         <div className="chat-header">
                             <Bot size={24} />
-                            <span>4Sight AI Assistant</span>
+                            <span>Marketing 4Sight AI Assistant</span>
                             <span className="chat-status">Offline</span>
                         </div>
 
@@ -64,7 +64,7 @@ const AIAssistantPage = () => {
                                     <Bot size={20} />
                                 </div>
                                 <div className="message-content">
-                                    <p>Hello! I'm the 4Sight AI Assistant. I'm currently in development, but soon I'll be able to help you with:</p>
+                                    <p>Hello! I'm the Marketing 4Sight AI Assistant. I'm currently in development, but soon I'll be able to help you with:</p>
                                     <ul>
                                         <li>SEO strategy recommendations</li>
                                         <li>Automation workflow suggestions</li>

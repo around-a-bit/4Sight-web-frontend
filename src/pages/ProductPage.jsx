@@ -70,7 +70,7 @@ const ProductPage = () => {
                         transition={{ duration: 0.6 }}
                     >
                         Transform Your Business with
-                        <span className="text-gradient"> 4Sight</span>
+                        <span className="text-gradient"> Marketing 4Sight</span>
                     </motion.h1>
                     <motion.p
                         className="product-hero-subtitle"
@@ -99,7 +99,7 @@ const ProductPage = () => {
                             iconPosition="right"
                             className="onboard-button"
                         >
-                            Onboard to 4Sight
+                            Onboard to Marketing 4Sight
                         </Button>
                     </Link>
                 </motion.div>
@@ -198,7 +198,7 @@ const ProductPage = () => {
                             Ready to Get Started?
                         </h2>
                         <p className="product-cta-subtitle">
-                            Join hundreds of enterprises already transforming their operations with 4Sight
+                            Join hundreds of enterprises already transforming their operations with Marketing 4Sight
                         </p>
                         <div className="product-cta-buttons">
                             <Link to="/#contact">
