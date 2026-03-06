@@ -1,10 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { Target, Rocket, Shield, TrendingUp, ExternalLink, X, ZoomIn, LayoutDashboard } from 'lucide-react';
+import { Target, Rocket, Shield, TrendingUp, ExternalLink, X, ZoomIn } from 'lucide-react';
 import './EthosSection.css';
-
-// Import marketing dashboard screenshot
-import marketingDashboardImg from '../../assets/marketing-dashboard.jpeg';
 
 // Import dashboard screenshots
 import strategyDashboardImg from '../../assets/strategy-dashboard.png';
@@ -12,33 +9,13 @@ import implementationDashboardImg from '../../assets/implementation-dashboard.pn
 import governanceDashboardImg from '../../assets/governance-dashboard.png';
 import optimizationDashboardImg from '../../assets/optimization-dashboard.png';
 
-// Marketing Dashboard featured card
-const marketingDashboardStatement = {
-    id: 0,
-    icon: LayoutDashboard,
-    title: 'Marketing Dashboard',
-    description: (
-        <>
-            A unified command centre with a left-side navigator spanning all four pillars:
-            <ul className="md-nav-list">
-                <li><strong>Strategy</strong> — Strategic workbench combining a Diagnostic Dashboard for current health checks with a data-driven workspace for goal-oriented planning to address visibility gaps and drive sustainable growth across SEO, content funnel, and media channels.</li>
-                <li><strong>Implementation</strong> — AI-enabled toolset generates lifecycle-specific artifacts—like keyword content, funnel nurtures, media creatives, and metadata—to boost performance end-to-end.</li>
-                <li><strong>Governance</strong> — Real-time governance of lifecycle execution via 24×7 monitoring of channel markers, with degradation alerts and Target vs. Achievement metrics linked to strategy action plans.</li>
-                <li><strong>Optimization</strong> — Strategic workbench optimizes lifecycle performance through insights into ecosystem dynamics, competitive landscapes, and keyword/content/media opportunity universes.</li>
-            </ul>
-        </>
-    ),
-    dashboardLabel: 'Marketing Dashboard',
-    dashboardImage: marketingDashboardImg,
-};
-
 // SIGO Framework - Strategy, Implementation, Governance, Optimization
 const ethosStatements = [
     {
         id: 1,
         icon: Target,
         title: 'Strategy',
-        description: 'Strategic workbench that combines a Diagnostic Dashboard for current health check with a data driven workspace for Goal oriented planning to address health issues related to search visibility and drive sustainable keyword led growth.',
+        description: 'Strategic workbench combining a Diagnostic Dashboard for current health checks with a data-driven workspace for goal-oriented planning to address visibility gaps and drive sustainable growth across SEO, content funnel, and media channels.',
         dashboardLabel: 'Strategy Dashboard',
         dashboardImage: strategyDashboardImg,
     },
@@ -46,7 +23,7 @@ const ethosStatements = [
         id: 2,
         icon: Rocket,
         title: 'Implementation',
-        description: 'AI enabled toolset to generate artifacts like Blogs, FAQs, Meta Tags etc., needed to boost SEO performance.',
+        description: 'AI-enabled toolset generates lifecycle-specific artifacts—like keyword content, funnel nurtures, media creatives, and metadata—to boost performance end-to-end.',
         dashboardLabel: 'Implementation Dashboard',
         dashboardImage: implementationDashboardImg,
     },
@@ -54,7 +31,7 @@ const ethosStatements = [
         id: 3,
         icon: Shield,
         title: 'Governance',
-        description: 'Real time governance of SEO implementation by 24×7 monitoring of Search Engine Markers and providing real time alerts for performance degradation. Additionally it provides Target Vs Achievement metrics in terms of SEO action plan finalized in the strategy phase.',
+        description: 'Real-time governance of lifecycle execution via 24×7 monitoring of channel markers, with degradation alerts and Target vs. Achievement metrics linked to strategy action plans.',
         dashboardLabel: 'Governance Dashboard',
         dashboardImage: governanceDashboardImg,
     },
@@ -62,7 +39,7 @@ const ethosStatements = [
         id: 4,
         icon: TrendingUp,
         title: 'Optimization',
-        description: 'Strategic workbench to optimize SEO performance by providing insights related to ecosystem, competition & keyword universe.',
+        description: 'Strategic workbench optimizes lifecycle performance through insights into ecosystem dynamics, competitive landscapes, and keyword/content/media opportunity universes.',
         dashboardLabel: 'Optimization Dashboard',
         dashboardImage: optimizationDashboardImg,
     },
@@ -212,21 +189,6 @@ const EthosSection = () => {
 
     return (
         <>
-        {/* Marketing Dashboard Featured Flip Card */}
-        <section className="marketing-dashboard-section">
-            <div className="marketing-dashboard-container">
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, ease: 'easeOut' }}
-                    className="marketing-flip-card-wrapper"
-                >
-                    <FlipCard statement={marketingDashboardStatement} onImageClick={openLightbox} />
-                </motion.div>
-            </div>
-        </section>
-
         <section className="ethos-section">
             <div className="ethos-container">
                 <motion.div
