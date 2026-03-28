@@ -1,4 +1,4 @@
-# 4Sight Frontend
+# This is Marketing 4Sight Frontend
 
 A modern, data-driven SEO and business automation platform frontend built with React and Vite. Deployed on Vercel, backed by a Node.js REST API.
 
