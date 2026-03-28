@@ -53,7 +53,7 @@ const Footer = () => {
                         <div className="footer-contact">
                             <div className="contact-item">
                                 <MapPin size={16} />
-                                <span>Eastern High, Block AG 1, Major Arterial Road, Action Area 1, New Town, North 24 Parganas, West Bengal-700156</span>
+                                <span>83, S.P Mukherjee Road, Hazra, Kolkata - 700026, West Bengal, India</span>
                             </div>
                             <div className="contact-item">
                                 <Phone size={16} />
