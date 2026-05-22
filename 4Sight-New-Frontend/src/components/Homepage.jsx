@@ -48,8 +48,11 @@ export default function Homepage() {
   };
 
   useEffect(() => {
+    // Prevent outer body scrollbar on homepage
+    document.body.style.overflow = 'hidden';
     return () => {
       document.body.className = '';
+      document.body.style.overflow = 'auto';
     };
   }, []);
 
@@ -61,22 +64,9 @@ export default function Homepage() {
   };
 
   return (
-    <div>
-      {/* Dynamic Slide Dots */}
-      <div className="dots" role="tablist" aria-label="Slide navigation">
-        {slideLabels.map((label, idx) => (
-          <button
-            key={idx}
-            className={activeSlide === idx ? 'active' : ''}
-            onClick={() => scrollToSlide(idx)}
-            aria-label={`Slide ${idx + 1} - ${label}`}
-            title={label}
-          />
-        ))}
-      </div>
-
+    <>
       {/* Main Snap Scrolling Deck */}
-      <div className="deck" id="deck" ref={deckRef} onScroll={handleScroll}>
+      <div className="h-[100dvh] w-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory scroll-smooth relative" id="deck" ref={deckRef} onScroll={handleScroll}>
         <Hero scrollToSlide={scrollToSlide} />
         <Challenges />
         <Structure scrollToSlide={scrollToSlide} />
@@ -87,6 +77,6 @@ export default function Homepage() {
         <Connect />
         <Footer />
       </div>
-    </div>
+    </>
   );
 }

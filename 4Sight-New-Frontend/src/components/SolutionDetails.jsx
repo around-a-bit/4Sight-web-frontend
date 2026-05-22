@@ -356,25 +356,12 @@ export default function SolutionDetails() {
 
   return (
     <div>
-      {/* Slide Navigation Dots */}
-      <div className="dots" role="tablist" aria-label="Slide navigation">
-        {slideLabels.map((label, idx) => (
-          <button
-            key={idx}
-            className={activeSlide === idx ? 'active' : ''}
-            onClick={() => scrollToSlide(idx)}
-            aria-label={`Slide ${idx + 1} - ${label}`}
-            title={label}
-          />
-        ))}
-      </div>
-
       {/* Snap Scrolling Deck Container */}
-      <div className="deck" id="deck" ref={deckRef} onScroll={handleScroll}>
+      <div className="h-screen overflow-y-auto [scroll-snap-type:y_mandatory] max-[1180px]:h-auto max-[1180px]:overflow-visible max-[1180px]:[scroll-snap-type:none]" id="deck" ref={deckRef} onScroll={handleScroll}>
         
         {/* SLIDE 1: Hero Overview */}
-        <section className="slide details-slide flex flex-col justify-center">
-          <div className="container max-w-6xl relative z-10 px-6 md:px-0">
+        <section className="min-h-screen [scroll-snap-align:start] [scroll-snap-stop:always] flex flex-col justify-center py-16 px-6 max-[1180px]:min-h-0 max-[1180px]:pt-24 max-[1180px]:pb-14 max-[1180px]:px-7">
+          <div className="max-w-6xl mx-auto w-full relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-left">
               {/* Left Column: Strategic Text Details */}
               <div className="lg:col-span-7">
@@ -415,8 +402,8 @@ export default function SolutionDetails() {
         </section>
 
         {/* SLIDE 2: Side-by-Side Comparison Table */}
-        <section className="slide details-slide flex flex-col justify-center">
-          <div className="container max-w-5xl relative z-10 px-6 md:px-0">
+        <section className="min-h-screen [scroll-snap-align:start] [scroll-snap-stop:always] flex flex-col justify-center py-16 px-6 max-[1180px]:min-h-0 max-[1180px]:pt-24 max-[1180px]:pb-14 max-[1180px]:px-7">
+          <div className="max-w-5xl mx-auto w-full relative z-10">
             <div className="text-center max-w-2xl mx-auto mb-8">
               <span className="text-[11px] font-bold text-[var(--violet)] bg-[var(--violet-soft)] border border-[var(--line)] px-3 py-1 rounded-full uppercase tracking-widest">
                 {solution.scroll2.title}
@@ -478,8 +465,8 @@ export default function SolutionDetails() {
         </section>
 
         {/* SLIDE 3: Connected System Overview */}
-        <section className="slide details-slide flex flex-col justify-center">
-          <div className="container max-w-5xl relative z-10 px-6 md:px-0">
+        <section className="min-h-screen [scroll-snap-align:start] [scroll-snap-stop:always] flex flex-col justify-center py-16 px-6 max-[1180px]:min-h-0 max-[1180px]:pt-24 max-[1180px]:pb-14 max-[1180px]:px-7">
+          <div className="max-w-5xl mx-auto w-full relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
               {/* Hierarchy Display */}
               <div className="order-2 md:order-1 p-6 bg-white border border-[var(--line)] rounded-2xl shadow-md relative overflow-hidden">
@@ -521,8 +508,8 @@ export default function SolutionDetails() {
         </section>
 
         {/* SLIDE 4: Capabilities Grid */}
-        <section className="slide details-slide flex flex-col justify-center">
-          <div className="container max-w-5xl relative z-10 px-6 md:px-0">
+        <section className="min-h-screen [scroll-snap-align:start] [scroll-snap-stop:always] flex flex-col justify-center py-16 px-6 max-[1180px]:min-h-0 max-[1180px]:pt-24 max-[1180px]:pb-14 max-[1180px]:px-7">
+          <div className="max-w-5xl mx-auto w-full relative z-10">
             <div className="text-center mb-8">
               <span className="text-[11px] font-bold text-[var(--violet)] bg-[var(--violet-soft)] border border-[var(--line)] px-3 py-1 rounded-full uppercase tracking-widest">
                 {solution.scroll4.title}
@@ -556,8 +543,8 @@ export default function SolutionDetails() {
         </section>
 
         {/* SLIDE 5: Bottom CTA */}
-        <section className="slide details-slide flex flex-col justify-center">
-          <div className="container max-w-4xl relative z-10 px-6 md:px-0 text-center">
+        <section className="min-h-screen [scroll-snap-align:start] [scroll-snap-stop:always] flex flex-col justify-center py-16 px-6 max-[1180px]:min-h-0 max-[1180px]:pt-24 max-[1180px]:pb-14 max-[1180px]:px-7">
+          <div className="max-w-4xl mx-auto w-full relative z-10 text-center">
             <div className="p-8 md:p-12 bg-white border border-[var(--line)] rounded-3xl relative overflow-hidden group shadow-lg">
               <div className="absolute inset-0 bg-gradient-to-r from-[var(--violet-soft)] to-[var(--magenta-soft)] opacity-20 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none"></div>
               
@@ -585,8 +572,8 @@ export default function SolutionDetails() {
         </section>
 
         {/* SLIDE 6: Dynamic FAQs Accordion */}
-        <section className="slide details-slide flex flex-col justify-center">
-          <div className="container max-w-3xl relative z-10 px-6 md:px-0">
+        <section className="min-h-screen [scroll-snap-align:start] [scroll-snap-stop:always] flex flex-col justify-center py-16 px-6 max-[1180px]:min-h-0 max-[1180px]:pt-24 max-[1180px]:pb-14 max-[1180px]:px-7">
+          <div className="max-w-3xl mx-auto w-full relative z-10">
             <div className="text-center mb-8">
               <span className="text-[11px] font-bold text-[var(--violet)] bg-[var(--violet-soft)] border border-[var(--line)] px-3 py-1 rounded-full uppercase tracking-widest">
                 Platform Intelligence

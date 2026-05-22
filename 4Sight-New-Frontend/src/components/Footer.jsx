@@ -1,17 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import logo from '../assets/4Sight_new_logo.png';
 
 export default function Footer() {
   return (
     <footer className="site-footer" id="site-footer" data-screen-label="Footer">
       <div className="footer-grid">
         <div className="footer-brand">
-          <Link to="/" className="logo">
-            <div className="logo-mark">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 2 L14.6 9.4 L22 12 L14.6 14.6 L12 22 L9.4 14.6 L2 12 L9.4 9.4 Z" fill="#fff"/>
-              </svg>
+          <Link to="/" className="flex items-center shrink-0 mb-4" title="Marketing 4Sight">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 transition-all duration-300">
+              <img src={logo} alt="Marketing 4Sight" className="w-full h-full object-contain" />
             </div>
-            <div className="logo-text">MARKETING <span>4SIGHT</span></div>
           </Link>
           <p>The data-driven marketing OS. Built on the SIGO framework by Quantyra.</p>
           <div className="footer-contact" style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -33,42 +31,31 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Product</h4>
           <ul>
-            <li><Link to="/product">Overview</Link></li>
-            <li><Link to="/product">How it works</Link></li>
-            <li><Link to="/product">Capabilities</Link></li>
-            <li><a href="#pricing">Pricing</a></li>
-          </ul>
-        </div>
-        <div className="footer-col">
-          <h4>Solutions</h4>
-          <ul>
-            <li><a href="#founders">For Founders</a></li>
-            <li><a href="#teams">For Marketing Teams</a></li>
-            <li><a href="#agencies">For Agencies</a></li>
-            <li><a href="#usecases">Use Cases</a></li>
+            <li><NavLink to="/product" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Overview</NavLink></li>
+            <li><NavLink to="/solutions" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Solutions</NavLink></li>
+            <li><NavLink to="/pricing" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Pricing</NavLink></li>
           </ul>
         </div>
         <div className="footer-col">
           <h4>Resources</h4>
           <ul>
-            <li><a href="#blogs">Blog</a></li>
-            <li><a href="#whitepapers">Whitepapers</a></li>
-            <li><a href="#ebooks">eBooks</a></li>
-            <li><a href="#shf">Self-Help Forum</a></li>
+            <li><NavLink to="/resources" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Blog & Insights</NavLink></li>
+            <li><NavLink to="/resources" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Whitepapers</NavLink></li>
           </ul>
         </div>
         <div className="footer-col">
           <h4>Company</h4>
           <ul>
-            <li><Link to="/about">About</Link></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#privacy">Privacy</a></li>
-            <li><a href="#terms">Terms</a></li>
+            <li><NavLink to="/about" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Our Story</NavLink></li>
+            <li><NavLink to="/contact-us" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Contact Us</NavLink></li>
+            <li><NavLink to="/compliance" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Compliance</NavLink></li>
           </ul>
         </div>
       </div>
       <div className="footer-bottom">
-        <div>&copy; 2026 Quantyra. All rights reserved.</div>
+        <div>
+          &copy; {new Date().getFullYear()} Quantyra Analytics Private Limited. All rights reserved.
+        </div>
         <div className="socials">
           <a href="#" aria-label="LinkedIn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -83,6 +70,11 @@ export default function Footer() {
           <a href="#" aria-label="YouTube">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
             </svg>
           </a>
         </div>
