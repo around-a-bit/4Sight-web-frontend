@@ -1,0 +1,481 @@
+// {
+//   "solutions": [
+//     {
+//       "id": 1,
+//       "slug": "strategy-planning",
+//       "title": "Marketing Strategy & Operational Planning",
+//       "scroll1": {
+//         "title": "Marketing strategy & operational planning built for faster, clearer decisions",
+//         "description": "Marketing 4Sight transforms marketing strategy from disconnected planning into a continuously guided operational system, helping teams identify priorities faster, align execution with business goals, and make sharper decisions through connected intelligence, live visibility, and data-driven direction.",
+//         "screenshot": "/images/solutions/strategy-planning-hero.png"
+//       },
+//       "scroll2": {
+//         "title": "Why It Matters",
+//         "subtitle": "Disconnected marketing slows decisions",
+//         "description": "When strategy, execution, and performance operate separately, marketing becomes harder to prioritize, adapt, and scale. Marketing 4Sight keeps planning, visibility, and operational workflows continuously connected so teams can move with greater clarity and faster decision-making."
+//       },
+//       "scroll3": {
+//         "title": "Your central system for marketing decisions",
+//         "description": "Bring strategy, execution priorities, visibility, and market intelligence together so marketing decisions stay aligned, responsive, and continuously informed.",
+//         "screenshot": "/images/solutions/strategy-planning-system.png"
+//       },
+//       "scroll4": {
+//         "title": "Why Businesses Choose Marketing 4Sight",
+//         "subtitle": "Built for teams that need clarity, visibility, and connected marketing operations",
+//         "cards": [
+//           {
+//             "title": "Connected marketing visibility",
+//             "desc": "Keep strategy, execution, performance, and operational priorities continuously connected across the marketing workflow."
+//           },
+//           {
+//             "title": "Data-driven decision making",
+//             "desc": "Use live performance visibility, market signals, and operational intelligence to support faster and more informed decisions."
+//           },
+//           {
+//             "title": "AI-assisted operational support",
+//             "desc": "Reduce manual effort through intelligent recommendations, structured workflows, and context-aware marketing guidance."
+//           },
+//           {
+//             "title": "Shared intelligence environment",
+//             "desc": "Keep teams aligned through shared visibility across priorities, execution workflows, marketing activities, and outcomes."
+//           },
+//           {
+//             "title": "Cross-functional marketing alignment",
+//             "desc": "Ensure SEO, content, local visibility, social media, websites, funnels, and campaigns operate with shared direction and priorities."
+//           },
+//           {
+//             "title": "Competitive and market visibility",
+//             "desc": "Track movement across competitors, visibility trends, operational shifts, and emerging opportunities continuously."
+//           }
+//         ]
+//       },
+//       "scroll5": {
+//         "title": "Move faster with connected marketing approach",
+//         "description": "Turn live market signals, business intelligence, and performance visibility into faster decisions and sharper marketing direction."
+//       },
+//       "scroll6": {
+//         "title": "Marketing Strategy & Operational Planning FAQs",
+//         "faqs": [
+//           {
+//             "question": "How does Marketing 4Sight help with marketing strategy?",
+//             "answer": "The platform helps businesses structure marketing direction using business context, competitor intelligence, search visibility, operational goals, and market movement to create clearer priorities and connected execution planning."
+//           },
+//           {
+//             "question": "Does the platform generate marketing action plans?",
+//             "answer": "Yes. Marketing 4Sight helps translate strategic direction into structured operational workflows, priorities, and implementation layers aligned to marketing goals and visibility opportunities."
+//           },
+//           {
+//             "question": "Can strategy evolve based on performance changes?",
+//             "answer": "Yes. The platform continuously surfaces performance movements, operational changes, competitive shifts, and trend visibility to help businesses dynamically refine their direction."
+//           },
+//           {
+//             "question": "How is this different from traditional marketing planning?",
+//             "answer": "Traditional planning often happens across disconnected systems and static reporting cycles. Marketing 4Sight keeps planning, implementation, governance, and optimization connected within one operational environment."
+//           },
+//           {
+//             "question": "Does the platform support cross-channel planning?",
+//             "answer": "Yes. Marketing 4Sight connects planning visibility across SEO, content, local visibility, social media, campaigns, website operations, and conversion workflows."
+//           },
+//           {
+//             "question": "Is this suitable for agencies and multi-team environments?",
+//             "answer": "Yes. The platform helps maintain structured planning visibility, operational governance, and connected workflows across multiple brands, teams, and marketing activities."
+//           }
+//         ]
+//       }
+//     },
+//     {
+//       "id": 2,
+//       "slug": "governance",
+//       "title": "Marketing Governance & Performance Visibility",
+//       "scroll1": {
+//         "title": "",
+//         "description": "Marketing 4Sight helps businesses monitor marketing performance, operational progress, execution consistency, and visibility movement through one connected environment, enabling teams to identify what’s working, what needs attention, and where decisions should move next with greater confidence.",
+//         "screenshot": "/images/solutions/governance-hero.png"
+//       },
+//       "scroll2": {
+//         "title": "Why It Matters",
+//         "subtitle": "Visibility gaps slow marketing decisions",
+//         "description": "When performance data, execution tracking, and operational visibility stay fragmented across platforms, it becomes harder to understand progress, identify priorities, and respond quickly. Marketing 4Sight keeps governance, reporting, activities, and performance visibility continuously connected so businesses operate with clearer oversight and faster decision-making."
+//       },
+//       "scroll3": {
+//         "title": "",
+//         "description": "Monitor execution progress, track performance movement, identify operational gaps, and maintain continuous visibility across marketing workflows from one connected environment.",
+//         "screenshot": "/images/solutions/governance-system.png"
+//       },
+//       "scroll4": {
+//         "title": "Why Businesses Choose Marketing 4Sight",
+//         "subtitle": "Built for teams that need operational visibility, execution clarity, and connected reporting",
+//         "cards": [
+//           {
+//             "title": "Unified performance visibility",
+//             "desc": "Track marketing performance, execution movement, operational progress, and visibility trends from one connected layer."
+//           },
+//           {
+//             "title": "Connected governance workflows",
+//             "desc": "Monitor activities, approvals, implementation progress, and operational consistency across marketing functions."
+//           },
+//           {
+//             "title": "Live operational monitoring",
+//             "desc": "Identify visibility shifts, performance changes, execution gaps, and workflow movement as activities evolve."
+//           },
+//           {
+//             "title": "Cross-channel reporting clarity",
+//             "desc": "Keep SEO, content, social media, GMB, website, and campaign reporting aligned within one environment."
+//           },
+//           {
+//             "title": "Goal and priority tracking",
+//             "desc": "Measure progress against operational priorities, strategic objectives, and marketing direction continuously."
+//           },
+//           {
+//             "title": "AI-assisted visibility support",
+//             "desc": "Surface key movements, anomalies, trends, and operational signals faster through intelligent monitoring layers."
+//           }
+//         ]
+//       },
+//       "scroll5": {
+//         "title": "Stay aligned with live marketing visibility",
+//         "description": "Turn operational tracking, connected analytics, and performance visibility into faster actions, stronger governance, and more confident marketing decisions."
+//       },
+//       "scroll6": {
+//         "title": "",
+//         "faqs": [
+//           {
+//             "question": "How does Marketing 4Sight improve marketing visibility?",
+//             "answer": "The platform connects performance tracking, execution visibility, operational workflows, and reporting into one environment so businesses can monitor marketing with greater clarity and control."
+//           },
+//           {
+//             "question": "Can teams track execution progress inside the platform?",
+//             "answer": "Yes. Marketing 4Sight helps teams monitor ongoing activities, approvals, implementation status, task movement, and workflow progress across connected marketing operations."
+//           },
+//           {
+//             "question": "Does the platform support performance reporting across channels?",
+//             "answer": "Yes. The platform keeps visibility connected across SEO, content, social media, local visibility, websites, campaigns, and operational workflows."
+//           },
+//           {
+//             "question": "How does governance work inside Marketing 4Sight?",
+//             "answer": "Governance combines operational monitoring, implementation visibility, activity tracking, and connected reporting so businesses maintain continuous oversight across marketing execution."
+//           },
+//           {
+//             "question": "Can businesses identify performance gaps quickly?",
+//             "answer": "Yes. Marketing 4Sight continuously surfaces operational gaps, visibility changes, performance movement, and execution bottlenecks through connected intelligence and live monitoring."
+//           },
+//           {
+//             "question": "Is this useful for agencies and multi-team operations?",
+//             "answer": "Yes. The platform helps agencies and teams maintain centralized governance visibility, connected reporting, and operational consistency across multiple brands and workflows."
+//           }
+//         ]
+//       }
+//     },
+//     {
+//       "id": 3,
+//       "slug": "optimization",
+//       "title": "Marketing Optimization & Competitive Intelligence",
+//       "scroll1": {
+//         "title": "",
+//         "description": "Marketing 4Sight helps businesses monitor competitive movement, visibility shifts, performance opportunities, and evolving market signals through one connected intelligence environment — enabling teams to optimize faster, respond smarter, and stay aligned with changing market dynamics.",
+//         "screenshot": "/images/solutions/optimization-hero.png"
+//       },
+//       "scroll2": {
+//         "title": "Why It Matters",
+//         "subtitle": "Markets shift faster than static marketing plans",
+//         "description": "Search behavior, competitors, visibility trends, and audience movement continuously evolve. Marketing 4Sight helps businesses stay connected to these changes through live intelligence, optimization visibility, and competitive monitoring so marketing direction adapts with greater speed and clarity."
+//       },
+//       "scroll3": {
+//         "title": "",
+//         "description": "Track visibility shifts, competitor activity, performance movement, trend changes, and optimization opportunities continuously from one connected intelligence environment.",
+//         "screenshot": "/images/solutions/optimization-system.png"
+//       },
+//       "scroll4": {
+//         "title": "Why Businesses Choose Marketing 4Sight",
+//         "subtitle": "Built for teams that need continuous optimization visibility and competitive intelligence",
+//         "cards": [
+//           {
+//             "title": "Continuous optimization visibility",
+//             "desc": "Track evolving opportunities, visibility movement, performance shifts, and optimization priorities continuously."
+//           },
+//           {
+//             "title": "Competitive intelligence tracking",
+//             "desc": "Monitor competitor visibility, ranking movement, content activity, and market positioning through connected intelligence."
+//           },
+//           {
+//             "title": "Live market signal visibility",
+//             "desc": "Identify emerging trends, audience movement, and changing visibility patterns across marketing activities."
+//           },
+//           {
+//             "title": "AI-assisted optimization support",
+//             "desc": "Surface opportunities, operational changes, and strategic movement faster through intelligent monitoring layers."
+//           },
+//           {
+//             "title": "Opportunity-driven decision visibility",
+//             "desc": "Keep optimization priorities aligned with performance signals, market conditions, and business goals."
+//           },
+//           {
+//             "title": "Connected intelligence environment",
+//             "desc": "Bring together visibility trends, operational data, market movement, and optimization workflows within one system."
+//           }
+//         ]
+//       },
+//       "scroll5": {
+//         "title": "Adapt faster with connected optimization intelligence",
+//         "description": "Turn market movement, visibility trends, and competitive insights into faster optimization actions and smarter marketing decisions."
+//       },
+//       "scroll6": {
+//         "title": "",
+//         "faqs": [
+//           {
+//             "question": "How does Marketing 4Sight support marketing optimization?",
+//             "answer": "The platform continuously surfaces visibility movement, operational changes, trend signals, and optimization opportunities so businesses can refine marketing direction faster."
+//           },
+//           {
+//             "question": "Can businesses track competitors inside the platform?",
+//             "answer": "Yes. Marketing 4Sight helps monitor competitor visibility, keyword movement, content activity, and broader market positioning through connected intelligence workflows."
+//           },
+//           {
+//             "question": "Does the platform identify optimization opportunities automatically?",
+//             "answer": "Yes. The platform uses connected intelligence and AI-assisted monitoring to highlight operational gaps, performance movement, and optimization opportunities continuously."
+//           },
+//           {
+//             "question": "How does competitive intelligence work inside Marketing 4Sight?",
+//             "answer": "Marketing 4Sight combines market visibility, competitor movement, trend analysis, and operational insights into one connected intelligence environment for faster decision-making."
+//           },
+//           {
+//             "question": "Can teams monitor changing market trends?",
+//             "answer": "Yes. The platform continuously tracks visibility shifts, audience movement, emerging opportunities, and trend signals across connected marketing activities."
+//           },
+//           {
+//             "question": "Is this useful for agencies and multi-brand environments?",
+//             "answer": "Yes. Marketing 4Sight helps agencies and teams maintain centralized optimization visibility and competitive intelligence across multiple brands, industries, and operational workflows."
+//           }
+//         ]
+//       }
+//     },
+//     {
+//       "id": 4,
+//       "slug": "multi-channel-ops",
+//       "title": "Multi-Channel Marketing Operations",
+//       "scroll1": {
+//         "title": "",
+//         "description": "Marketing 4Sight helps businesses manage websites, content, social media, campaigns, visibility, and marketing activities through one connected operational environment, enabling teams to maintain consistency, improve coordination, and execute faster across channels.",
+//         "screenshot": "/images/solutions/multi-channel-ops-hero.png"
+//       },
+//       "scroll2": {
+//         "title": "Why It Matters",
+//         "subtitle": "Marketing breaks when channels operate separately",
+//         "description": "Websites, social media, campaigns, visibility, and content workflows continuously influence each other. Marketing 4Sight keeps operational activities connected across channels so businesses maintain stronger alignment, more consistent execution, and greater workflow visibility."
+//       },
+//       "scroll3": {
+//         "title": "",
+//         "description": "Manage websites, content workflows, social media operations, publishing activities, and marketing execution from one connected operational layer.",
+//         "screenshot": "/images/solutions/multi-channel-ops-system.png"
+//       },
+//       "scroll4": {
+//         "title": "Why Businesses Choose Marketing 4Sight",
+//         "subtitle": "Built for teams managing connected marketing operations across channels",
+//         "cards": [
+//           {
+//             "title": "Connected operational workflows",
+//             "desc": "Keep websites, campaigns, content, visibility, and publishing activities continuously connected."
+//           },
+//           {
+//             "title": "Centralized execution visibility",
+//             "desc": "Monitor ongoing marketing activities, workflow progress, publishing schedules, and operational movement from one environment."
+//           },
+//           {
+//             "title": "Social media workflow management",
+//             "desc": "Plan, organize, and track content across Instagram, Facebook, LinkedIn, X, and YouTube through connected workflows."
+//           },
+//           {
+//             "title": "Website and digital presence support",
+//             "desc": "Manage website structure, page workflows, content layers, and digital visibility operations alongside broader marketing activities."
+//           },
+//           {
+//             "title": "AI-assisted execution support",
+//             "desc": "Reduce operational dependency through intelligent workflow support, publishing assistance, and connected activity visibility."
+//           },
+//           {
+//             "title": "Cross-channel consistency",
+//             "desc": "Maintain aligned messaging, operational clarity, and structured execution across multiple marketing touchpoints."
+//           }
+//         ]
+//       },
+//       "scroll5": {
+//         "title": "Execute faster across connected marketing channels",
+//         "description": "Turn operational visibility, connected workflows, and structured execution into more aligned and scalable marketing operations."
+//       },
+//       "scroll6": {
+//         "title": "",
+//         "faqs": [
+//           {
+//             "question": "How does Marketing 4Sight support multi-channel marketing operations?",
+//             "answer": "The platform connects websites, social media, workflows, campaigns, and operational activities into one environment for more structured execution and visibility."
+//           },
+//           {
+//             "question": "Can teams manage social media workflows inside the platform?",
+//             "answer": "Yes. Marketing 4Sight helps teams plan, organize, create, and monitor content across major social media platforms through connected workflows."
+//           },
+//           {
+//             "question": "Does the platform support website-related operations?",
+//             "answer": "Yes. Businesses can manage website core web vitals, content workflows, on-page, off-page, digital presence layers, and operational visibility alongside broader marketing activities."
+//           },
+//           {
+//             "question": "How does Marketing 4Sight improve operational coordination?",
+//             "answer": "The platform keeps activities, publishing schedules, workflows, and execution visibility continuously connected so teams operate with stronger alignment."
+//           },
+//           {
+//             "question": "Can businesses manage content and campaigns together?",
+//             "answer": "Yes. Marketing 4Sight connects content workflows, publishing activities, campaigns, and operational visibility within one structured environment."
+//           },
+//           {
+//             "question": "Is this useful for agencies and large marketing teams?",
+//             "answer": "Yes. The platform helps agencies and teams maintain centralized workflow visibility, operational coordination, and connected execution across multiple brands and channels."
+//           }
+//         ]
+//       }
+//     },
+//     {
+//       "id": 5,
+//       "slug": "organic-growth",
+//       "title": "Organic Visibility & Search Growth",
+//       "scroll1": {
+//         "title": "",
+//         "description": "Marketing 4Sight helps businesses improve search visibility, local discoverability, keyword presence, and organic growth through connected SEO, GMB, content, and search intelligence workflows, enabling teams to strengthen visibility across evolving search behavior and competitive environments.",
+//         "screenshot": "/images/solutions/organic-growth-hero.png"
+//       },
+//       "scroll2": {
+//         "title": "Why It Matters",
+//         "subtitle": "Search visibility changes every day",
+//         "description": "Search rankings, local visibility, competitor positioning, and audience behavior continuously evolve across search environments. Marketing 4Sight keeps SEO, GMB, content, and visibility workflows connected so businesses can maintain stronger discoverability and adapt faster to changing search movement."
+//       },
+//       "scroll3": {
+//         "title": "",
+//         "description": "Monitor keyword movement, search rankings, local discoverability, optimization priorities, and visibility trends through one connected search intelligence layer.",
+//         "screenshot": "/images/solutions/organic-growth-system.png"
+//       },
+//       "scroll4": {
+//         "title": "Why Businesses Choose Marketing 4Sight",
+//         "subtitle": "Built for teams focused on discoverability, visibility, and search growth",
+//         "cards": [
+//           {
+//             "title": "Connected search visibility workflows",
+//             "desc": "Keep SEO, GMB, keyword planning, content, and optimization activities aligned within one environment."
+//           },
+//           {
+//             "title": "Unified keyword intelligence",
+//             "desc": "Build and manage keyword visibility across organic search, local discoverability, content planning, and optimization workflows."
+//           },
+//           {
+//             "title": "Local visibility monitoring",
+//             "desc": "Track GMB performance, local discoverability, reviews, engagement movement, and visibility changes continuously."
+//           },
+//           {
+//             "title": "SEO operational visibility",
+//             "desc": "Monitor rankings, technical visibility, Core Web Vitals, on-page performance, and optimization priorities through connected workflows."
+//           },
+//           {
+//             "title": "AI-assisted search support",
+//             "desc": "Surface ranking movement, optimization opportunities, and discoverability signals faster through intelligent monitoring systems."
+//           },
+//           {
+//             "title": "Continuous discoverability tracking",
+//             "desc": "Maintain visibility into evolving search trends, audience behavior, competitor movement, and organic growth opportunities."
+//           }
+//         ]
+//       },
+//       "scroll5": {
+//         "title": "Strengthen visibility across evolving search environments",
+//         "description": "Turn search intelligence, optimization visibility, and connected workflows into stronger discoverability and sustainable organic growth."
+//       },
+//       "scroll6": {
+//         "title": "D. Business Owners / Decision Makers",
+//         "faqs": [
+//           {
+//             "question": "How does Marketing 4Sight improve organic visibility?",
+//             "answer": "The platform connects SEO, GMB, keyword intelligence, content workflows, and optimization visibility into one environment for stronger discoverability and search growth."
+//           },
+//           {
+//             "question": "Can businesses track keyword rankings inside the platform?",
+//             "answer": "Yes. Marketing 4Sight helps monitor keyword movement, ranking visibility, search trends, and optimization opportunities continuously."
+//           },
+//           {
+//             "question": "Does the platform support local SEO and GMB visibility?",
+//             "answer": "Yes. Businesses can manage local discoverability, GMB insights, reviews, engagement visibility, and local optimization workflows through connected systems."
+//           },
+//           {
+//             "question": "How does keyword planning work inside Marketing 4Sight?",
+//             "answer": "The platform structures keyword planning using business context, market intelligence, competitor visibility, and search intent signals connected across workflows."
+//           },
+//           {
+//             "question": "Can teams monitor SEO performance continuously?",
+//             "answer": "Yes. Marketing 4Sight provides ongoing visibility into rankings, technical SEO, Core Web Vitals, optimization priorities, and discoverability movement."
+//           },
+//           {
+//             "question": "Is this suitable for businesses managing multiple locations or brands?",
+//             "answer": "Content Operations & Social Media Management"
+//           }
+//         ]
+//       }
+//     },
+//     {
+//       "id": 6,
+//       "slug": "content-operations",
+//       "title": "Content Operations & Social Media Management",
+//       "scroll1": {
+//         "title": "",
+//         "description": "Technology alone does not create transformation. Meaningful progress happens when intelligence, execution, learning, and innovation operate together with clarity and purpose. Quantyra focuses on building connected environments that help organizations adapt to evolving digital realities through AI, data-driven thinking, operational ecosystems, and future-ready systems.",
+//         "screenshot": "/images/solutions/content-operations-hero.png"
+//       },
+//       "scroll2": {
+//         "title": "",
+//         "subtitle": "",
+//         "description": "Rather than operating through isolated functions, Quantyra is structured as an interconnected ecosystem where consulting, services, academics, and platforms contribute toward a broader vision of future-ready operational environments."
+//       },
+//       "scroll3": {
+//         "title": "",
+//         "description": "Quantyra is being built around this shift — with a focus on creating ecosystems that combine technology, intelligence, operational thinking, and adaptive digital infrastructure for the environments of tomorrow.",
+//         "screenshot": "/images/solutions/content-operations-system.png"
+//       },
+//       "scroll4": {
+//         "title": "",
+//         "subtitle": "",
+//         "cards": []
+//       },
+//       "scroll5": {
+//         "title": "Amit Kumar Das",
+//         "description": "Amit Kumar Das focuses on AI-assisted systems, intelligent technologies, scalable infrastructure, and adaptive digital innovation. His work contributes toward building future-ready environments where technology, intelligence, and evolving operational ecosystems continuously interact and evolve."
+//       },
+//       "scroll6": {
+//         "title": "Tables found in document",
+//         "faqs": [
+//           {
+//             "question": "Let’s Connect.",
+//             "answer": "*Mandatory Fields"
+//           },
+//           {
+//             "question": "Table 1",
+//             "answer": "| Market changes identified through delayed manual reviews | Live visibility into trends, competitors, and operational movement |"
+//           },
+//           {
+//             "question": "Table 2",
+//             "answer": "| Marketing priorities shift without operational clarity | Real-time governance visibility aligned to business priorities |"
+//           },
+//           {
+//             "question": "Table 3",
+//             "answer": "| Strategic adjustments require manual analysis across tools | AI-assisted optimization support aligned to live signals |"
+//           },
+//           {
+//             "question": "Table 4",
+//             "answer": "| Teams switch platforms to manage marketing activities | Connected operational environment for execution and monitoring |"
+//           },
+//           {
+//             "question": "Table 5",
+//             "answer": "| Search opportunities identified through delayed reviews | Live visibility into ranking and discoverability movement |"
+//           },
+//           {
+//             "question": "Table 6",
+//             "answer": "| Performance visibility separated from publishing operations | Connected content visibility across operational layers |"
+//           }
+//         ]
+//       }
+//     }
+//   ]
+// }
