@@ -4,6 +4,7 @@ import overviewImg from '../../assets/screenshorts/HomePageImages/Strategy Overv
 import ActionPlan from '../../assets/screenshorts/HomePageImages/actionPlan.jpeg';
 import Implementaion from '../../assets/screenshorts/HomePageImages/Implementation.png';
 import Governance from '../../assets/screenshorts/HomePageImages/Governance.png';
+import improve from '../../assets/screenshorts/HomePageImages/improve.png';
 // Image loading component with fallback and error handling
 const ImageWithFallback = ({ src, alt, fallbackUI }) => {
   const [loaded, setLoaded] = useState(false);
@@ -67,7 +68,7 @@ export default function System() {
     direction: ActionPlan,
     execution: Implementaion,
     control: Governance,
-    improve: '/assets/screenshots/05-improve-performance.png'
+    improve: improve
   };
 
   return (

@@ -28,25 +28,22 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="footer-col">
-          <h4>Product</h4>
+        <div className="footer-col" style={{ paddingTop: '10px' }}>
           <ul>
-            <li><NavLink to="/product" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Overview</NavLink></li>
+            <li><NavLink to="/" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Home</NavLink></li>
+            <li><NavLink to="/about" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Our Story</NavLink></li>
+            <li><NavLink to="/product" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Product</NavLink></li>
+          </ul>
+        </div>
+        <div className="footer-col" style={{ paddingTop: '10px' }}>
+          <ul>
             <li><NavLink to="/solutions" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Solutions</NavLink></li>
             <li><NavLink to="/pricing" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Pricing</NavLink></li>
+            <li><NavLink to="/resources" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Resources</NavLink></li>
           </ul>
         </div>
-        <div className="footer-col">
-          <h4>Resources</h4>
+        <div className="footer-col" style={{ paddingTop: '10px' }}>
           <ul>
-            <li><NavLink to="/resources" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Blog & Insights</NavLink></li>
-            <li><NavLink to="/resources" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Whitepapers</NavLink></li>
-          </ul>
-        </div>
-        <div className="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li><NavLink to="/about" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Our Story</NavLink></li>
             <li><NavLink to="/contact-us" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Contact Us</NavLink></li>
             <li><NavLink to="/compliance" className={({ isActive }) => (isActive ? "active text-purple-500 font-medium" : "hover:text-purple-400 transition-colors")}>Compliance</NavLink></li>
           </ul>
