@@ -174,7 +174,7 @@ export default function Pricing() {
             <Link to="/contact-us" className="btn-solid py-3 px-8 text-sm font-bold rounded-lg transition-all hover:scale-105 shadow-md">
               Start Free
             </Link>
-            <Link to="/contact-us" className="btn-ghost py-3 px-8 text-sm font-bold border border-[var(--line)] rounded-lg hover:bg-[var(--violet-soft)] transition-all">
+            <Link to="" className="btn-ghost py-3 px-8 text-sm font-bold border border-[var(--line)] rounded-lg hover:bg-[var(--violet-soft)] transition-all">
               Contact Sales
             </Link>
           </div>
