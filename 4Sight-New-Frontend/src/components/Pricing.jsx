@@ -2,530 +2,312 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 
-/* ───────── DATA ───────── */
-const plans = [
-  {
-    id: "free",
-    badge: "Best for Starters",
-    name: "Free",
-    description:
-      "Perfect for startups and small businesses beginning their digital journey.",
-    monthlyPrice: 0,
-    yearlyPrice: 0,
-    features: [
-      { text: "Marketing Dashboard Access", included: true },
-      { text: "Basic Business Profile", included: true },
-      { text: "Limited Website Builder Access", included: true },
-      { text: "Content Placeholder Support", included: true },
-      { text: "SEO & GMB Setup Prompts", included: true },
-      { text: "Help Centre Access", included: true },
-      { text: "Funnel Manager", included: false },
-      { text: "Media Manager", included: false },
-      { text: "Advanced SEO Features", included: false },
-      { text: "Full Competitor Tracking", included: false },
-      { text: "Premium Analytics", included: false },
-      { text: "Enterprise Support", included: false },
-    ],
-    cta: "Start Free",
-    featured: false,
-  },
-  {
-    id: "enterprise",
-    badge: "Most Popular",
-    name: "Enterprise",
-    description:
-      "Complete AI-powered marketing infrastructure for growing brands and agencies.",
-    monthlyPrice: 4999,
-    yearlyPrice: 47999,
-    features: [
-      { text: "Full SEO Manager", included: true },
-      { text: "GMB Manager Access", included: true },
-      { text: "AI Website Builder", included: true },
-      { text: "Content Manager", included: true },
-      { text: "Competitor Intelligence", included: true },
-      { text: "Keyword Planner", included: true },
-      { text: "Funnel Manager", included: true },
-      { text: "Media Manager", included: true },
-      { text: "Multi-user Collaboration", included: true },
-      { text: "Advanced Analytics", included: true },
-      { text: "Priority Support", included: true },
-      { text: "Invoice & Billing Access", included: true },
-      { text: "Brand Management", included: true },
-    ],
-    cta: "Upgrade to Enterprise",
-    featured: true,
-  },
-];
-
-const comparisonRows = [
-  { feature: "Marketing Dashboard", free: "✓", enterprise: "✓" },
-  { feature: "Website Builder", free: "Limited", enterprise: "Full" },
-  { feature: "SEO Manager", free: "Limited", enterprise: "Full" },
-  { feature: "GMB Manager", free: "Limited", enterprise: "Full" },
-  { feature: "Content Manager", free: "Limited", enterprise: "Full" },
-  { feature: "Competitor Tracking", free: "✕", enterprise: "✓" },
-  { feature: "Funnel Manager", free: "✕", enterprise: "✓" },
-  { feature: "Media Manager", free: "✕", enterprise: "✓" },
-  { feature: "AI Content Generation", free: "Limited", enterprise: "Unlimited" },
-  { feature: "Analytics", free: "Basic", enterprise: "Advanced" },
-  { feature: "Support", free: "Standard", enterprise: "Priority" },
-  { feature: "Multi Brand Support", free: "✕", enterprise: "✓" },
-  { feature: "Billing & Invoice", free: "✕", enterprise: "✓" },
-];
-
-const benefits = [
-  {
-    icon: "🚀",
-    title: "Flexible Billing",
-    desc: "Choose monthly or yearly billing with automatic GST invoice generation and easy payment options.",
-    gradient: "from-[var(--violet)] to-indigo-500",
-  },
-  {
-    icon: "💳",
-    title: "Payment Options",
-    desc: "Support for UPI, QR codes, credit/debit cards, bank transfer, and auto-mandate through Razorpay.",
-    gradient: "from-emerald-500 to-teal-500",
-  },
-  {
-    icon: "🎫",
-    title: "Coupon Support",
-    desc: "Apply discount codes and promotional coupons instantly during checkout for extra savings.",
-    gradient: "from-amber-500 to-orange-500",
-  },
-  {
-    icon: "📊",
-    title: "Advanced Analytics",
-    desc: "Get deep insights into your marketing performance with comprehensive reporting and data visualization.",
-    gradient: "from-[var(--magenta)] to-rose-500",
-  },
-];
-
-const faqs = [
-  {
-    q: "Is there a free plan?",
-    a: "Yes! Users can start with the Free plan and explore the platform's core features. You can upgrade to Enterprise anytime to unlock advanced AI-powered marketing tools.",
-  },
-  {
-    q: "Can I switch between monthly and yearly billing?",
-    a: "Yes, Enterprise users can easily switch between monthly and yearly billing cycles from their account settings. Yearly billing offers a 20% discount.",
-  },
-  {
-    q: "Do I get invoices?",
-    a: "Yes, Enterprise users receive downloadable GST-compliant invoices for all payments. Invoices are automatically generated and available in your billing dashboard.",
-  },
-  {
-    q: "Does Marketing 4Sight host my website?",
-    a: "No, Marketing 4Sight generates the website structure, design, and files using AI. However, website hosting is managed separately through your preferred hosting provider.",
-  },
-  {
-    q: "What payment methods are supported?",
-    a: "We support UPI, QR codes, credit/debit cards, bank transfers, and recurring billing options through our secure payment partner, Razorpay.",
-  },
-];
-
-/* ───────── HELPERS ───────── */
-const formatPrice = (n) => n.toLocaleString("en-IN");
-
-const CheckIcon = () => (
-  <svg className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
-
-const CrossIcon = () => (
-  <svg className="w-4 h-4 text-[var(--ink-mute)] shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-);
-
-/* ───────── COMPONENT ───────── */
 export default function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [coupon, setCoupon] = useState("");
+  const [couponMessage, setCouponMessage] = useState(null);
+
+  const toggleFaq = (index) => {
+    if (openFaq === index) {
+      setOpenFaq(null);
+    } else {
+      setOpenFaq(index);
+    }
+  };
+
+  const applyCoupon = () => {
+    const code = coupon.trim().toUpperCase();
+    if (code === '') {
+      setCouponMessage({ type: 'error', text: 'Please enter a valid coupon code.' });
+    } else {
+      setCouponMessage({ type: 'success', text: `Success! ${code} applied. Proceed to checkout to see your savings.` });
+    }
+  };
 
   return (
-    <div className="relative w-full min-h-screen overflow-y-auto bg-transparent">
-
-      {/* ═══════ HERO ═══════ */}
-      <section className="relative overflow-hidden pt-36 pb-28 px-6 text-center">
-        {/* Decorative blurs */}
-        <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(124,58,237,0.10),transparent_70%)] rounded-full pointer-events-none animate-pulse" />
-        <div className="absolute bottom-[-20%] left-[-8%] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(219,39,119,0.08),transparent_70%)] rounded-full pointer-events-none animate-pulse" style={{ animationDelay: "2s" }} />
-
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[var(--violet-soft)] text-[var(--violet)] text-[11px] font-bold tracking-[0.2em] uppercase border border-[var(--line)] mb-6">
-            Pricing Plans
-          </span>
-
-          <h1 className="text-4xl md:text-5xl lg:text-[3.4rem] font-extrabold text-[var(--ink)] tracking-tight leading-[1.1] mb-5">
-            Grow Your Brand Smarter with{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--violet)] via-[var(--magenta)] to-[var(--violet)]">
-              AI-Powered Marketing
-            </span>
-          </h1>
-
-          <p className="text-sm md:text-base text-[var(--ink-dim)] font-light leading-relaxed max-w-2xl mx-auto mb-10">
-            From SEO and content management to GMB optimization and website generation — Marketing 4Sight helps businesses manage their digital growth from one platform.
-          </p>
-
-          <div className="flex flex-wrap gap-3 justify-center">
-            <Link to="/contact-us" className="btn-solid py-3 px-8 text-sm font-bold rounded-lg transition-all hover:scale-105 shadow-md">
-              Start Free
-            </Link>
-            <Link to="" className="btn-ghost py-3 px-8 text-sm font-bold border border-[var(--line)] rounded-lg hover:bg-[var(--violet-soft)] transition-all">
-              Contact Sales
-            </Link>
-          </div>
-
-          {/* Feature badges */}
-          <div className="flex flex-wrap gap-3 justify-center mt-12">
-            {["SEO Manager", "Website Builder", "Content Manager", "GMB Manager", "Funnel Manager", "Media Manager"].map((b, i) => (
-              <span key={i} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--paper)] border border-[var(--line)] text-[var(--ink-2)] text-xs font-semibold shadow-sm">
-                ✨ {b}
-              </span>
-            ))}
-          </div>
+    <div className="text-[#222222] antialiased selection:bg-[#e7eb90] selection:text-[#222222] font-['Helvetica_Neue',sans-serif]">
+        
+        {/* GLOBAL ANIMATED BACKGROUND */}
+        <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+            <div className="absolute top-[-10%] left-[10%] w-[300px] h-[300px] bg-[#0859b8]/10 rounded-full blur-[50px] mix-blend-multiply animate-blob"></div>
+            <div className="absolute top-[20%] right-[10%] w-[450px] h-[450px] bg-[#00adc4]/10 rounded-full blur-[50px] mix-blend-multiply animate-blob animation-delay-2000"></div>
+            <div className="absolute bottom-[10%] left-[40%] w-[250px] h-[250px] bg-[#0859b8]/10 rounded-full blur-[50px] mix-blend-multiply animate-blob animation-delay-4000"></div>
+            <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
         </div>
-      </section>
 
-      {/* ═══════ BILLING TOGGLE ═══════ */}
-      <section className="max-w-4xl mx-auto -mt-6 px-6 mb-14 relative z-20">
-        <div className="bg-[var(--paper)] border border-[var(--line)] rounded-2xl shadow-lg p-5 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <span className={`text-sm font-semibold transition-colors ${!isYearly ? "text-[var(--ink)]" : "text-[var(--ink-mute)]"}`}>
-            Monthly
-          </span>
-
-          {/* Toggle */}
-          <button
-            onClick={() => setIsYearly(!isYearly)}
-            className={`relative w-14 h-7 rounded-full transition-all duration-300 cursor-pointer ${
-              isYearly
-                ? "bg-gradient-to-r from-[var(--violet)] to-indigo-500"
-                : "bg-[var(--line)]"
-            }`}
-          >
-            <span
-              className={`absolute top-[3px] w-[22px] h-[22px] rounded-full bg-white shadow transition-all duration-300 ${
-                isYearly ? "left-[calc(100%-25px)]" : "left-[3px]"
-              }`}
-            />
-          </button>
-
-          <span className={`text-sm font-semibold transition-colors ${isYearly ? "text-[var(--ink)]" : "text-[var(--ink-mute)]"}`}>
-            Yearly
-          </span>
-
-          <span className="text-[10px] font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-500 px-3 py-1 rounded-full tracking-wide">
-            SAVE 20%
-          </span>
-        </div>
-      </section>
-
-      {/* ═══════ PRICING CARDS ═══════ */}
-      <section className="max-w-5xl mx-auto px-6 mb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-          {plans.map((plan) => {
-            const price = isYearly ? plan.yearlyPrice : plan.monthlyPrice;
-            const period = plan.monthlyPrice === 0 ? "/month" : isYearly ? "/year" : "/month";
-            const isFeatured = plan.featured;
-
-            return (
-              <div
-                key={plan.id}
-                className={`relative rounded-3xl p-8 transition-all duration-400 hover:-translate-y-1.5 group ${
-                  isFeatured
-                    ? "bg-[var(--ink)] text-white border-2 border-transparent shadow-[0_30px_80px_rgba(124,58,237,0.18)]"
-                    : "bg-[var(--paper)] border-2 border-[var(--line)] shadow-md hover:shadow-xl"
-                }`}
-              >
-                {/* Gradient border glow for featured */}
-                {isFeatured && (
-                  <div className="absolute -inset-[2px] rounded-3xl bg-gradient-to-br from-[var(--violet)] via-[var(--magenta)] to-amber-400 -z-10 opacity-60" />
-                )}
-
-                {/* Badge */}
-                <span
-                  className={`inline-block text-[11px] font-bold px-4 py-1.5 rounded-full mb-5 ${
-                    isFeatured
-                      ? "bg-gradient-to-r from-amber-400 to-orange-500 text-white"
-                      : "bg-[var(--violet-soft)] text-[var(--violet)]"
-                  }`}
-                >
-                  {plan.badge}
-                </span>
-
-                {/* Plan name */}
-                <h3 className={`text-3xl font-extrabold mb-2 ${isFeatured ? "text-white" : "text-[var(--ink)]"}`}>
-                  {plan.name}
-                </h3>
-                <p className={`text-sm leading-relaxed mb-6 ${isFeatured ? "text-gray-300" : "text-[var(--ink-dim)]"}`}>
-                  {plan.description}
+        <main className="pt-32 pb-16 relative z-10">
+            {/* HEADER SECTION */}
+            <section className="text-center max-w-4xl mx-auto px-6 mb-16 animate-[fadeInUp_0.8s_ease-out]">
+                <div className="inline-block bg-blue-50 primary_color font-bold px-4 py-1.5 rounded-full text-sm tracking-wide mb-6 border border-blue-100 uppercase">
+                    Pricing Plans
+                </div>
+                <h1 className="text-5xl md:text-6xl heading1 text-[#222222] mb-6">
+                    Grow Your Brand Smarter with <br/><span className="primary_color">Data-Driven Marketing</span>
+                </h1>
+                <p className="text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed bodyText">
+                    From SEO and content management to GMB optimization and website generation — Marketing 4Sight helps businesses manage their digital growth from one platform.
                 </p>
-
-                {/* Price */}
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-1.5">
-                    <span className={`text-lg font-bold ${isFeatured ? "text-white" : "text-[var(--ink)]"}`}>₹</span>
-                    <span className={`text-5xl font-extrabold tracking-tight ${isFeatured ? "text-white" : "text-[var(--ink)]"}`}>
-                      {formatPrice(price)}
-                    </span>
-                    <span className={`text-base font-medium ${isFeatured ? "text-gray-400" : "text-[var(--ink-mute)]"}`}>
-                      {period}
-                    </span>
-                  </div>
-                  {plan.monthlyPrice > 0 && (
-                    <p className={`text-xs mt-1 ${isFeatured ? "text-gray-400" : "text-[var(--ink-mute)]"}`}>
-                      {isYearly ? "Billed annually (Save 20%)" : "Billed monthly"}
-                    </p>
-                  )}
+                
+                <div className="flex justify-center gap-4 mb-12">
+                    <a href="#free" className="primary_bg text-white font-bold py-3 px-8 rounded shadow-lg hover:bg-blue-800 transition">Start Free</a>
+                    <Link to="/contact-us" className="bg-white border-2 border-gray-200 text-[#222222] font-bold py-3 px-8 rounded hover:border-[#0859b8] hover:text-[#0859b8] transition">Contact Sales</Link>
                 </div>
 
-                {/* Features */}
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((f, i) => (
-                    <li
-                      key={i}
-                      className={`flex items-start gap-3 text-[13px] ${
-                        f.included
-                          ? isFeatured ? "text-gray-200" : "text-[var(--ink-2)]"
-                          : "opacity-40"
-                      }`}
-                    >
-                      {f.included ? <CheckIcon /> : <CrossIcon />}
-                      {f.text}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA */}
-                <Link
-                  to="/contact-us"
-                  className={`block w-full text-center py-3.5 rounded-xl font-bold text-sm transition-all hover:-translate-y-0.5 ${
-                    isFeatured
-                      ? "bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-[0_10px_30px_rgba(245,158,11,0.3)] hover:shadow-[0_15px_40px_rgba(245,158,11,0.4)]"
-                      : "bg-[var(--ink)] text-white hover:bg-[var(--ink-2)]"
-                  }`}
-                >
-                  {plan.cta}
-                </Link>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ═══════ COMPARISON TABLE ═══════ */}
-      <section className="max-w-5xl mx-auto px-6 mb-20">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-[var(--ink)] tracking-tight mb-3">
-            Compare Plans in Detail
-          </h2>
-          <p className="text-sm text-[var(--ink-dim)] font-light max-w-xl mx-auto">
-            See exactly what's included in each plan and choose the one that fits your needs.
-          </p>
-        </div>
-
-        <div className="bg-[var(--paper)] border border-[var(--line)] rounded-2xl shadow-md overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse min-w-[500px]">
-              <thead>
-                <tr className="bg-[var(--ink)]">
-                  <th className="text-left text-white font-bold text-sm py-4 px-6 w-[50%]">Features</th>
-                  <th className="text-left text-white font-bold text-sm py-4 px-6">Free</th>
-                  <th className="text-left text-white font-bold text-sm py-4 px-6">Enterprise</th>
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonRows.map((row, i) => (
-                  <tr key={i} className="border-b border-[var(--line)] hover:bg-[var(--bg)] transition-colors">
-                    <td className="py-3.5 px-6 text-sm font-semibold text-[var(--ink)]">{row.feature}</td>
-                    <td className="py-3.5 px-6 text-sm">
-                      {row.free === "✓" ? (
-                        <span className="text-emerald-500 font-bold text-lg">✓</span>
-                      ) : row.free === "✕" ? (
-                        <span className="text-[var(--ink-mute)] text-lg">✕</span>
-                      ) : (
-                        <span className="text-[var(--ink-dim)]">{row.free}</span>
-                      )}
-                    </td>
-                    <td className="py-3.5 px-6 text-sm">
-                      {row.enterprise === "✓" ? (
-                        <span className="text-emerald-500 font-bold text-lg">✓</span>
-                      ) : (
-                        <span className="text-[var(--ink-2)] font-medium">{row.enterprise}</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════ WHY ENTERPRISE ═══════ */}
-      <section className="max-w-5xl mx-auto px-6 mb-20">
-        <div className="bg-gradient-to-br from-[var(--bg)] to-[var(--violet-soft)]/40 border border-[var(--line)] rounded-3xl p-8 md:p-12">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-[var(--ink)] tracking-tight mb-3">
-              Why Choose Enterprise?
-            </h2>
-            <p className="text-sm text-[var(--ink-dim)] font-light max-w-xl mx-auto">
-              Unlock the full potential of AI-powered marketing automation.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {benefits.map((b, i) => (
-              <div
-                key={i}
-                className="bg-[var(--paper)] border border-[var(--line)] rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-              >
-                <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${b.gradient} flex items-center justify-center text-lg mb-4`}>
-                  {b.icon}
+                {/* Module Pills */}
+                <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+                    <span className="bg-white border border-gray-200 shadow-sm px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2"><span className="secondary_color">✦</span> SEO Manager</span>
+                    <span className="bg-white border border-gray-200 shadow-sm px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2"><span className="secondary_color">✦</span> Website Builder</span>
+                    <span className="bg-white border border-gray-200 shadow-sm px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2"><span className="secondary_color">✦</span> Content Manager</span>
+                    <span className="bg-white border border-gray-200 shadow-sm px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2"><span className="secondary_color">✦</span> GMB Manager</span>
+                    <span className="bg-white border border-gray-200 shadow-sm px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2"><span className="secondary_color">✦</span> Funnel Manager</span>
+                    <span className="bg-white border border-gray-200 shadow-sm px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2"><span className="secondary_color">✦</span> Media Manager</span>
                 </div>
-                <h3 className="text-sm font-bold text-[var(--ink)] mb-2">{b.title}</h3>
-                <p className="text-xs text-[var(--ink-dim)] leading-relaxed">{b.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </section>
 
-      {/* ═══════ COUPON SECTION ═══════ */}
-      <section className="max-w-2xl mx-auto px-6 mb-20">
-        <div className="bg-[var(--paper)] border border-[var(--line)] rounded-2xl shadow-md p-6 md:p-8 text-center">
-          <h3 className="text-xl font-extrabold text-[var(--ink)] mb-2">Have a Coupon Code?</h3>
-          <p className="text-sm text-[var(--ink-dim)] font-light mb-6">
-            Apply your discount code during checkout to save on your Enterprise subscription.
-          </p>
+            {/* PRICING CARDS */}
+            <section className="max-w-5xl mx-auto px-6 mb-12">
+                {/* Billing Toggle */}
+                <div className="flex justify-center items-center mb-12 bg-white p-4 rounded-xl shadow-sm border border-gray-100 max-w-sm mx-auto">
+                    <span className={`font-bold mr-3 transition-colors ${!isYearly ? 'text-[#222222]' : 'text-gray-400'}`}>Monthly</span>
+                    <div className="relative inline-block w-12 mr-3 align-middle select-none">
+                        <input type="checkbox" checked={isYearly} onChange={() => setIsYearly(!isYearly)} id="billing-toggle" className="absolute opacity-0 w-0 h-0" />
+                        <label htmlFor="billing-toggle" className={`block overflow-hidden h-6 w-12 rounded-full cursor-pointer transition-colors duration-300 ${isYearly ? 'secondary_bg' : 'bg-gray-200'} relative`}>
+                            <span className={`absolute top-[2px] w-[20px] h-[20px] bg-white rounded-full transition-transform duration-300 ${isYearly ? 'translate-x-[26px]' : 'translate-x-[2px]'}`}></span>
+                        </label>
+                    </div>
+                    <span className={`font-bold mr-3 transition-colors ${isYearly ? 'text-[#222222]' : 'text-gray-400'}`}>Yearly</span>
+                    <span className="secondary_bg text-white text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wide">Save 20%</span>
+                </div>
 
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Coupon functionality will be available at checkout!");
-            }}
-            className="flex flex-col sm:flex-row gap-3 mb-6"
-          >
-            <input
-              type="text"
-              value={coupon}
-              onChange={(e) => setCoupon(e.target.value)}
-              placeholder="Enter coupon code"
-              className="flex-1 h-11 rounded-xl border border-[var(--line)] bg-[var(--bg)] px-4 text-sm font-mono outline-none focus:border-[var(--violet)] focus:ring-3 focus:ring-[var(--violet-soft)] transition-all"
-            />
-            <button
-              type="submit"
-              className="h-11 px-7 rounded-xl bg-gradient-to-r from-[var(--violet)] to-indigo-500 text-white text-sm font-bold shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all cursor-pointer"
-            >
-              Apply
-            </button>
-          </form>
+                <div className="grid md:grid-cols-2 gap-8" id="free">
+                    {/* Free Plan */}
+                    <div className="bg-white rounded-3xl p-10 border border-gray-200 shadow-xl flex flex-col relative overflow-hidden group hover:border-[#0859b8] transition duration-300">
+                        <div className="bg-blue-50 primary_color text-sm font-bold px-4 py-1.5 rounded-full inline-block mb-6 self-start">Best for Starters</div>
+                        <h3 className="text-4xl heading1 text-[#222222] mb-4">Free</h3>
+                        <p className="text-gray-600 mb-8 min-h-[48px] bodyText">Perfect for startups and small businesses beginning their digital journey.</p>
+                        
+                        <div className="mb-8">
+                            <span className="text-2xl font-bold">₹</span>
+                            <span className="text-6xl heading1 text-[#222222]">0</span>
+                            <span className="text-gray-500 font-bold">/month</span>
+                        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {[
-              { icon: "💰", title: "Auto-Renewal", desc: "Hassle-free subscription management" },
-              { icon: "🧾", title: "GST Invoice", desc: "Automatic invoice generation" },
-              { icon: "🔒", title: "Secure Payment", desc: "Powered by Razorpay" },
-            ].map((info, i) => (
-              <div key={i} className="bg-[var(--bg)] border border-[var(--line)] rounded-xl p-4 text-center">
-                <h4 className="text-sm font-bold text-[var(--ink)] mb-1">
-                  {info.icon} {info.title}
-                </h4>
-                <p className="text-[11px] text-[var(--ink-mute)]">{info.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+                        <ul className="space-y-5 mb-10 flex-grow bodyText">
+                            <li className="flex items-start"><svg className="w-6 h-6 secondary_color mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Marketing Dashboard Access</li>
+                            <li className="flex items-start"><svg className="w-6 h-6 secondary_color mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Basic Business Profile</li>
+                            <li className="flex items-start"><svg className="w-6 h-6 secondary_color mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Limited Website Builder Access</li>
+                            <li className="flex items-start"><svg className="w-6 h-6 secondary_color mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Content Placeholder Support</li>
+                            <li className="flex items-start"><svg className="w-6 h-6 secondary_color mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> SEO & GMB Setup Prompts</li>
+                        </ul>
 
-      {/* ═══════ FAQ ═══════ */}
-      <section className="max-w-3xl mx-auto px-6 mb-20">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-[var(--ink)] tracking-tight mb-3">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-sm text-[var(--ink-dim)] font-light">
-            Everything you need to know about Marketing 4Sight pricing.
-          </p>
-        </div>
+                        <Link to="/contact-us" className="w-full bg-white border-2 border-[#0859b8] primary_color text-center font-bold py-4 rounded-xl hover:bg-[#0859b8] hover:text-white transition">Get Started Free</Link>
+                    </div>
 
-        <div className="space-y-3">
-          {faqs.map((faq, i) => (
-            <div
-              key={i}
-              className="bg-[var(--paper)] border border-[var(--line)] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
-            >
-              <button
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="w-full flex justify-between items-center p-5 text-left hover:bg-[var(--violet-soft)]/20 transition-colors group cursor-pointer"
-              >
-                <span className="text-sm font-bold text-[var(--ink)] group-hover:text-[var(--violet)] transition-colors">
-                  {faq.q}
-                </span>
-                <svg
-                  className={`w-4 h-4 text-[var(--violet)] transition-transform duration-300 shrink-0 ml-4 ${
-                    openFaq === i ? "rotate-180" : ""
-                  }`}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
-              <div
-                className={`transition-all duration-300 overflow-hidden ${
-                  openFaq === i ? "max-h-52 border-t border-[var(--line)]" : "max-h-0"
-                }`}
-              >
-                <p className="p-5 text-[13px] text-[var(--ink-dim)] font-light leading-relaxed bg-[var(--violet-soft)]/10">
-                  {faq.a}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+                    {/* Enterprise Plan */}
+                    <div className="primary_bg rounded-3xl p-10 border border-blue-800 shadow-2xl flex flex-col relative overflow-hidden text-white transform md:-translate-y-4" id="sales">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#00adc4]/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+                        
+                        <div className="bg-[#e7eb90] text-[#222222] text-sm font-bold px-4 py-1.5 rounded-full inline-block mb-6 self-start shadow-md">Most Popular</div>
+                        <h3 className="text-4xl heading1 mb-4">Enterprise</h3>
+                        <p className="text-blue-100 mb-8 min-h-[48px] bodyText">Complete data-driven marketing infrastructure for growing brands and agencies.</p>
+                        
+                        <div className="mb-2">
+                            <span className="text-2xl font-bold">₹</span>
+                            <span className="text-6xl heading1">{isYearly ? "3,999" : "4,999"}</span>
+                            <span className="text-blue-200 font-bold">/month</span>
+                        </div>
+                        <p className="text-sm text-blue-300 mb-8">{isYearly ? "Billed annually" : "Billed monthly"}</p>
 
-      {/* ═══════ BOTTOM CTA ═══════ */}
-      <section className="max-w-4xl mx-auto px-6 mb-20">
-        <div className="relative p-8 md:p-14 bg-[var(--paper)] border border-[var(--line)] rounded-3xl text-center overflow-hidden group shadow-lg">
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--violet-soft)] to-[var(--magenta-soft)] opacity-20 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none" />
+                        <ul className="space-y-5 mb-10 flex-grow relative z-10 bodyText">
+                            <li className="flex items-start"><svg className="w-6 h-6 text-[#e7eb90] mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Full SEO Manager</li>
+                            <li className="flex items-start"><svg className="w-6 h-6 text-[#e7eb90] mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> GMB Manager Access</li>
+                            <li className="flex items-start"><svg className="w-6 h-6 text-[#e7eb90] mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> AI Website Builder</li>
+                            <li className="flex items-start"><svg className="w-6 h-6 text-[#e7eb90] mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Content Manager</li>
+                            <li className="flex items-start"><svg className="w-6 h-6 text-[#e7eb90] mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Competitor & Funnel Tracking</li>
+                        </ul>
 
-          <span className="text-[11px] font-bold text-[var(--violet)] uppercase tracking-[0.2em] block relative z-10">
-            Ready to Grow?
-          </span>
+                        <Link to="/contact-us" className="block w-full bg-[#e7eb90] text-[#222222] text-center font-bold py-4 rounded-xl hover:bg-yellow-300 transition shadow-[0_0_20px_rgba(231,235,144,0.4)] relative z-10">Upgrade to Enterprise</Link>
+                    </div>
+                </div>
+            </section>
 
-          <h2 className="text-2xl md:text-3xl font-extrabold text-[var(--ink)] mt-4 tracking-tight max-w-2xl mx-auto leading-tight relative z-10">
-            Ready to Grow Your Digital Presence?
-          </h2>
+            {/* INTERACTIVE COUPON SECTION */}
+            <section className="max-w-md mx-auto px-6 mb-24 text-center">
+                <div className="bg-blue-50/50 border border-blue-100 p-6 rounded-2xl shadow-sm hover:shadow-md transition">
+                    <h3 className="text-lg font-bold primary_color mb-2 flex items-center justify-center gap-2">
+                        <svg className="w-5 h-5 secondary_color" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                        Have a promo code?
+                    </h3>
+                    <p className="text-sm text-gray-500 mb-4 bodyText">Enter it below to apply your discount to the Enterprise plan.</p>
+                    
+                    <div className="relative flex items-center">
+                        <input 
+                            type="text" 
+                            value={coupon}
+                            onChange={(e) => setCoupon(e.target.value)}
+                            placeholder="e.g. GROW2026" 
+                            className={`w-full pl-4 pr-24 py-3 rounded-xl border ${couponMessage?.type === 'success' ? 'border-green-500 bg-green-50' : 'border-gray-200'} focus:outline-none focus:border-[#00adc4] focus:ring-1 focus:ring-[#00adc4] uppercase tracking-wider text-[#222222] font-bold placeholder-gray-300 transition shadow-inner`}
+                        />
+                        <button 
+                            onClick={applyCoupon} 
+                            className="absolute right-1 top-1 bottom-1 primary_bg text-white font-bold px-4 rounded-lg hover:bg-blue-800 transition text-sm shadow"
+                        >
+                            Apply
+                        </button>
+                    </div>
+                    
+                    {couponMessage && (
+                        <p className={`text-sm font-bold mt-3 transition-opacity duration-300 ${couponMessage.type === 'error' ? 'text-red-500' : 'text-green-600'}`}>
+                            {couponMessage.text}
+                        </p>
+                    )}
+                </div>
+            </section>
 
-          <p className="text-sm text-[var(--ink-dim)] font-light mt-4 max-w-xl mx-auto leading-relaxed relative z-10">
-            Start with the Free plan or unlock advanced AI-powered marketing tools with Enterprise.
-          </p>
+            {/* FEATURE COMPARISON TABLE */}
+            <section className="max-w-5xl mx-auto px-6 mb-24">
+                <div className="text-center mb-10">
+                    <h2 className="text-4xl heading1 primary_color mb-4">Compare Plans in Detail</h2>
+                    <p className="text-gray-600 bodyText">See exactly what's included in each plan and choose the one that fits your needs.</p>
+                </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center relative z-10">
-            <Link
-              to="/contact-us"
-              className="btn-solid py-3 px-8 text-sm font-bold rounded-lg transition-all hover:scale-105 shadow-md"
-            >
-              Get Started Free
-            </Link>
-            <Link
-              to="/contact-us"
-              className="btn-ghost py-3 px-8 text-sm font-bold border border-[var(--line)] rounded-lg hover:bg-[var(--violet-soft)] transition-all"
-            >
-              Book a Demo
-            </Link>
-          </div>
-        </div>
-      </section>
+                <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse min-w-[600px]">
+                            <thead>
+                                <tr className="bg-[#222222] text-white">
+                                    <th className="py-5 px-6 font-bold text-lg w-1/2">Features</th>
+                                    <th className="py-5 px-6 font-bold text-lg text-center w-1/4">Free</th>
+                                    <th className="py-5 px-6 font-bold text-lg text-center w-1/4 primary_bg">Enterprise</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-700 divide-y divide-gray-100 bodyText">
+                                {[
+                                    { feature: "Marketing Dashboard", free: "check", enterprise: "check" },
+                                    { feature: "Website Builder", free: "Limited", enterprise: "Full" },
+                                    { feature: "SEO Manager", free: "Limited", enterprise: "Full" },
+                                    { feature: "GMB Manager", free: "Limited", enterprise: "Full" },
+                                    { feature: "Content Manager", free: "Limited", enterprise: "Full" },
+                                    { feature: "Competitor Tracking", free: "cross", enterprise: "check" },
+                                    { feature: "Funnel Manager", free: "cross", enterprise: "check" },
+                                    { feature: "Media Manager", free: "cross", enterprise: "check" },
+                                    { feature: "AI Content Generation", free: "Limited", enterprise: "Unlimited" },
+                                    { feature: "Analytics", free: "Basic", enterprise: "Advanced" },
+                                    { feature: "Support", free: "Standard", enterprise: "Priority" },
+                                    { feature: "Multi Brand Support", free: "cross", enterprise: "check" },
+                                    { feature: "Billing & Invoice", free: "cross", enterprise: "check" }
+                                ].map((row, i) => (
+                                    <tr key={i} className="hover:bg-gray-50 transition">
+                                        <td className="py-4 px-6 font-bold text-[#222222]">{row.feature}</td>
+                                        <td className="py-4 px-6 text-center">
+                                            {row.free === "check" ? <svg className="w-6 h-6 secondary_color mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> : 
+                                             row.free === "cross" ? <svg className="w-6 h-6 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> : 
+                                             <span className="text-gray-400 font-bold">{row.free}</span>}
+                                        </td>
+                                        <td className="py-4 px-6 text-center bg-blue-50/30">
+                                            {row.enterprise === "check" ? <svg className="w-6 h-6 primary_color mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> : 
+                                             <span className="primary_color font-bold">{row.enterprise}</span>}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-      <Footer />
+            {/* WHY CHOOSE ENTERPRISE */}
+            <section className="max-w-7xl mx-auto px-6 mb-24">
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl heading1 primary_color mb-4">Why Choose Enterprise?</h2>
+                    <p className="text-gray-600 bodyText">Unlock the full potential of data-driven marketing automation.</p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 bodyText">
+                    <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition hover:-translate-y-1">
+                        <div className="w-14 h-14 rounded-xl bg-blue-50 primary_color flex items-center justify-center mb-6">
+                            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 className="text-xl font-bold text-[#222222] mb-3">Flexible Billing</h3>
+                        <p className="text-gray-600 text-sm">Choose monthly or yearly billing with automatic GST invoice generation and easy payment options.</p>
+                    </div>
+                    <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition hover:-translate-y-1">
+                        <div className="w-14 h-14 rounded-xl bg-[#00adc4]/10 secondary_color flex items-center justify-center mb-6">
+                            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                        </div>
+                        <h3 className="text-xl font-bold text-[#222222] mb-3">Payment Options</h3>
+                        <p className="text-gray-600 text-sm">Support for UPI, QR codes, credit/debit cards, bank transfer, and auto-mandate through Razorpay.</p>
+                    </div>
+                    <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition hover:-translate-y-1">
+                        <div className="w-14 h-14 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center mb-6">
+                            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                        </div>
+                        <h3 className="text-xl font-bold text-[#222222] mb-3">Coupon Support</h3>
+                        <p className="text-gray-600 text-sm">Apply discount codes and promotional coupons instantly during checkout for extra savings.</p>
+                    </div>
+                    <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition hover:-translate-y-1">
+                        <div className="w-14 h-14 rounded-xl bg-blue-50 primary_color flex items-center justify-center mb-6">
+                            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </div>
+                        <h3 className="text-xl font-bold text-[#222222] mb-3">Advanced Analytics</h3>
+                        <p className="text-gray-600 text-sm">Get deep insights into your marketing performance with comprehensive reporting and data visualization.</p>
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQ SECTION */}
+            <section className="max-w-3xl mx-auto px-6 mb-24">
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl heading1 primary_color mb-4">Frequently Asked Questions</h2>
+                    <p className="text-gray-600 bodyText">Everything you need to know about Marketing 4Sight pricing.</p>
+                </div>
+                
+                <div className="space-y-4">
+                    {[
+                        { q: "Is there a free plan?", a: "Yes, we offer a Free plan perfect for startups and small businesses to begin their digital journey, providing essential access to the marketing dashboard, limited builder tools, and prompt support." },
+                        { q: "Can I switch between monthly and yearly billing?", a: "Absolutely. You can change your billing preference at any time from your account settings. Switching to yearly billing will automatically apply a 20% discount." },
+                        { q: "Do I get invoices?", a: "Yes, automated GST invoices are generated for every successful payment and can be downloaded directly from your billing dashboard." },
+                        { q: "Does Marketing 4Sight host my website?", a: "We provide the Website Builder to generate structure, design, and code. You can export these files to host on your preferred environment, or integrate with our recommended hosting partners." },
+                        { q: "What payment methods are supported?", a: "We process payments securely through Razorpay, supporting UPI, QR Codes, all major credit/debit cards, Net Banking, and auto-mandate subscriptions." }
+                    ].map((faq, index) => (
+                        <div key={index} className="bg-white border border-gray-200 rounded-lg shadow-sm">
+                            <button onClick={() => toggleFaq(index)} className="w-full flex items-center justify-between cursor-pointer p-6 font-bold text-lg text-[#222222]">
+                                {faq.q}
+                                <span className={`transition-transform duration-300 secondary_color ${openFaq === index ? 'rotate-180' : ''}`}>
+                                    <svg fill="none" height="24" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                                </span>
+                            </button>
+                            <div className={`transition-all duration-300 overflow-hidden ${openFaq === index ? 'max-h-40' : 'max-h-0'}`}>
+                                <div className="text-gray-600 px-6 pb-6 text-base bodyText">{faq.a}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* CTA SECTION */}
+            <section className="max-w-5xl mx-auto px-6">
+                <div className="bg-white p-12 lg:p-20 rounded-3xl shadow-2xl border border-gray-100 text-center relative overflow-hidden">
+                    <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#00adc4]/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-[#0859b8]/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div className="relative z-10">
+                        <div className="inline-block primary_color font-bold text-sm tracking-widest uppercase mb-4">Ready to Grow?</div>
+                        <h2 className="text-4xl md:text-5xl heading1 text-[#222222] mb-6">Ready to Grow Your Digital Presence?</h2>
+                        <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto bodyText">
+                            Start with the Free plan or unlock advanced data-driven marketing tools with Enterprise.
+                        </p>
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
+                            <Link to="/contact-us" className="primary_bg text-white font-bold py-4 px-10 rounded shadow-lg hover:bg-blue-800 transition text-lg">Get Started Free</Link>
+                            <Link to="/contact-us" className="bg-white border-2 border-gray-200 text-[#222222] font-bold py-4 px-10 rounded hover:border-[#0859b8] hover:text-[#0859b8] transition text-lg">Book a Demo</Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <Footer />
     </div>
   );
 }

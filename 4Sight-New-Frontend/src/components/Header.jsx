@@ -12,7 +12,7 @@ export default function Header() {
       slug: "strategy-planning",
       title: "Strategy Planning",
       desc: "Align teams, set goals, and cascade strategic OKRs.",
-      color: "from-purple-500 to-indigo-500",
+      color: "from-blue-600 to-cyan-500",
       icon: (
         <svg
           width="14"
@@ -35,7 +35,7 @@ export default function Header() {
       slug: "governance",
       title: "Governance",
       desc: "Monitor execution consistency and compliance.",
-      color: "from-pink-500 to-rose-500",
+      color: "from-blue-500 to-cyan-400",
       icon: (
         <svg
           width="14"
@@ -56,7 +56,7 @@ export default function Header() {
       slug: "optimization",
       title: "Optimization",
       desc: "Competitor positioning and visibility dashboards.",
-      color: "from-amber-500 to-orange-500",
+      color: "from-blue-400 to-cyan-300",
       icon: (
         <svg
           width="14"
@@ -146,7 +146,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full flex h-20 items-center justify-between px-6 lg:px-10 z-[100] bg-white/80 backdrop-blur-md border-b border-slate-200/50">
+    <header className=" heading2 fixed top-0 left-0 w-full flex h-20 items-center justify-between px-6 lg:px-10 z-[100] bg-white/95 backdrop-blur-lg border-b border-slate-200/80 shadow-sm">
 
       {/* Logo */}
       <Link to="/" className="logo shrink-0 flex items-center" title="Marketing 4Sight">
@@ -162,7 +162,7 @@ export default function Header() {
       {/* CENTER NAVIGATION - Desktop */}
       <div className="hidden md:flex flex-1 justify-center">
 
-        <nav className="main flex items-center gap-8" aria-label="Primary navigation">
+        <nav className="main font-extrabold text-[#1C1635] flex items-center gap-8" aria-label="Primary navigation">
 
           <NavLink
             to="/"
@@ -204,7 +204,7 @@ export default function Header() {
 
               <svg
                 className={`w-2.5 h-2.5 transition-transform duration-200 ${
-                  isOpen ? "rotate-180 text-purple-400" : ""
+                  isOpen ? "rotate-180 text-blue-500" : ""
                 }`}
                 viewBox="0 0 24 24"
                 fill="none"
@@ -219,52 +219,81 @@ export default function Header() {
 
             {/* Dropdown Menu */}
             <div
-              className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[460px] bg-slate-950/90 backdrop-blur-2xl border border-white/10 rounded-xl p-3.5 shadow-[0_15px_45px_rgba(0,0,0,0.8)] transition-all duration-200 origin-top z-[100] ${
+              className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[880px] bg-white/95 backdrop-blur-3xl rounded-3xl shadow-[0_40px_100px_rgba(8,89,184,0.15)] border border-gray-100 p-8 origin-top z-[100] transition-all duration-200 ${
                 isOpen
                   ? "opacity-100 scale-100 pointer-events-auto"
                   : "opacity-0 scale-95 pointer-events-none"
               }`}
             >
-              <div className="grid grid-cols-2 gap-2">
-
-                {dropdownItems.map((item) => (
-                  <Link
-                    key={item.slug}
-                    to={`/solutions/${item.slug}`}
-                    onClick={() => setIsOpen(false)}
-                    className="flex gap-2.5 p-2 rounded-lg hover:bg-white/5 transition-all text-left group/item"
-                  >
-                    <div
-                      className={`w-7 h-7 rounded bg-gradient-to-br ${item.color} flex items-center justify-center shrink-0 text-white`}
-                    >
-                      {item.icon}
+              <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                
+                <Link to="/solutions?tab=strategy-planning" onClick={() => setIsOpen(false)} className="flex items-start gap-4 group/item hover:bg-blue-50/80 p-4 rounded-2xl transition duration-300 cursor-pointer border border-transparent hover:border-blue-100">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover/item:bg-[#0859b8] group-hover/item:text-white group-hover/item:shadow-md transition-all text-[#0859b8]">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
                     </div>
-
                     <div>
-                      <h4 className="text-[11px] font-bold text-white tracking-wide group-hover/item:text-purple-400 transition-colors">
-                        {item.title}
-                      </h4>
-
-                      <p className="text-[9px] text-gray-400 leading-snug mt-0.5 font-light">
-                        {item.desc}
-                      </p>
+                        <h4 className="text-base font-bold text-[#1C1635] mb-1 group-hover/item:text-[#0859b8] transition">Strategy Planning</h4>
+                        <p className="text-xs text-gray-500 font-normal leading-relaxed">Align teams, set goals, and cascade strategic OKRs.</p>
                     </div>
-                  </Link>
-                ))}
-              </div>
-
-              <div className="border-t border-white/10 mt-3 pt-2.5 flex justify-between items-center text-[9px] font-medium tracking-wide">
-                <span className="text-gray-500">
-                  6 SPECIALIZED DOMAINS
-                </span>
-
-                <Link
-                  to="/solutions"
-                  onClick={() => setIsOpen(false)}
-                  className="text-purple-400 font-bold hover:text-purple-300 transition-colors flex items-center gap-0.5"
-                >
-                  Solutions Hub →
                 </Link>
+
+                <Link to="/solutions?tab=governance" onClick={() => setIsOpen(false)} className="flex items-start gap-4 group/item hover:bg-blue-50/80 p-4 rounded-2xl transition duration-300 cursor-pointer border border-transparent hover:border-blue-100">
+                    <div className="w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover/item:bg-[#00adc4] group-hover/item:text-white group-hover/item:shadow-md transition-all text-[#00adc4]">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <div>
+                        <h4 className="text-base font-bold text-[#1C1635] mb-1 group-hover/item:text-[#00adc4] transition">Governance</h4>
+                        <p className="text-xs text-gray-500 font-normal leading-relaxed">Monitor execution consistency and compliance.</p>
+                    </div>
+                </Link>
+
+                <Link to="/solutions?tab=optimization" onClick={() => setIsOpen(false)} className="flex items-start gap-4 group/item hover:bg-blue-50/80 p-4 rounded-2xl transition duration-300 cursor-pointer border border-transparent hover:border-blue-100">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover/item:bg-[#0859b8] group-hover/item:text-white group-hover/item:shadow-md transition-all text-[#0859b8]">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path></svg>
+                    </div>
+                    <div>
+                        <h4 className="text-base font-bold text-[#1C1635] mb-1 group-hover/item:text-[#0859b8] transition">Optimization</h4>
+                        <p className="text-xs text-gray-500 font-normal leading-relaxed">Competitor positioning and visibility dashboards.</p>
+                    </div>
+                </Link>
+
+                <Link to="/solutions?tab=multi-channel-ops" onClick={() => setIsOpen(false)} className="flex items-start gap-4 group/item hover:bg-blue-50/80 p-4 rounded-2xl transition duration-300 cursor-pointer border border-transparent hover:border-blue-100">
+                    <div className="w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover/item:bg-[#00adc4] group-hover/item:text-white group-hover/item:shadow-md transition-all text-[#00adc4]">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    </div>
+                    <div>
+                        <h4 className="text-base font-bold text-[#1C1635] mb-1 group-hover/item:text-[#00adc4] transition">Multi-Channel Ops</h4>
+                        <p className="text-xs text-gray-500 font-normal leading-relaxed">Process orchestration and publishing workflows.</p>
+                    </div>
+                </Link>
+
+                <Link to="/solutions?tab=organic-growth" onClick={() => setIsOpen(false)} className="flex items-start gap-4 group/item hover:bg-blue-50/80 p-4 rounded-2xl transition duration-300 cursor-pointer border border-transparent hover:border-blue-100">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover/item:bg-[#0859b8] group-hover/item:text-white group-hover/item:shadow-md transition-all text-[#0859b8]">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h4 className="text-base font-bold text-[#1C1635] mb-1 group-hover/item:text-[#0859b8] transition">Organic Growth</h4>
+                        <p className="text-xs text-gray-500 font-normal leading-relaxed">Local search GMB listings and keyword rank universes.</p>
+                    </div>
+                </Link>
+
+                <Link to="/solutions?tab=content-operations" onClick={() => setIsOpen(false)} className="flex items-start gap-4 group/item hover:bg-blue-50/80 p-4 rounded-2xl transition duration-300 cursor-pointer border border-transparent hover:border-blue-100">
+                    <div className="w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover/item:bg-[#00adc4] group-hover/item:text-white group-hover/item:shadow-md transition-all text-[#00adc4]">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7v12m0 0l-4-4m4 4l4-4M16 17V3m0 0l-4 4m4-4l4 4"></path></svg>
+                    </div>
+                    <div>
+                        <h4 className="text-base font-bold text-[#1C1635] mb-1 group-hover/item:text-[#00adc4] transition">Content Operations</h4>
+                        <p className="text-xs text-gray-500 font-normal leading-relaxed">Campaign-aligned asset planning and social flows.</p>
+                    </div>
+                </Link>
+
+              </div>
+              
+              <div className="mt-6 pt-6 border-t border-gray-100 flex justify-between items-center">
+                  <span className="text-gray-400 text-xs tracking-widest font-bold uppercase">6 Specialized Domains</span>
+                  <Link to="/solutions" onClick={() => setIsOpen(false)} className="text-[#0859b8] font-bold hover:text-[#00adc4] transition flex items-center gap-1 cursor-pointer">
+                      Explore Solutions Hub &rarr;
+                  </Link>
               </div>
             </div>
           </div>
@@ -304,7 +333,7 @@ export default function Header() {
       <div className="md:hidden flex items-center">
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="text-slate-800 hover:text-purple-600 transition-colors focus:outline-none p-2"
+          className="text-slate-800 hover:text-blue-600 transition-colors focus:outline-none p-2"
           aria-label="Toggle mobile menu"
         >
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -318,56 +347,56 @@ export default function Header() {
             <NavLink
               to="/"
               end
-              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-purple-500/20 text-purple-300" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
+              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Home
             </NavLink>
             <NavLink
               to="/about"
-              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-purple-500/20 text-purple-300" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
+              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Our Story
             </NavLink>
             <NavLink
               to="/product"
-              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-purple-500/20 text-purple-300" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
+              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Product
             </NavLink>
             <NavLink
               to="/solutions"
-              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-purple-500/20 text-purple-300" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
+              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Solutions
             </NavLink>
             <NavLink
               to="/pricing"
-              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-purple-500/20 text-purple-300" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
+              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Pricing
             </NavLink>
             <NavLink
               to="/resources"
-              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-purple-500/20 text-purple-300" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
+              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Resources
             </NavLink>
             <NavLink
               to="/contact-us"
-              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-purple-500/20 text-purple-300" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
+              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Contact Us
             </NavLink>
             <NavLink
               to="/compliance"
-              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-purple-500/20 text-purple-300" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
+              className={({ isActive }) => `px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Compliance

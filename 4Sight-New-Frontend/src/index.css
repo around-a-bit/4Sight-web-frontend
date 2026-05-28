@@ -10,11 +10,11 @@
   --ink-mute: #9A92B4;
   --line: #E7E1F2;
   --line-soft: #F0EBF8;
-  --violet: #7C3AED;
-  --violet-2: #A78BFA;
-  --violet-soft: #EDE6FB;
-  --magenta: #DB2777;
-  --magenta-soft: #FCE7F1;
+  --violet: #0859b8;
+  --violet-2: #1073e6;
+  --violet-soft: #e6f0fa;
+  --magenta: #00adc4;
+  --magenta-soft: #e6f9fc;
   --orange: #EA580C;
   --mint: #0EA372;
   --shadow-md: 0 12px 32px -16px rgba(124, 58, 237, .25), 0 4px 12px -6px rgba(36, 22, 80, .08);
@@ -25,12 +25,61 @@
   box-sizing: border-box;
 }
 
+.primary_bg {
+    background-color: #0859b8;
+}
+
+.primary_color {
+    color: #0859b8;
+}
+
+.secondary_color {
+    color: #00adc4;
+}
+
+.secondary_bg{
+    background-color: #00adc4;
+}
+
+.backgroupnd_color {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+}
+
+.text_color {
+    color: #222222;
+}
+
+.accent_color {
+    color: #e7eb90;
+}
+
+.heading1 {
+  font-family: 'Area Normal Black';
+}
+
+.heading2 {
+  font-family: 'Area Normal Bold';
+}
+
+.bodyText {
+  font-family: 'DIN 2014 Light';
+}
+
+.smallText {
+  font-family: 'DIN 2014 Regular';
+}
+
+.button-font {
+    font-family: 'Area Normal Black';
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: var(--bg);
+  background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: "Plus Jakarta Sans", system-ui, sans-serif;
 }
