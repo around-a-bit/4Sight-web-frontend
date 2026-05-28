@@ -1,182 +1,185 @@
-import { useState } from 'react';
-import Footer from './Footer';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Footer from "./Footer";
+
+import imgPlatforms from '../assets/ecosystem_platforms.png';
+import imgConsulting from '../assets/ecosystem_consulting.png';
+import imgServices from '../assets/ecosystem_services.png';
+import imgAcademics from '../assets/ecosystem_academics.png';
 
 export default function About() {
-  const [activeEcosystem, setActiveEcosystem] = useState('platforms');
+  useEffect(() => {
+    const reveals = document.querySelectorAll('.reveal');
+    const revealOnScroll = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { root: null, threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
-  const ecosystemDetails = {
-    consulting: {
-      title: 'Consulting Engine',
-      desc: 'Deep structural consulting to align organizational goals, target audiences, and operational processes before launching any software.'
-    },
-    services: {
-      title: 'Services Group',
-      desc: 'Expert execution services providing dedicated support in technical SEO execution, GMB verification audits, media booking, and direct funnel building.'
-    },
-    academics: {
-      title: 'Academics & Research',
-      desc: 'Ongoing research and education on data systems, behavioral science, and structured management models to guide future platform iterations.'
-    },
-    platforms: {
-      title: 'Platforms (Marketing 4Sight)',
-      desc: "Quantyra's flagship marketing OS. A software ecosystem designed to automate and enforce clean strategy-to-execution pipelines for modern marketing operations."
-    }
-  };
+    reveals.forEach(reveal => revealOnScroll.observe(reveal));
+    
+    return () => reveals.forEach(reveal => revealOnScroll.unobserve(reveal));
+  }, []);
 
   return (
-    <div className="relative w-full min-h-screen overflow-y-auto bg-transparent">
-
-      {/* ============ SECTION 1: OUR STORY ============ */}
-      <section className="min-h-[85vh] flex items-center justify-center pt-32 pb-20 px-6 md:px-12 relative">
-        <div className="w-full max-w-[820px] mx-auto text-center">
-          <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--violet-soft)] text-[var(--violet)] text-[11px] font-bold tracking-[0.2em] uppercase border border-[var(--line)] mb-6">
-            Our Story
-          </span>
-          <h1 className="mb-6 text-[var(--ink)] font-extrabold text-4xl md:text-5xl lg:text-[62px] leading-tight tracking-tight">
-            We're Bringing Structure to <span className="bg-gradient-to-r from-[var(--violet)] to-[var(--magenta)] bg-clip-text text-transparent">#ModernMarketing.</span>
-          </h1>
-          <div className="space-y-4 max-w-2xl mx-auto">
-            <p className="text-[var(--ink-dim)] text-sm md:text-base leading-relaxed font-light">
-              A structured marketing platform built to bring <strong className="font-bold text-[var(--violet)]">clarity</strong> to how marketing is planned, executed, and improved.
-            </p>
-            <p className="text-[var(--ink-dim)] text-sm md:text-base leading-relaxed font-light">
-              Built as part of Quantyra's AI and data-driven ecosystem, Marketing 4Sight connects <strong className="font-bold text-[var(--violet)]">direction, execution, and outcomes</strong> into a single, continuous system.
-            </p>
-            <p className="text-[var(--ink-dim)] text-sm md:text-base leading-relaxed font-light">
-              As marketing has become more complex, the need for structure has become critical. Marketing 4Sight ensures that activities remain aligned, visible, and measurable across the entire workflow.
-            </p>
-          </div>
+    <div className="text-[#222222] antialiased selection:bg-[#e7eb90] selection:text-[#222222] font-['Helvetica_Neue',sans-serif]">
+        
+        {/* GLOBAL ANIMATED BACKGROUND */}
+        <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+            <div className="absolute top-[-10%] left-[10%] w-[300px] h-[300px] bg-[#0859b8]/10 rounded-full blur-[50px] mix-blend-multiply animate-blob"></div>
+            <div className="absolute top-[20%] right-[10%] w-[450px] h-[450px] bg-[#00adc4]/10 rounded-full blur-[50px] mix-blend-multiply animate-blob animation-delay-2000"></div>
+            <div className="absolute bottom-[10%] left-[40%] w-[250px] h-[250px] bg-[#0859b8]/10 rounded-full blur-[50px] mix-blend-multiply animate-blob animation-delay-4000"></div>
+            <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
         </div>
-      </section>
 
-      {/* ============ SECTION 2: QUANTYRA ============ */}
-      <section className="py-20 px-6 md:px-12 relative">
-        <div className="w-full max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--violet-soft)] text-[var(--violet)] text-[11px] font-bold tracking-[0.2em] uppercase border border-[var(--line)] mb-5">
-              Quantyra Ecosystem
-            </span>
-            <h2 className="mb-4 text-[var(--ink)] font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight">
-              Quantyra<br />— The <em className="not-italic font-extrabold bg-gradient-to-r from-[var(--violet)] to-[var(--magenta)] bg-clip-text text-transparent">Thinking</em> Behind the Platform
-            </h2>
-            <p className="mb-6 text-[var(--violet)] text-sm font-bold italic">Built within a larger ecosystem of structured intelligence.</p>
+        <main className="relative z-10">
+            {/* 1. FIRST SCROLL: HERO SECTION */}
+            <section className="relative pt-32 pb-24  lg:pb-32 overflow-hidden reveal transition-all duration-700 opacity-0 translate-y-10">
+                <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10 text-center">
+                    <h1 className="text-5xl lg:text-7xl heading1 primary_color leading-tight mb-8">
+                        We’re Bringing Structure to <span className="secondary_color inline-block transition-transform hover:scale-105 duration-300">#ModernMarketing.</span>
+                    </h1>
+                    <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed bodyText max-w-3xl mx-auto">
+                        A structured marketing platform built to bring clarity to how marketing is planned, executed, and improved.
+                    </p>
+                    <p className="text-lg text-gray-500 max-w-3xl mx-auto mb-12 bodyText">
+                        Built as part of Quantyra’s AI and data-driven ecosystem, Marketing 4Sight connects direction, execution, and outcomes into a single, continuous system. As marketing has become more complex, the need for structure has become critical. Marketing 4Sight ensures that activities remain aligned, visible, and measurable across the entire workflow.
+                    </p>
+                </div>
+            </section>
 
-            <div className="max-w-2xl mx-auto space-y-3">
-              <p className="text-[var(--ink-dim)] text-sm leading-relaxed font-light">Quantyra is an AI and data-driven organization with offerings across Consulting, Services, Academics, and Platforms.</p>
-              <p className="text-[var(--ink-dim)] text-sm leading-relaxed font-light">The organization is built on a simple belief: as business environments become more complex, decisions need stronger systems, clearer inputs, and better visibility.</p>
-            </div>
+            {/* 2. SECOND SCROLL: QUANTYRA ECOSYSTEM */}
+            <section className="py-24 primary_bg backdrop-blur-md text-white relative border-y border-blue-900 reveal transition-all duration-700 opacity-0 translate-y-10">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                    <div className="text-center max-w-3xl mx-auto mb-16 bodyText">
+                        <h2 className="text-4xl heading1 mb-6 text-white">Quantyra — The Thinking Behind the Platform</h2>
+                        <p className="text-xl text-blue-100 mb-4">Built within a larger ecosystem of structured intelligence.</p>
+                        <p className="text-blue-200 text-lg">
+                            Quantyra is an AI and data-driven organization with offerings across Consulting, Services, Academics, and Platforms. The organization is built on a simple belief: as business environments become more complex, decisions need stronger systems, clearer inputs, and better visibility.
+                        </p>
+                    </div>
 
-            {/* Dynamic Interactive Detail Block */}
-            <div className="bg-[var(--paper)] border border-[var(--line)] p-5 rounded-2xl max-w-xl mx-auto mt-8 text-left shadow-sm">
-              <span className="text-[10px] text-[var(--violet)] uppercase font-black tracking-wider block mb-2">Ecosystem Focus: {activeEcosystem}</span>
-              <strong className="text-base text-[var(--ink)] block mb-2 font-bold">{ecosystemDetails[activeEcosystem].title}</strong>
-              <p className="text-xs text-[var(--ink-dim)] leading-relaxed">{ecosystemDetails[activeEcosystem].desc}</p>
-            </div>
-          </div>
+                    {/* Ecosystem Grid */}
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-5xl mx-auto">
+                        {/* Platform Highlighted (Moved to first) */}
+                        <div className="group border-2 border-[#00adc4] bg-[#00adc4]/20 p-8 rounded-xl text-center backdrop-blur-md relative transform lg:-translate-y-4 shadow-[0_0_40px_rgba(0,173,196,0.3)] hover:shadow-[0_0_60px_rgba(0,173,196,0.5)] hover:-translate-y-6 transition-all duration-500 bodyText cursor-default">
+                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 secondary_bg text-xs font-bold text-white px-3 py-1 rounded-full whitespace-nowrap shadow-md">Marketing 4Sight</div>
+                            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 overflow-hidden border-2 border-white/20 shadow-lg group-hover:border-[#e7eb90] transition-colors duration-500">
+                                <img src={imgPlatforms} alt="Platforms" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white heading2 group-hover:text-[#e7eb90] transition-colors duration-500">Platforms</h3>
+                        </div>
+                        <div className="group border border-blue-700 bg-blue-900/40 p-8 rounded-xl text-center backdrop-blur-sm hover:border-[#00adc4]/70 hover:bg-blue-800/60 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(0,173,196,0.15)] transition-all duration-500 bodyText cursor-default">
+                            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 overflow-hidden border-2 border-white/10 shadow-lg">
+                                <img src={imgConsulting} alt="Consulting" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white heading2 group-hover:text-[#00adc4] transition-colors duration-500">Consulting</h3>
+                        </div>
+                        <div className="group border border-blue-700 bg-blue-900/40 p-8 rounded-xl text-center backdrop-blur-sm hover:border-[#00adc4]/70 hover:bg-blue-800/60 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(0,173,196,0.15)] transition-all duration-500 bodyText cursor-default">
+                            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 overflow-hidden border-2 border-white/10 shadow-lg">
+                                <img src={imgServices} alt="Services" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white heading2 group-hover:text-[#00adc4] transition-colors duration-500">Services</h3>
+                        </div>
+                        <div className="group border border-blue-700 bg-blue-900/40 p-8 rounded-xl text-center backdrop-blur-sm hover:border-[#00adc4]/70 hover:bg-blue-800/60 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(0,173,196,0.15)] transition-all duration-500 bodyText cursor-default">
+                            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 overflow-hidden border-2 border-white/10 shadow-lg">
+                                <img src={imgAcademics} alt="Academics" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white heading2 group-hover:text-[#00adc4] transition-colors duration-500">Academics</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-[720px] mx-auto">
-            {Object.keys(ecosystemDetails).map((key) => (
-              <button
-                key={key}
-                className={`min-h-[76px] grid place-items-center p-4 border rounded-xl text-xs font-semibold transition-all duration-300 hover:-translate-y-1 cursor-pointer ${activeEcosystem === key ? 'border-transparent bg-gradient-to-br from-[var(--violet)] to-[var(--magenta)] text-white shadow-lg shadow-purple-500/30' : 'border-[var(--line)] bg-[var(--paper)] text-[var(--ink-2)] hover:border-[var(--violet-2)] hover:shadow-md'}`}
-                onClick={() => setActiveEcosystem(key)}
-                type="button"
-              >
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+            {/* 3. THIRD SCROLL: WHY IT EXISTS */}
+            <section className="py-24 border-b border-gray-200/50 reveal transition-all duration-700 opacity-0 translate-y-10">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 className="text-4xl heading1 primary_color mb-6">Why Marketing 4Sight Exists</h2>
+                        <h3 className="text-2xl text-[#222222] mb-6 font-bold heading2">Marketing needs more structure, not more fragmentation.</h3>
+                        <p className="text-lg text-gray-600 mb-6 leading-relaxed bodyText">
+                            Marketing today involves multiple activities, channels, teams, and tools. While execution has become faster, maintaining alignment across all moving parts has become increasingly difficult. This often creates gaps between what is planned, what gets executed, and what ultimately drives outcomes.
+                        </p>
+                        <p className="text-lg text-gray-600 leading-relaxed bodyText">
+                            Marketing 4Sight is built to address this by creating a connected system — where <span className="font-bold primary_color">strategy</span> defines direction, <span className="font-bold primary_color">implementation</span> drives execution, <span className="font-bold primary_color">governance</span> ensures consistency, and <span className="font-bold primary_color">optimization</span> continuously improves performance.
+                        </p>
+                    </div>
+                    
+                    <div className="relative h-96 bg-white/60 backdrop-blur-xl rounded-2xl border border-gray-200 p-8 flex flex-col justify-between overflow-hidden shadow-xl group">
+                        <div className="flex justify-between gap-4 mb-8 opacity-50 group-hover:opacity-30 transition">
+                            <div className="w-1/3 h-12 border border-dashed border-gray-400 rounded-lg"></div>
+                            <div className="w-1/4 h-12 border border-dashed border-gray-400 rounded-lg translate-y-4"></div>
+                            <div className="w-1/3 h-12 border border-dashed border-gray-400 rounded-lg -translate-y-2"></div>
+                        </div>
+                        <div className="flex justify-center text-gray-300 z-10">
+                            <svg className="w-10 h-10 animate-bounce secondary_color" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        </div>
+                        <div className="mt-8 z-10">
+                            <div className="w-full bg-white shadow-lg border-l-4 border-[#0859b8] p-4 rounded-md flex items-center justify-between relative transform group-hover:-translate-y-2 transition">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-3 h-3 secondary_bg rounded-full animate-pulse"></div>
+                                    <span className="font-bold text-[#222222] text-sm uppercase tracking-wider bodyText">Unified Marketing System</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-      {/* ============ SECTION 3: WHY 4SIGHT EXISTS ============ */}
-      <section className="py-20 px-6 md:px-12 relative">
-        <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 lg:gap-24 items-center">
-          <div className="max-w-[720px]">
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--violet-soft)] text-[var(--violet)] text-[11px] font-bold tracking-[0.2em] uppercase border border-[var(--line)] mb-5">
-              Our Purpose
-            </span>
-            <h2 className="mb-4 text-[var(--ink)] font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight">
-              Why Marketing <em className="not-italic font-extrabold bg-gradient-to-r from-[var(--violet)] to-[var(--magenta)] bg-clip-text text-transparent">4Sight</em> Exists
-            </h2>
-            <p className="mb-5 text-[var(--violet)] text-sm font-bold italic">Marketing needs more structure, not more fragmentation.</p>
-            <div className="space-y-3">
-              <p className="text-[var(--ink-dim)] text-sm leading-relaxed font-light">Marketing today involves multiple activities, channels, teams, and tools. While execution has become faster, maintaining alignment across all moving parts has become increasingly difficult.</p>
-              <p className="text-[var(--ink-dim)] text-sm leading-relaxed font-light">This often creates gaps between what is planned, what gets executed, and what ultimately drives outcomes.</p>
-              <p className="text-[var(--ink-dim)] text-sm leading-relaxed font-light">Marketing 4Sight is built to address this by creating a connected system — where <strong className="font-bold text-[var(--violet)]">strategy</strong> defines direction, <strong className="font-bold text-[var(--violet)]">implementation</strong> drives execution, governance ensures consistency, and optimization continuously improves performance.</p>
-            </div>
-          </div>
+            {/* 4. FOURTH SCROLL: WHAT MAKES IT DIFFERENT */}
+            <section className="py-24 bg-white/40 backdrop-blur-sm reveal transition-all duration-700 opacity-0 translate-y-10">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <h2 className="text-4xl heading1 primary_color mb-6">What Makes Marketing 4Sight Different</h2>
+                        <p className="text-lg text-gray-600 bodyText">
+                            Marketing 4Sight is built with a different approach — not as a set of features, but as a system that connects how marketing decisions are made, executed, and improved over time. This ensures clarity is maintained across the entire workflow, not just at individual stages.
+                        </p>
+                    </div>
 
-          <div className="grid gap-5 justify-items-center relative">
-            {/* Connection Line */}
-            <div className="absolute top-[43px] bottom-[43px] left-1/2 -translate-x-1/2 w-1 bg-gradient-to-b from-[var(--violet-soft)] to-[var(--magenta-soft)] -z-10"></div>
+                    <div className="grid md:grid-cols-2 gap-8 bodyText">
+                        {[
+                            { title: 'Structure-led', desc: 'Organizes marketing into a clear framework instead of disconnected activities.', icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' },
+                            { title: 'Continuity-focused', desc: 'Supports an ongoing cycle of planning, execution, visibility, and improvement.', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' },
+                            { title: 'Decision-oriented', desc: 'Helps prioritize what to focus on and how to act based on evolving needs.', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+                            { title: 'Operational visibility', desc: 'Keeps activities and outcomes visible in one place for better control and consistency.', icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' }
+                        ].map((item, i) => (
+                            <div key={i} className="bg-white/80 backdrop-blur-md p-10 rounded-xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-[#0859b8] hover:-translate-y-2 transition-all duration-300 group flex items-start space-x-6 cursor-default">
+                                <div className="flex-shrink-0 w-14 h-14 bg-blue-50 text-[#0859b8] rounded-xl flex items-center justify-center group-hover:bg-[#0859b8] group-hover:text-white group-hover:shadow-lg transition-all duration-300">
+                                    <svg className="w-7 h-7 transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path></svg>
+                                </div>
+                                <div>
+                                    <h3 className="text-2xl font-bold mb-3 text-[#222222] group-hover:text-[#0859b8] transition-colors duration-300 heading2">{item.title}</h3>
+                                    <p className="text-gray-600">{item.desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
-            {['Strategy', 'Implementation', 'Governance', 'Optimization'].map((step, i) => (
-              <div key={step} className={`w-[270px] min-h-[86px] grid place-items-center border rounded-2xl text-base font-bold shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${i === 0 || i === 3 ? 'bg-gradient-to-br from-white to-[var(--violet-soft)] text-[var(--violet)] border-[var(--violet-2)]/30' : 'bg-[var(--paper)] text-[var(--ink)] border-[var(--line)]'}`}>
-                <span>{step}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            {/* 5. FIFTH SCROLL: FOOTER & CTA */}
+            <section className="bg-gradient-to-r from-[#0859b8] to-[#00adc4] text-white py-24 text-center relative overflow-hidden reveal transition-all duration-700 opacity-0 translate-y-10">
+                {/* Subtle abstract background elements */}
+                <div className="absolute w-[800px] h-[800px] bg-white rounded-full opacity-5 blur-[100px] -top-[400px] -left-[200px] pointer-events-none"></div>
+                <div className="absolute w-[600px] h-[600px] bg-[#e7eb90] rounded-full opacity-10 blur-[100px] -bottom-[200px] -right-[100px] pointer-events-none"></div>
 
-      {/* ============ SECTION 4: WHAT MAKES IT DIFFERENT ============ */}
-      <section className="py-20 px-6 md:px-12 relative">
-        <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="max-w-[520px]">
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--violet-soft)] text-[var(--violet)] text-[11px] font-bold tracking-[0.2em] uppercase border border-[var(--line)] mb-5">
-              Our Approach
-            </span>
-            <h2 className="mb-6 text-[var(--ink)] font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight">
-              What Makes Marketing <em className="not-italic font-extrabold bg-gradient-to-r from-[var(--violet)] to-[var(--magenta)] bg-clip-text text-transparent">4Sight</em> Different
-            </h2>
-            <p className="mb-3 text-[var(--ink-dim)] text-sm leading-relaxed font-light">Marketing 4Sight is built with a different approach — not as a set of features, but as a <strong className="font-bold text-[var(--violet)]">system</strong> that connects how marketing decisions are made, executed, and improved over time.</p>
-            <p className="text-[var(--ink-dim)] text-sm leading-relaxed font-light">This ensures clarity is maintained across the entire workflow, not just at individual stages.</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 border border-[var(--line)] rounded-3xl bg-[var(--paper)] shadow-xl overflow-hidden">
-            {[
-              { num: '01', title: 'Structure-led', desc: 'Organizes marketing into a clear framework instead of disconnected activities.' },
-              { num: '02', title: 'Continuity-focused', desc: 'Supports an ongoing cycle of planning, execution, visibility, and improvement.' },
-              { num: '03', title: 'Decision-oriented', desc: 'Helps prioritize what to focus on and how to act based on evolving needs.' },
-              { num: '04', title: 'Operational visibility', desc: 'Keeps activities and outcomes visible in one place for better control.' }
-            ].map((item, i) => (
-              <div key={item.num} className={`min-h-[158px] p-6 md:p-8 flex flex-col justify-center text-center relative transition-all duration-300 hover:bg-[var(--violet-soft)]/20 ${i === 0 || i === 1 ? 'border-b border-[var(--line)]' : ''} ${i === 0 || i === 2 ? 'sm:border-r border-[var(--line)]' : ''}`}>
-                <span className="absolute top-4 left-5 text-[var(--violet)]/30 font-bold text-xs tracking-widest">{item.num}</span>
-                <h3 className="mb-2 text-[var(--ink)] font-bold text-base">{item.title}</h3>
-                <div className="w-8 h-0.5 bg-gradient-to-r from-[var(--violet)] to-[var(--magenta)] mx-auto mb-3 opacity-60 rounded-full"></div>
-                <p className="text-[var(--ink-dim)] text-xs leading-relaxed font-light">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============ SECTION 5: CTA ============ */}
-      <section className="py-20 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto">
-          <div className="relative w-full text-center p-10 md:p-16 rounded-3xl bg-[var(--paper)] border border-[var(--line)] shadow-lg overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--violet-soft)] to-[var(--magenta-soft)] opacity-20 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none"></div>
-
-            <span className="text-[11px] font-bold text-[var(--violet)] uppercase tracking-[0.2em] block relative z-10 mb-4">
-              Take Action
-            </span>
-            <h2 className="mb-8 text-[var(--ink)] font-extrabold text-2xl md:text-4xl leading-tight tracking-tight relative z-10">
-              Bring Structure to How Your <br className="hidden md:block"/>
-              <span className="bg-gradient-to-r from-[var(--violet)] to-[var(--magenta)] bg-clip-text text-transparent">Marketing Operates.</span>
-            </h2>
-            <button className="relative z-10 group/btn inline-flex items-center justify-center gap-3 btn-solid font-bold py-3.5 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 hover:scale-105">
-              <span>Book a live demo</span>
-              <svg className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
+                <div className="max-w-4xl mx-auto px-6 relative z-10">
+                    <h2 className="text-4xl lg:text-5xl heading1 mb-10 leading-tight drop-shadow-sm">See how Marketing 4Sight works in practice.</h2>
+                    <Link to="/contact-us" className="bg-[#e7eb90] text-[#1c1635] font-extrabold py-4 px-12 rounded-full hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(231,235,144,0.4)] transition-all duration-300 text-lg inline-block heading2 uppercase tracking-widest">
+                        Book a Demo
+                    </Link>
+                </div>
+            </section>
+        </main>
+        <Footer />
+        <style dangerouslySetInnerHTML={{__html: `
+            .reveal.active {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+        `}} />
     </div>
   );
 }
