@@ -1,75 +1,33 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext';
-import { AuthProvider } from './context/AuthContext';
-import { MainLayout } from './components/layout';
-import { AuthModal, ProtectedRoute } from './components/auth';
-import {
-  HomePage,
-  ProductPage,
-  KnowledgeBasePage,
-  ArticleDetailPage,
-  CommunityPage,
-  ROICalculatorPage,
-  SEOAnalyzerPage,
-  TrendTrackerPage,
-  AIAssistantPage,
-  LoginPage,
-  SignupPage,
-  SEOMaturityGraderPage,
-} from './pages';
-import './styles/index.css';
+import Layout from './layout';
+import Homepage from './components/Homepage';
+import About from './components/About';
+import Product from './components/Product';
+import ContactUs from './components/ContactUs';
+import './App.css';
+import Compliance from './components/Compliance';
+import Resources from './components/Resources';
+import BlogDetail from './components/BlogDetail';
+import Pricing from './components/Pricing';
+import SolutionsHub from './components/SolutionsHub';
 
-function App() {
+export default function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <Router>
-          {/* Global Auth Modal */}
-          <AuthModal />
-
-          <Routes>
-            {/* Auth Pages (outside layout) */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-
-            {/* Main App Routes */}
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="product" element={<ProductPage />} />
-              <Route path="knowledge" element={<KnowledgeBasePage />} />
-              <Route path="knowledge/:slug" element={<ArticleDetailPage />} />
-              <Route path="community" element={<CommunityPage />} />
-
-              {/* Protected Calculator Routes */}
-              <Route path="community/roi-calculator" element={
-                <ProtectedRoute>
-                  <ROICalculatorPage />
-                </ProtectedRoute>
-              } />
-              <Route path="community/seo-analyzer" element={
-                <ProtectedRoute>
-                  <SEOAnalyzerPage />
-                </ProtectedRoute>
-              } />
-              <Route path="community/trend-tracker" element={
-                <ProtectedRoute>
-                  <TrendTrackerPage />
-                </ProtectedRoute>
-              } />
-              <Route path="community/ai-assistant" element={
-                <ProtectedRoute>
-                  <AIAssistantPage />
-                </ProtectedRoute>
-              } />
-
-              {/* SEO Maturity Grader - Public route */}
-              <Route path="community/seo-maturity-grader" element={<SEOMaturityGraderPage />} />
-            </Route>
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </ThemeProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Homepage />} />
+          <Route path="about" element={<About />} />
+          <Route path="product" element={<Product />} />
+          <Route path="contact-us" element={<ContactUs />} />
+          <Route path="pricing" element={<Pricing />} />
+          <Route path="solutions" element={<SolutionsHub />} />
+          <Route path="compliance" element={<Compliance />} />
+          <Route path="resources" element={<Resources />} />
+          <Route path="resources/:slug" element={<BlogDetail />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
-export default App;
