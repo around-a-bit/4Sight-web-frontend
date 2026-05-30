@@ -454,8 +454,8 @@ export default function Homepage() {
                                 <div className="flex items-center gap-4">
                                     <div>
                                         <p className="heading1 font-bold text-slate-900 text-base leading-tight">Indranil Mandal</p>
-                                        <p className="text-xs text-[#0859b8] font-semibold uppercase tracking-wider mt-0.5">Founder - Bombay Local</p>
-                                        <p className="text-xs text-slate-600 mt-0.5">Maharashtrian Specialty Restaurant</p>
+                                        <p className="text-xs text-[#0859b8] font-semibold uppercase tracking-wider mt-0.5">Founder</p>
+                                        <p className="text-xs text-slate-600 mt-0.5">Bombay Local</p>
                                     </div>
                                 </div>
                             </div>
@@ -476,8 +476,8 @@ export default function Homepage() {
                                 <div className="flex items-center gap-4">
                                     <div>
                                         <p className="heading1 font-bold text-slate-900 text-base leading-tight">Jagannath Thakur</p>
-                                        <p className="text-xs text-[#0859b8] font-semibold uppercase tracking-wider mt-0.5">Founder - enpropeL</p>
-                                        <p className="text-xs text-slate-600 mt-0.5">Jagannath's Affiliation</p>
+                                        <p className="text-xs text-[#0859b8] font-semibold uppercase tracking-wider mt-0.5">Founder</p>
+                                        <p className="text-xs text-slate-600 mt-0.5">enpropeL</p>
                                     </div>
                                 </div>
                             </div>
