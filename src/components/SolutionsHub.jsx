@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import Footer from './Footer';
 
 import strategyDashboard from '../assets/strategy-dashboard.png';
@@ -305,7 +305,7 @@ export default function SolutionsHub() {
                                 </div>
                                 <h1 className="heading1 text-4xl lg:text-6xl primary_color leading-[1.1] mb-6">{data.title}</h1>
                                 <p className="bodyText text-lg text-gray-600 mb-10 leading-relaxed">{data.desc}</p>
-                                <a href="#demo" className="primary_bg text-white font-bold py-4 px-10 rounded-2xl hover:opacity-90 transition shadow-[0_10px_30px_rgba(8,89,184,0.3)] text-lg inline-block">Book a Demo</a>
+                                <Link to="/contact-us" className="primary_bg text-white font-bold py-4 px-10 rounded-2xl hover:opacity-90 transition shadow-[0_10px_30px_rgba(8,89,184,0.3)] text-lg inline-block">Book a Demo</Link>
                             </div>
                             <div className="bg-white/70 backdrop-blur-2xl p-2 rounded-3xl border border-white shadow-[0_20px_60px_rgba(0,0,0,0.05)] flex items-center justify-center transform hover:scale-[1.02] transition duration-500 overflow-hidden">
                                 {data.imageSrc ? (
@@ -356,7 +356,7 @@ export default function SolutionsHub() {
                             <h2 className="heading1 text-4xl md:text-5xl mb-6">{data.centerTitle}</h2>
                             <p className="bodyText text-blue-100 text-xl max-w-3xl mx-auto mb-16 leading-relaxed">{data.centerDesc}</p>
                             
-                            <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 aspect-[16/9] w-full flex items-center justify-center p-6 shadow-[0_30px_60px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition duration-700 cursor-pointer group">
+                            <Link to="/product#video" className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 aspect-[16/9] w-full flex items-center justify-center p-6 shadow-[0_30px_60px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition duration-700 cursor-pointer group block">
                                 <div className="text-center transition duration-500 group-hover:-translate-y-2">
                                     <div className="w-20 h-20 bg-[#e7eb90] text-[#1C1635] rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(231,235,144,0.4)] group-hover:scale-110 transition duration-500">
                                         <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
@@ -364,7 +364,7 @@ export default function SolutionsHub() {
                                     <p className="text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-3">System Workspace Preview</p>
                                     <p className="heading2 text-white max-w-sm mx-auto text-lg">{data.centerImg}</p>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </section>
 
@@ -393,7 +393,7 @@ export default function SolutionsHub() {
                         <div className="max-w-4xl mx-auto px-6">
                             <h2 className="heading1 text-4xl md:text-5xl primary_color mb-6">{data.ctaText}</h2>
                             <p className="bodyText text-gray-600 text-xl mb-12">{data.ctaDesc}</p>
-                            <a href="#demo" className="primary_bg text-white font-bold py-4 px-12 rounded-2xl hover:opacity-90 transition shadow-xl shadow-blue-900/20 text-lg inline-block hover:-translate-y-1">Book a Demo</a>
+                            <Link to="/contact-us" className="primary_bg text-white font-bold py-4 px-12 rounded-2xl hover:opacity-90 transition shadow-xl shadow-blue-900/20 text-lg inline-block hover:-translate-y-1">Book a Demo</Link>
                         </div>
                     </section>
 
@@ -486,9 +486,9 @@ export default function SolutionsHub() {
                     <div className="max-w-4xl mx-auto px-6">
                         <h2 className="heading1 text-4xl lg:text-5xl mb-8 leading-tight primary_color">Ready to transform your operations?</h2>
                         <p className="bodyText text-gray-600 mb-10 text-lg">Connect your strategy, execution, and performance in one place.</p>
-                        <a href="#demo" className="primary_bg text-white font-bold py-4 px-14 rounded-2xl hover:opacity-90 transition text-lg inline-block shadow-xl shadow-blue-900/20">
+                        <Link to="/contact-us" className="primary_bg text-white font-bold py-4 px-14 rounded-2xl hover:opacity-90 transition text-lg inline-block shadow-xl shadow-blue-900/20">
                             Book a Demo Today
-                        </a>
+                        </Link>
                     </div>
                 </footer>
 
