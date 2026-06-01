@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "../components/Footer";
 import { ShieldCheck, ScrollText, CreditCard, Cookie } from "lucide-react";
 
 // ... [data definition kept unchanged but not shown here because replace block needs full text for those lines]

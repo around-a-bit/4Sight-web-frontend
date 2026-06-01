@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { blogsData } from '../data/blogsData';
 import { ArrowLeft, Clock, User, Calendar, Share2, ArrowRight } from 'lucide-react';
-import Footer from './Footer';
+import Footer from '../components/Footer';
 
 export default function BlogDetail() {
   const { slug } = useParams();
