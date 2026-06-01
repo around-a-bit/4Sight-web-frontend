@@ -39,7 +39,7 @@ export default function Product() {
                 <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-[#e7eb90]/20 rounded-full blur-3xl mix-blend-multiply animate-blob"></div>
                 <div className="absolute top-[20%] right-[-10%] w-[35vw] h-[35vw] bg-blue-300/20 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-2000"></div>
                 <div className="absolute bottom-[-10%] left-[20%] w-[45vw] h-[45vw] bg-[#00adc4]/10 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-4000"></div>
-                <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
+                <div className="absolute inset-0 bg-white/40"></div>
             </div>
 
             <main className="relative z-10">
@@ -150,7 +150,7 @@ export default function Product() {
                 </section>
 
                 {/* 4. FOURTH SCROLL: SIGO FRAMEWORK */}
-                <section className="py-24 bg-white/40 backdrop-blur-sm">
+                <section className="py-24 bg-white/95">
                     <div className="max-w-7xl mx-auto px-6 lg:px-8">
                         <div className="text-center max-w-3xl mx-auto mb-20 reveal transition-all duration-700 opacity-0 translate-y-10">
                             <h2 className="text-4xl heading1 primary_color mb-6">The SIGO Framework Behind Marketing4Sight.</h2>
@@ -245,7 +245,7 @@ export default function Product() {
                 </section>
 
                 {/* 7. SEVENTH SCROLL: FAQ */}
-                <section className="py-24 bg-white/60 backdrop-blur-sm">
+                <section className="py-24 bg-white/95">
                     <div className="max-w-4xl mx-auto px-6 lg:px-8 reveal transition-all duration-700 opacity-0 translate-y-10">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl heading1 primary_color mb-4">Frequently Asked Questions</h2>
