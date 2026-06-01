@@ -268,7 +268,7 @@ export default function Compliance() {
         <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-[#e7eb90]/20 rounded-full blur-3xl mix-blend-multiply animate-blob"></div>
         <div className="absolute top-[20%] right-[-10%] w-[35vw] h-[35vw] bg-blue-300/20 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-2000"></div>
         <div className="absolute bottom-[-10%] left-[20%] w-[45vw] h-[45vw] bg-[#00adc4]/10 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-4000"></div>
-        <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
+        <div className="absolute inset-0 bg-white/40"></div>
       </div>
 
       <main className="pt-36 pb-24 min-h-screen relative z-10">
@@ -291,7 +291,7 @@ export default function Compliance() {
 
             {/* LEFT SIDEBAR (Sticky Navigation) */}
             <div className="lg:col-span-4 lg:sticky lg:top-36 z-10">
-              <div className="bg-white/70 backdrop-blur-2xl p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white relative overflow-hidden">
+              <div className="bg-white/95 p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white relative overflow-hidden">
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#00adc4]/10 rounded-full blur-2xl"></div>
 
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 pl-2">Select Document</h3>
@@ -329,7 +329,7 @@ export default function Compliance() {
 
             {/* RIGHT CONTENT AREA */}
             <div className="lg:col-span-8">
-              <div className="bg-white/70 backdrop-blur-2xl p-8 md:p-14 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white min-h-[600px] relative overflow-hidden transition-all duration-300">
+              <div className="bg-white/95 p-8 md:p-14 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white min-h-[600px] relative overflow-hidden transition-all duration-300">
 
                 <div
                   style={{
