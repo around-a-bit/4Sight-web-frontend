@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "../components/Footer";
 
 export default function Pricing() {
   const [isYearly, setIsYearly] = useState(false);

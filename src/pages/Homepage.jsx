@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "../components/Footer";
 
 // Asset Imports
 import dashboardImg from '../assets/screenshorts/product-screenshots/dashboard.png';
@@ -8,7 +8,7 @@ import strategyDashboard from '../assets/strategy-dashboard.png';
 import implementationDashboard from '../assets/implementation-dashboard.png';
 import governanceDashboard from '../assets/governance-dashboard.png';
 import optimizationDashboard from '../assets/optimization-dashboard.png';
-import { DynamicGeometricBackground } from './DynamicGeometricMotion';
+import { DynamicGeometricBackground } from '../components/DynamicGeometricMotion';
 import banner from '../assets/banner.svg';
 
 export default function Homepage() {
@@ -42,10 +42,10 @@ export default function Homepage() {
 
             {/* GLOBAL ANIMATED BACKGROUND */}
             <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-[#e7eb90]/20 rounded-full blur-3xl mix-blend-multiply animate-blob"></div>
-                <div className="absolute top-[20%] right-[-10%] w-[35vw] h-[35vw] bg-blue-300/20 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-2000"></div>
-                <div className="absolute bottom-[-10%] left-[20%] w-[45vw] h-[45vw] bg-[#00adc4]/10 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-4000"></div>
-                <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
+                <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full animate-blob" style={{ background: 'radial-gradient(circle, rgba(231,235,144,0.3) 0%, rgba(231,235,144,0) 65%)' }}></div>
+                <div className="absolute top-[20%] right-[-10%] w-[35vw] h-[35vw] rounded-full animate-blob animation-delay-2000" style={{ background: 'radial-gradient(circle, rgba(147,197,253,0.3) 0%, rgba(147,197,253,0) 65%)' }}></div>
+                <div className="absolute bottom-[-10%] left-[20%] w-[45vw] h-[45vw] rounded-full animate-blob animation-delay-4000" style={{ background: 'radial-gradient(circle, rgba(0,173,196,0.15) 0%, rgba(0,173,196,0) 65%)' }}></div>
+                <div className="absolute inset-0 bg-white/95"></div>
             </div>
 
             <main className="relative z-10">
@@ -77,7 +77,7 @@ export default function Homepage() {
                 </section>
 
                 {/* 2. SECOND SCROLL: CHALLENGES */}
-                <section className="py-24 bg-white/40 backdrop-blur-sm border-y border-gray-200/50 reveal transition-all duration-700 opacity-0 translate-y-10">
+                <section className="py-24 bg-white/95  border-y border-gray-200/50 reveal transition-all duration-700 opacity-0 translate-y-10">
                     <div className="max-w-7xl mx-auto px-6 lg:px-8">
                         <div className="text-center max-w-3xl mx-auto mb-16">
                             <h2 className="text-4xl heading1 primary_color mb-4">Common Marketing Challenges</h2>
@@ -140,7 +140,7 @@ export default function Homepage() {
                 </section>
 
                 {/* 4. FOURTH SCROLL: FEATURE DEEP-DIVE */}
-                <section className="py-24 bg-white/60 backdrop-blur-md overflow-hidden reveal transition-all duration-700 opacity-0 translate-y-10">
+                <section className="py-24 bg-white/95  overflow-hidden reveal transition-all duration-700 opacity-0 translate-y-10">
                     <div className="max-w-7xl mx-auto px-6 lg:px-8">
                         <div className="text-center max-w-3xl mx-auto mb-20">
                             <h2 className="text-4xl heading1 primary_color mb-4">Plan Clearly. Execute with Control. Improve Continuously.</h2>
@@ -232,7 +232,7 @@ export default function Homepage() {
                 </section>
 
                 {/* 5. FIFTH SCROLL: TARGET AUDIENCE ROLES */}
-                <section className="py-24 bg-white/40 backdrop-blur-sm border-t border-gray-200/50 reveal transition-all duration-700 opacity-0 translate-y-10">
+                <section className="py-24 bg-white/95  border-t border-gray-200/50 reveal transition-all duration-700 opacity-0 translate-y-10">
                     <div className="max-w-7xl mx-auto px-6 lg:px-8">
                         <div className="text-center max-w-3xl mx-auto mb-16">
                             <h2 className="text-4xl heading1 primary_color mb-4">One Platform. Different Roles. <br />A Structured Way to Work.</h2>
@@ -262,7 +262,7 @@ export default function Homepage() {
                 </section>
 
                 {/* 6. SIXTH SCROLL: IN ACTION PROCESS */}
-                <section className="py-24 bg-white/60 backdrop-blur-md reveal transition-all duration-700 opacity-0 translate-y-10">
+                <section className="py-24 bg-white/95  reveal transition-all duration-700 opacity-0 translate-y-10">
                     <div className="max-w-7xl mx-auto px-6 lg:px-8">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl heading1 primary_color mb-4">See Marketing4Sight in Action</h2>
@@ -299,7 +299,7 @@ export default function Homepage() {
                 </section>
 
                 {/* 7. SEVENTH SCROLL: FAQ */}
-                <section className="py-24 bg-white/40 backdrop-blur-sm border-t border-gray-200/50 reveal transition-all duration-700 opacity-0 translate-y-10">
+                <section className="py-24 bg-white/95  border-t border-gray-200/50 reveal transition-all duration-700 opacity-0 translate-y-10">
                     <div className="max-w-4xl mx-auto px-6 lg:px-8">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl heading1 primary_color mb-4">Frequently Asked Questions</h2>

@@ -146,7 +146,7 @@ export default function Header() {
   ];
 
   return (
-    <header className=" heading2  fixed top-0 left-0 w-full flex h-20 items-center justify-between px-6 lg:px-10 z-[100] bg-white/95 backdrop-blur-lg border-b border-slate-200/80 shadow-sm">
+    <header className="heading2 fixed top-0 left-0 z-[100] w-full flex h-20 items-center justify-between px-6 lg:px-10 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
 
       {/* Logo */}
       <Link to="/" className="logo shrink-0 flex items-center" title="Marketing4Sight">
@@ -219,7 +219,7 @@ export default function Header() {
 
             {/* Dropdown Menu */}
             <div
-              className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[880px] bg-white/95 backdrop-blur-3xl rounded-3xl shadow-[0_40px_100px_rgba(8,89,184,0.15)] border border-gray-100 p-8 origin-top z-[100] transition-all duration-200 ${
+              className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[880px] bg-white  rounded-3xl shadow-[0_40px_100px_rgba(8,89,184,0.15)] border border-gray-100 p-8 origin-top z-[100] transition-all duration-200 ${
                 isOpen
                   ? "opacity-100 scale-100 pointer-events-auto"
                   : "opacity-0 scale-95 pointer-events-none"
@@ -342,7 +342,7 @@ export default function Header() {
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="absolute top-[calc(100%+0.5rem)] left-4 right-4 bg-slate-950/95 backdrop-blur-xl border border-white/10 rounded-2xl md:hidden shadow-2xl overflow-hidden z-50">
+        <div className="absolute top-[calc(100%+0.5rem)] left-4 right-4 bg-slate-950/95  border border-white/10 rounded-2xl md:hidden shadow-2xl overflow-hidden z-50">
           <nav className="flex flex-col p-2 gap-1">
             <NavLink
               to="/"

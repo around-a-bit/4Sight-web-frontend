@@ -114,8 +114,12 @@ export const DynamicGeometricBackground = () => {
                 ctx.globalAlpha = currentOpacity;
                 
                 if (this.layer > 0) {
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = this.color;
+                    ctx.lineWidth = this.lineWidth + 6;
+                    ctx.globalAlpha = currentOpacity * 0.3;
+                    ctx.stroke();
+                    
+                    ctx.lineWidth = this.lineWidth;
+                    ctx.globalAlpha = currentOpacity;
                 }
                 
                 ctx.stroke();
@@ -173,7 +177,11 @@ export const DynamicGeometricBackground = () => {
             ctx.stroke();
         }
 
+        let isIntersecting = false;
+        
         function animate() {
+            if (!isIntersecting) return;
+            
             ctx.clearRect(0, 0, width, height);
             
             // Smooth mouse tracking interpolation
@@ -190,6 +198,7 @@ export const DynamicGeometricBackground = () => {
         }
 
         const handleMouseMove = (e) => {
+            if (!isIntersecting) return;
             const rect = canvas.getBoundingClientRect();
             targetMouseX = e.clientX - rect.left;
             targetMouseY = e.clientY - rect.top;
@@ -199,11 +208,25 @@ export const DynamicGeometricBackground = () => {
         window.addEventListener('mousemove', handleMouseMove);
 
         resize();
-        animate();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isIntersecting = entry.isIntersecting;
+                if (isIntersecting) {
+                    cancelAnimationFrame(animationFrameId);
+                    animate();
+                } else {
+                    cancelAnimationFrame(animationFrameId);
+                }
+            });
+        }, { threshold: 0 });
+
+        observer.observe(canvas);
 
         return () => {
             window.removeEventListener('resize', resize);
             window.removeEventListener('mousemove', handleMouseMove);
+            observer.disconnect();
             cancelAnimationFrame(animationFrameId);
         };
     }, []);
@@ -217,7 +240,6 @@ export const DynamicGeometricBackground = () => {
             <canvas 
                 ref={canvasRef} 
                 className="w-full h-full pointer-events-none" 
-                style={{ filter: 'blur(0.4px)' }}
             />
         </div>
     );
@@ -228,14 +250,19 @@ export const GeometricCluster = () => {
     const clusterRef = useRef(null);
 
     useEffect(() => {
+        let rafId;
         const handleMouseMove = (e) => {
             const width = window.innerWidth;
             const height = window.innerHeight;
             const moveX = (e.clientX - width / 2) * 0.045;
             const moveY = (e.clientY - height / 2) * 0.045;
-            if (clusterRef.current) {
-                clusterRef.current.style.transform = `translate(${moveX}px, ${moveY}px) rotateX(${moveY * 0.4}deg) rotateY(${-moveX * 0.4}deg)`;
-            }
+            
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                if (clusterRef.current) {
+                    clusterRef.current.style.transform = `translate(${moveX}px, ${moveY}px) rotateX(${moveY * 0.4}deg) rotateY(${-moveX * 0.4}deg)`;
+                }
+            });
         };
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);

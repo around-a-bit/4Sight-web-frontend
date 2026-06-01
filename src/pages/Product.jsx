@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "../components/Footer";
 
 // Asset Imports (keeping the video thumbnail if possible, or using a placeholder)
 import marketingDashboard from '../assets/futuristic_dashboard.png';

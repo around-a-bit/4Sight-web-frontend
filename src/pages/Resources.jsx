@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import BlogCard from './BlogCard';
+import BlogCard from '../components/BlogCard';
 import { blogsData } from '../data/blogsData';
-import Footer from './Footer';
+import Footer from '../components/Footer';
 
 export default function Resources() {
   useEffect(() => {

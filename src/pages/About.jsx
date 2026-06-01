@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "../components/Footer";
 
 import imgPlatforms from '../assets/ecosystem_platforms.png';
 import imgConsulting from '../assets/ecosystem_consulting.png';

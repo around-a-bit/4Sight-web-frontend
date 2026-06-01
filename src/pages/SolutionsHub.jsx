@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import Footer from './Footer';
+import Footer from '../components/Footer';
 
 import strategyDashboard from '../assets/strategy-dashboard.png';
 import governanceDashboard from '../assets/governance-dashboard.png';
@@ -283,7 +283,7 @@ export default function SolutionsHub() {
                 <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-[#e7eb90]/20 rounded-full blur-3xl mix-blend-multiply animate-blob"></div>
                 <div className="absolute top-[20%] right-[-10%] w-[35vw] h-[35vw] bg-blue-300/20 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-2000"></div>
                 <div className="absolute bottom-[-10%] left-[20%] w-[45vw] h-[45vw] bg-[#00adc4]/10 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-4000"></div>
-                <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
+                <div className="absolute inset-0 bg-white/40 [1px]"></div>
             </div>
 
             <div className="relative z-0">
@@ -299,7 +299,7 @@ export default function SolutionsHub() {
                     <section className="relative pt-12 pb-24 lg:pt-20 lg:pb-32 overflow-hidden flex items-center min-h-[85vh]">
                         <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
                             <div>
-                                <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-gray-200 px-4 py-1.5 rounded-full mb-6 shadow-sm">
+                                <div className="inline-flex items-center gap-2 bg-white/60  border border-gray-200 px-4 py-1.5 rounded-full mb-6 shadow-sm">
                                     <span className="w-2 h-2 rounded-full secondary_bg animate-pulse"></span>
                                     <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{data.badge}</span>
                                 </div>
@@ -307,7 +307,7 @@ export default function SolutionsHub() {
                                 <p className="bodyText text-lg text-gray-600 mb-10 leading-relaxed">{data.desc}</p>
                                 <Link to="/contact-us" className="primary_bg text-white font-bold py-4 px-10 rounded-2xl hover:opacity-90 transition shadow-[0_10px_30px_rgba(8,89,184,0.3)] text-lg inline-block">Book a Demo</Link>
                             </div>
-                            <div className="bg-white/70 backdrop-blur-2xl p-2 rounded-3xl border border-white shadow-[0_20px_60px_rgba(0,0,0,0.05)] flex items-center justify-center transform hover:scale-[1.02] transition duration-500 overflow-hidden">
+                            <div className="bg-white/70  p-2 rounded-3xl border border-white shadow-[0_20px_60px_rgba(0,0,0,0.05)] flex items-center justify-center transform hover:scale-[1.02] transition duration-500 overflow-hidden">
                                 {data.imageSrc ? (
                                     <img src={data.imageSrc} alt={data.heroImg} className="w-full h-auto object-cover rounded-2xl" />
                                 ) : (
@@ -323,7 +323,7 @@ export default function SolutionsHub() {
                         </div>
                     </section>
 
-                    <section className="py-24 bg-white/40 backdrop-blur-xl border-y border-gray-200/50 relative">
+                    <section className="py-24 bg-white/40  border-y border-gray-200/50 relative">
                         <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-5 gap-16 items-center">
                             <div className="lg:col-span-2">
                                 <h2 className="heading1 text-3xl primary_color mb-4">Why It Matters</h2>
@@ -356,7 +356,7 @@ export default function SolutionsHub() {
                             <h2 className="heading1 text-4xl md:text-5xl mb-6">{data.centerTitle}</h2>
                             <p className="bodyText text-blue-100 text-xl max-w-3xl mx-auto mb-16 leading-relaxed">{data.centerDesc}</p>
                             
-                            <Link to="/product#video" className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 aspect-[16/9] w-full flex items-center justify-center p-6 shadow-[0_30px_60px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition duration-700 cursor-pointer group block">
+                            <Link to="/product#video" className="bg-white/90  rounded-3xl border border-white/20 aspect-[16/9] w-full flex items-center justify-center p-6 shadow-[0_30px_60px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition duration-700 cursor-pointer group block">
                                 <div className="text-center transition duration-500 group-hover:-translate-y-2">
                                     <div className="w-20 h-20 bg-[#e7eb90] text-[#1C1635] rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(231,235,144,0.4)] group-hover:scale-110 transition duration-500">
                                         <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
@@ -376,7 +376,7 @@ export default function SolutionsHub() {
                             </div>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {data.features.map((feat, i) => (
-                                    <div key={i} className="bg-white/80 backdrop-blur-xl p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-[0_20px_40px_rgba(8,89,184,0.08)] hover:-translate-y-2 transition-all duration-500 border-t-4 border-t-[#00adc4] hover:border-t-[#0859b8] group relative overflow-hidden">
+                                    <div key={i} className="bg-white/80  p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-[0_20px_40px_rgba(8,89,184,0.08)] hover:-translate-y-2 transition-all duration-500 border-t-4 border-t-[#00adc4] hover:border-t-[#0859b8] group relative overflow-hidden">
                                         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#0859b8]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full pointer-events-none"></div>
                                         <div className="w-14 h-14 bg-[#00adc4]/10 rounded-2xl flex items-center justify-center text-[#00adc4] mb-6 group-hover:bg-[#0859b8] group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-500/30 transition-all duration-500 relative z-10">
                                             <svg className="w-6 h-6 transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
@@ -389,7 +389,7 @@ export default function SolutionsHub() {
                         </div>
                     </section>
 
-                    <section className="py-24 bg-gray-50/50 backdrop-blur-md border-y border-gray-200/50 text-center">
+                    <section className="py-24 bg-gray-50/50  border-y border-gray-200/50 text-center">
                         <div className="max-w-4xl mx-auto px-6">
                             <h2 className="heading1 text-4xl md:text-5xl primary_color mb-6">{data.ctaText}</h2>
                             <p className="bodyText text-gray-600 text-xl mb-12">{data.ctaDesc}</p>
@@ -402,7 +402,7 @@ export default function SolutionsHub() {
                             <h2 className="heading1 text-4xl primary_color text-center mb-16">{data.badge} FAQs</h2>
                             <div className="space-y-4">
                                 {data.faqs.map((faq, i) => (
-                                    <details key={i} className="group bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl transition hover:shadow-md">
+                                    <details key={i} className="group bg-white/80  border border-gray-200 rounded-2xl transition hover:shadow-md">
                                         <summary className="flex items-center justify-between cursor-pointer p-6 font-bold text-[#1C1635] text-lg list-none [&::-webkit-details-marker]:hidden">
                                             <span className="heading2">{faq[0]}</span>
                                             <span className="secondary_color group-open:rotate-180 transition-transform duration-300 bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center">&darr;</span>
@@ -422,7 +422,7 @@ export default function SolutionsHub() {
                     <div className="absolute bottom-0 left-0 bg-blue-900 w-[500px] h-[500px] blur-[100px] rounded-full pointer-events-none"></div>
 
                     <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 text-center">
-                        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full mb-6">
+                        <div className="inline-flex items-center gap-2 bg-white/90  border border-white/20 px-4 py-1.5 rounded-full mb-6">
                             <span className="w-2 h-2 rounded-full bg-[#e7eb90] animate-pulse"></span>
                             <span className="text-xs font-bold text-white uppercase tracking-widest">Solutions Hub</span>
                         </div>
@@ -430,7 +430,7 @@ export default function SolutionsHub() {
                         
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                             
-                            <div onClick={() => handleSolutionChange('strategy-planning')} className="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
+                            <div onClick={() => handleSolutionChange('strategy-planning')} className="bg-white/90  border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
                                 <div className="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#0859b8] group-hover:shadow-lg transition-all duration-500">
                                     <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
                                 </div>
@@ -438,7 +438,7 @@ export default function SolutionsHub() {
                                 <p className="bodyText text-blue-100 text-sm group-hover:text-gray-600 transition-colors duration-500">Align teams, set goals, and cascade strategic OKRs.</p>
                             </div>
 
-                            <div onClick={() => handleSolutionChange('governance')} className="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
+                            <div onClick={() => handleSolutionChange('governance')} className="bg-white/90  border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
                                 <div className="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#00adc4] group-hover:shadow-lg transition-all duration-500">
                                     <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                                 </div>
@@ -446,7 +446,7 @@ export default function SolutionsHub() {
                                 <p className="bodyText text-blue-100 text-sm group-hover:text-gray-600 transition-colors duration-500">Monitor execution consistency and compliance.</p>
                             </div>
 
-                            <div onClick={() => handleSolutionChange('optimization')} className="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
+                            <div onClick={() => handleSolutionChange('optimization')} className="bg-white/90  border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
                                 <div className="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#0859b8] group-hover:shadow-lg transition-all duration-500">
                                     <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path></svg>
                                 </div>
@@ -454,7 +454,7 @@ export default function SolutionsHub() {
                                 <p className="bodyText text-blue-100 text-sm group-hover:text-gray-600 transition-colors duration-500">Competitor positioning and visibility dashboards.</p>
                             </div>
 
-                            <div onClick={() => handleSolutionChange('multi-channel-ops')} className="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
+                            <div onClick={() => handleSolutionChange('multi-channel-ops')} className="bg-white/90  border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
                                 <div className="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#00adc4] group-hover:shadow-lg transition-all duration-500">
                                     <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                 </div>
@@ -462,7 +462,7 @@ export default function SolutionsHub() {
                                 <p className="bodyText text-blue-100 text-sm group-hover:text-gray-600 transition-colors duration-500">Process orchestration and publishing workflows.</p>
                             </div>
 
-                            <div onClick={() => handleSolutionChange('organic-growth')} className="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
+                            <div onClick={() => handleSolutionChange('organic-growth')} className="bg-white/90  border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
                                 <div className="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#0859b8] group-hover:shadow-lg transition-all duration-500">
                                     <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 </div>
@@ -470,7 +470,7 @@ export default function SolutionsHub() {
                                 <p className="bodyText text-blue-100 text-sm group-hover:text-gray-600 transition-colors duration-500">Local search GMB listings and keyword rank universes.</p>
                             </div>
 
-                            <div onClick={() => handleSolutionChange('content-operations')} className="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
+                            <div onClick={() => handleSolutionChange('content-operations')} className="bg-white/90  border border-white/10 p-8 rounded-3xl hover:bg-white hover:border-white transition-all duration-500 text-left group hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,173,196,0.3)] cursor-pointer">
                                 <div className="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#00adc4] group-hover:shadow-lg transition-all duration-500">
                                     <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7v12m0 0l-4-4m4 4l4-4M16 17V3m0 0l-4 4m4-4l4 4"></path></svg>
                                 </div>
