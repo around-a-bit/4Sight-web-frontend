@@ -2,7 +2,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import WhatsAppButton from './components/WhatsAppButton';
+import FloatingSocialMediaButton from './components/FloatingSocialMediaButton';
 
 export default function Layout() {
   const { pathname } = useLocation();
@@ -21,7 +21,7 @@ export default function Layout() {
         <main className="flex-grow z-10 relative">
           <Outlet />
         </main>
-      <WhatsAppButton />
+      <FloatingSocialMediaButton />
     </div>
   );
 }
