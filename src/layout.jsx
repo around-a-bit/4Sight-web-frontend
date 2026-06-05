@@ -8,11 +8,11 @@ export default function Layout() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant"
-    });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      document.documentElement.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      document.body.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }, 10);
   }, [pathname]);
 
   return (
