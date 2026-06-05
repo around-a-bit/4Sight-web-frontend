@@ -6,7 +6,7 @@ const WhatsAppButton = () => {
       
       {/* Facebook */}
       <a
-        href="https://www.facebook.com/people/Quantyra-Analytics/61578426362289/?rdid=HvT3hyEzbzlY4opA&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F18RT1JdEhP%2F"
+        href="https://www.facebook.com/people/Quantyra-Analytics/61590782033767/"
         target="_blank"
         rel="noopener noreferrer"
         className="relative flex items-center justify-center w-14 h-14 bg-[#1877F2] text-white rounded-full shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group"

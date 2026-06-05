@@ -15,7 +15,7 @@ const LinkedinIcon = ({ className }) => (
 );
 
 const socialLinks = [
-    { icon: FacebookIcon, href: 'https://www.facebook.com/share/18RT1JdEhP/', label: 'Facebook' },
+    { icon: FacebookIcon, href: 'https://www.facebook.com/people/Quantyra-Analytics/61590782033767/', label: 'Facebook' },
     { icon: LinkedinIcon, href: 'https://www.linkedin.com/company/quantyra-analytics/', label: 'LinkedIn' },
 ];
 
