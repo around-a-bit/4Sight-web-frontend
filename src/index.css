@@ -307,3 +307,32 @@ nav.main a.active {
     grid-template-columns: 1fr;
   }
 }
+
+/* Animated Pipeline Laser Pulse Effects */
+@keyframes pulseLaser {
+    0% {
+        stroke-dashoffset: 100;
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.2;
+    }
+}
+
+.animated-pipeline {
+    stroke-dasharray: 12, 12;
+    animation: pulseLaser 4s linear infinite;
+}
+
+/* Slow rotational background glow */
+@keyframes subtleGlow {
+    0%, 100% { transform: scale(1) translate(0px, 0px); }
+    50% { transform: scale(1.05) translate(10px, -10px); }
+}
+.bg-glow-animate {
+    animation: subtleGlow 8s ease-in-out infinite;
+}
