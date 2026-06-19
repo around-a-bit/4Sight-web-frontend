@@ -1,4 +1,18 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+@theme {
+  --color-primary: #0859b8;
+  --color-secondary: #00adc4;
+  --color-bglight: #fdfffc;
+  --color-dark: #222222;
+  --color-accent: #e7eb90;
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --shadow-glass: 0 10px 30px -10px rgba(8, 89, 184, 0.15);
+  --shadow-glow: 0 0 20px rgba(231, 235, 144, 0.6);
+  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
 
 :root {
   --bg: #FAF8FD;
@@ -308,6 +322,8 @@ nav.main a.active {
   }
 }
 
+}
+
 /* Animated Pipeline Laser Pulse Effects */
 @keyframes pulseLaser {
     0% {
@@ -335,4 +351,118 @@ nav.main a.active {
 }
 .bg-glow-animate {
     animation: subtleGlow 8s ease-in-out infinite;
+}
+
+/* Custom Cursor */
+.cursor-dot, .cursor-outline {
+    position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+    border-radius: 50%; z-index: 9999; pointer-events: none;
+}
+.cursor-dot { width: 8px; height: 8px; background-color: #0859b8; }
+.cursor-outline { 
+    width: 40px; height: 40px; border: 2px solid #00adc4; 
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+.cursor-hover { width: 60px; height: 60px; background-color: rgba(0, 173, 196, 0.1); border-color: transparent; }
+
+/* Animated Mesh Background */
+.mesh-bg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 15% 50%, rgba(0, 173, 196, 0.08), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(8, 89, 184, 0.1), transparent 40%);
+    z-index: -1; filter: blur(40px);
+    animation: pulse-mesh 10s infinite alternate ease-in-out;
+}
+@keyframes pulse-mesh { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+
+/* Premium Glass Panels */
+.glass-panel {
+    background: rgba(253, 255, 252, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(8, 89, 184, 0.1);
+}
+
+/* --- Section 2 Problem Swiper Styles --- */
+.problem-swiper { width: 100%; padding: 40px 0; overflow: hidden; }
+.problem-swiper .swiper-slide { width: 340px; height: auto; transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+.problem-card { height: 100%; transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); transform: scale(0.9); opacity: 0.5; filter: blur(3px); }
+.problem-swiper .swiper-slide-active .problem-card { transform: scale(1.05); opacity: 1; filter: blur(0px); box-shadow: 0 25px 50px -12px rgba(8, 89, 184, 0.25); border-color: rgba(0, 173, 196, 0.4); background-color: #ffffff; }
+
+/* --- Section 3 Vertical Gliding Swiper Styles --- */
+.vertical-swiper {
+    width: 100%; height: 600px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+/* Fixed height prevents Swiper vertical calculation bugs */
+.vertical-swiper .swiper-slide {
+    height: 280px !important; 
+    padding: 10px; 
+    opacity: 0.3; 
+    transform: scale(0.85) translateX(30px); 
+    transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.vertical-swiper .swiper-slide-active { 
+    opacity: 1; 
+    transform: scale(1) translateX(0); 
+    z-index: 10;
+}
+.mini-card { border-radius: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; height: 100%; }
+.mini-card:hover { transform: translateY(-5px); }
+
+/* Small UI Chart Animations */
+.bar-up { transform-origin: bottom; animation: growUp 2s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate; }
+.bar-w { transform-origin: left; animation: growRight 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes growUp { 0% { transform: scaleY(0.2); } 100% { transform: scaleY(1); } }
+@keyframes growRight { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+.d-1 { animation-delay: 0.2s; } .d-2 { animation-delay: 0.4s; } .d-3 { animation-delay: 0.6s; }
+.line-draw { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: dash 3s ease-in-out infinite alternate; }
+@keyframes dash { to { stroke-dashoffset: 0; } }
+.pulse-ring { animation: pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+@keyframes pulseRing { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.5); opacity: 0; } }
+
+/* --- Section 4 Animated Hub Styles --- */
+.float-subtle { animation: floatSubtle 4s ease-in-out infinite alternate; }
+@keyframes floatSubtle { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
+.hub-node { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 1px solid rgba(8, 89, 184, 0.1); }
+
+/* --- Section 5 Centered Highlight Client Swiper --- */
+.client-swiper { width: 100%; padding-top: 40px; padding-bottom: 80px; overflow: visible; position: relative; }
+.client-slide { 
+    width: 450px; 
+    height: auto; 
+    transition: all 1.5s cubic-bezier(0.25, 1, 0.5, 1); 
+    opacity: 0.3; transform: scale(0.85); filter: blur(2px); cursor: pointer;
+}
+.client-swiper .swiper-slide-active { opacity: 1; transform: scale(1.05); filter: blur(0px); z-index: 10; }
+.client-card { 
+    background: #ffffff; 
+    border-radius: 1rem; 
+    padding: 2.5rem; 
+    position: relative; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+    min-height: 280px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start;
+}
+.active-bar { position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: #0859b8; transform: scaleX(0); transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); transform-origin: left; }
+.swiper-slide-active .active-bar { transform: scaleX(1); }
+
+.swiper-button-next::after, .swiper-button-prev::after {
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+.swiper-button-next, .swiper-button-prev {
+    color: #0859b8;
+    background: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+.swiper-button-next:hover, .swiper-button-prev:hover {
+    background: #0859b8;
+    color: white;
 }
