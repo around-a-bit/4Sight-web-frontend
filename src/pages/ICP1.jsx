@@ -633,75 +633,42 @@ export default function ICP1() {
                 
                 {/* Client 1 */}
                 <div className="swiper-slide client-slide px-4">
-                    <div className="client-card interactive">
+                    <div className="client-card interactive h-full flex flex-col justify-between">
                         <div className="active-bar"></div>
-                        
-                        {/* Visible Quote Mark */}
-                        <div className="secondary_color heading2 text-6xl leading-none mb-2">"</div>
-                        
-                        <div className="relative z-10 flex flex-col text-left h-full w-full">
-                            <p className="heading2 italic text-gray-600 text-[15px] leading-relaxed mb-2 flex-1">
-                                The Marketing4Sight platform from Quantyra Analytics is a game-changer. It is extremely effective in strategizing, governing and optimizing marketing processes in an organization. The data-driven decision making framework implemented in Marketing4Sight helped us identify blind spots and addressing them effectively.
-                            </p>
-                            <div className="text-right secondary_color heading2 text-6xl leading-none mb-4">"</div>
-                            
-                            <div className="flex items-center gap-4 mt-auto border-t border-gray-100 pt-6">
-                                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center primary_color heading1 text-lg">NM</div>
-                                <div>
-                                    <h4 className="heading1 text_color">Nilagrib Mondal</h4>
-                                    <p className="text-[10px] heading2 primary_color uppercase tracking-wide">Marketing Head, Excel Home Decor</p>
-                                </div>
-                            </div>
+                        <p className="heading2 italic text-gray-500 text-[14px] leading-relaxed mb-8 flex-1">
+                            "The Marketing4Sight platform from Quantyra Analytics is a game-changer. It is extremely effective in strategizing, governing and optimizing marketing processes in an organization. The data-driven decision making framework implemented in Marketing4Sight helped us identify blind spots and addressing them effectively."
+                        </p>
+                        <div>
+                            <h4 className="heading1 text_color text-[15px]">Nilagrib Mondal</h4>
+                            <p className="text-[12px] heading2 primary_color font-medium mt-1">Marketing Head, Excel Home Decor</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Client 2 */}
                 <div className="swiper-slide client-slide px-4">
-                    <div className="client-card interactive">
+                    <div className="client-card interactive h-full flex flex-col justify-between">
                         <div className="active-bar"></div>
-                        
-                        {/* Visible Quote Mark */}
-                        <div className="secondary_color heading2 text-6xl leading-none mb-2">"</div>
-                        
-                        <div className="relative z-10 flex flex-col text-left h-full w-full">
-                            <p className="heading2 italic text-gray-600 text-[15px] leading-relaxed mb-2 flex-1">
-                                The Marketing4Sight platform from Quantyra Analytics is a game-changer. It is extremely effective in strategizing, governing and optimizing marketing processes in an organization. The data-driven decision making framework implemented in Marketing4Sight helped us identify blind spots and addressing them effectively.
-                            </p>
-                            <div className="text-right secondary_color heading2 text-6xl leading-none mb-4">"</div>
-                            
-                            <div className="flex items-center gap-4 mt-auto border-t border-gray-100 pt-6">
-                                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 heading1 text-lg">IM</div>
-                                <div>
-                                    <h4 className="heading1 text_color">Indranil Mandal</h4>
-                                    <p className="text-[10px] heading2 primary_color uppercase tracking-wide">Founder, Bombay Local</p>
-                                </div>
-                            </div>
+                        <p className="heading2 italic text-gray-500 text-[14px] leading-relaxed mb-8 flex-1">
+                            "The Marketing4Sight platform from Quantyra Analytics is a game-changer. It is extremely effective in strategizing, governing and optimizing marketing processes in an organization. The data-driven decision making framework implemented in Marketing4Sight helped us identify blind spots and addressing them effectively."
+                        </p>
+                        <div>
+                            <h4 className="heading1 text_color text-[15px]">Indranil Mandal</h4>
+                            <p className="text-[12px] heading2 primary_color font-medium mt-1">Founder, Bombay Local</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Client 3 */}
                 <div className="swiper-slide client-slide px-4">
-                    <div className="client-card interactive">
+                    <div className="client-card interactive h-full flex flex-col justify-between">
                         <div className="active-bar"></div>
-                        
-                        {/* Visible Quote Mark */}
-                        <div className="secondary_color heading2 text-6xl leading-none mb-2">"</div>
-                        
-                        <div className="relative z-10 flex flex-col text-left h-full w-full">
-                            <p className="heading2 italic text-gray-600 text-[15px] leading-relaxed mb-2 flex-1">
-                                Working with Quantyra Analytics has been a strategic move that enpropeL took. Getting onboarded to the Marketing4Sight platform as a beta customer, we received strategic inputs from the platform which helped in improving our brand presence. We recommend the Marketing4Sight platform to all small and medium business owners who aspire to improve their branding.
-                            </p>
-                            <div className="text-right secondary_color heading2 text-6xl leading-none mb-4">"</div>
-                            
-                            <div className="flex items-center gap-4 mt-auto border-t border-gray-100 pt-6">
-                                <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 heading1 text-lg">JT</div>
-                                <div>
-                                    <h4 className="heading1 text_color">Jagannath Thakur</h4>
-                                    <p className="text-[10px] heading2 primary_color uppercase tracking-wide">Founder, enpropeL</p>
-                                </div>
-                            </div>
+                        <p className="heading2 italic text-gray-500 text-[14px] leading-relaxed mb-8 flex-1">
+                            "Working with Quantyra Analytics has been a strategic move that enpropeL took. Getting onboarded to the Marketing4Sight platform as a beta customer, we received strategic inputs from the platform which helped in improving our brand presence. We recommend the Marketing4Sight platform to all small and medium business owners who aspire to improve their branding."
+                        </p>
+                        <div>
+                            <h4 className="heading1 text_color text-[15px]">Jagannath Thakur</h4>
+                            <p className="text-[12px] heading2 primary_color font-medium mt-1">Founder, enpropeL</p>
                         </div>
                     </div>
                 </div>
