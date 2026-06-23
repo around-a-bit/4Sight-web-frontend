@@ -13,6 +13,8 @@ import SolutionsHub from './pages/SolutionsHub';
 import  ICP1  from './pages/ICP1';
 import  ICP2  from './pages/ICP2';
 import  ICP3  from './pages/ICP3';
+import Register from './pages/Register';
+import PaymentResult from './pages/PaymentResult';
 
 export default function App() {
   return (
@@ -31,6 +33,8 @@ export default function App() {
           <Route path="icp1" element={<ICP1 />} />
           <Route path="icp2" element={<ICP2 />} />
           <Route path="icp3" element={<ICP3 />} />
+          <Route path="register" element={<Register />} />
+          <Route path="payment-result" element={<PaymentResult />} />
         </Route>
       </Routes>
     </Router>
