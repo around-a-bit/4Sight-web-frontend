@@ -13,7 +13,6 @@ export default function Register() {
 
   // Step 1 fields
   const [fullName, setFullName] = useState("");
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [businessName, setBusinessName] = useState("");
@@ -24,9 +23,6 @@ export default function Register() {
   const [resumeStep, setResumeStep] = useState(1);
 
   // Validation states
-  const [usernameTouched, setUsernameTouched] = useState(false);
-  const [usernameAvailable, setUsernameAvailable] = useState(null);
-  const [usernameSuggestions, setUsernameSuggestions] = useState([]);
   const [emailAvailable, setEmailAvailable] = useState(null);
   const [emailVerified, setEmailVerified] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
@@ -100,33 +96,6 @@ export default function Register() {
       .catch(err => console.error("Failed to load coupons:", err));
   }, []);
 
-  // Check username async
-  useEffect(() => {
-    if (!username || username.length < 3) return;
-    if (isResumeMode) {
-      setUsernameAvailable(true); // Treat as available so UI shows success
-      setUsernameSuggestions([]);
-      return;
-    }
-
-    clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(() => {
-      fetch(`${API_BASE}/api/v1/registration/check-username`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, full_name: fullName })
-      })
-        .then(r => r.json())
-        .then(data => {
-          setUsernameAvailable(data.available);
-          setUsernameSuggestions(data.suggestions || []);
-          if (!data.available && !usernameTouched && data.suggestions?.length > 0) {
-            setUsername(data.suggestions[0]);
-          }
-        });
-    }, 500);
-  }, [username, fullName, usernameTouched]);
-
   // Check email async
   useEffect(() => {
     if (!email || !email.includes("@")) return;
@@ -159,7 +128,6 @@ export default function Register() {
               .then(regData => {
                 if (regData.found) {
                   setFullName(regData.full_name || "");
-                  setUsername(regData.username || "");
                   
                   let rawPhone = regData.phone_number || "";
                   if (rawPhone.startsWith("+")) {
@@ -198,10 +166,6 @@ export default function Register() {
 
   const handleFullNameChange = (val) => {
     setFullName(val);
-    if (!usernameTouched) {
-      const base = val.toLowerCase().replace(/[^a-z0-9_]/g, "");
-      setUsername(base);
-    }
   };
 
   const showToast = (message, type = "success") => {
@@ -210,7 +174,7 @@ export default function Register() {
   };
 
   const handleStep1Submit = async () => {
-    if (!fullName || !username || !email || !phone || !businessName) {
+    if (!fullName || !email || !phone || !businessName) {
       showToast("All fields are required", "error");
       return;
     }
@@ -230,7 +194,6 @@ export default function Register() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           full_name: fullName,
-          username,
           email,
           phone_number: `${countryCode}${phone}`,
           business_name: businessName
@@ -315,10 +278,16 @@ export default function Register() {
         return;
       }
 
-      // Free plan: skip payment
-      if (parseFloat(selectedPlan.price) === 0) {
-        showToast("Free plan activated!", "success");
-        setTimeout(() => navigate("/"), 2000);
+      // Free plan or 100% discount: skip payment
+      if (finalPrice === 0) {
+        showToast(parseFloat(selectedPlan.price) === 0 ? "Free plan activated!" : "100% Discount applied! Plan activated!", "success");
+        setTimeout(() => {
+          if (LOGIN_URL.startsWith("http")) {
+            window.location.href = LOGIN_URL;
+          } else {
+            navigate(LOGIN_URL);
+          }
+        }, 2000);
         return;
       }
 
@@ -383,30 +352,6 @@ export default function Register() {
 
             <div>
               <Input
-                label="Username"
-                value={username}
-                onChange={(val) => {
-                  setUsernameTouched(true);
-                  setUsername(val);
-                }}
-                placeholder="johndoe"
-                required
-                disabled={isResumeMode}
-                status={isResumeMode ? "success" : usernameAvailable === null ? null : usernameAvailable ? "success" : "error"}
-                statusMessage={isResumeMode ? "Retrieved" : usernameAvailable === false ? "Username taken" : usernameAvailable ? "Available" : ""}
-              />
-              {usernameSuggestions.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-2">
-                  <span className="text-sm text-gray-500">Suggestions:</span>
-                  {usernameSuggestions.map(s => (
-                    <button key={s} onClick={() => setUsername(s)} className="text-sm text-blue-600 hover:underline">{s}</button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div>
-              <Input
                 label="Email"
                 type="email"
                 value={email}
@@ -453,10 +398,12 @@ export default function Register() {
                 <input
                   type="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+                  onChange={(e) => {
+                    setPhone(e.target.value.replace(/\D/g, ""));
+                    setPhoneVerified(false);
+                  }}
                   placeholder="9876543210"
-                  disabled={isResumeMode}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:text-gray-500"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               {!phoneVerified && phone.length >= 10 && (
@@ -489,11 +436,11 @@ export default function Register() {
               </button>
             ) : isResumeMode ? (
               <button
-                onClick={() => setStep(resumeStep)}
+                onClick={handleStep1Submit}
                 disabled={loading || !emailVerified || !phoneVerified}
                 className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
               >
-                {!emailVerified || !phoneVerified ? "Verify Contacts to Resume →" : "Resume Registration →"}
+                {!emailVerified || !phoneVerified ? "Verify Contacts to Resume →" : loading ? "Processing..." : "Save & Resume Registration →"}
               </button>
             ) : (
               <button
@@ -582,7 +529,7 @@ export default function Register() {
               disabled={!selectedPlan || loading}
               className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
             >
-              {loading ? "Processing..." : parseFloat(selectedPlan?.price || 0) === 0 ? "Activate Free Plan" : "Proceed to Payment →"}
+              {loading ? "Processing..." : finalPrice === 0 ? "Activate Plan" : "Proceed to Payment →"}
             </button>
 
             <button onClick={() => setStep(1)} className="w-full text-gray-600 hover:text-gray-900 font-bold py-3">
