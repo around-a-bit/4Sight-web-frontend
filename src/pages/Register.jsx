@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Input from "../components/Input";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8001";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
 const LOGIN_URL = import.meta.env.VITE_LOGIN_URL || "/";
 
 export default function Register() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const [step, setStep] = useState(1);
+
   const [loading, setLoading] = useState(false);
 
   // Step 1 fields
@@ -28,13 +29,6 @@ export default function Register() {
   const [phoneVerified, setPhoneVerified] = useState(false);
   const [onboardingCompleted, setOnboardingCompleted] = useState(null);
 
-  // Step 2 fields
-  const [plans, setPlans] = useState([]);
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [couponCode, setCouponCode] = useState("");
-  const [couponApplied, setCouponApplied] = useState(false);
-  const [discountAmount, setDiscountAmount] = useState(0);
-  const [finalPrice, setFinalPrice] = useState(0);
 
   // Modals
   const [showEmailOtpModal, setShowEmailOtpModal] = useState(false);
@@ -46,14 +40,6 @@ export default function Register() {
 
   // Load plan from URL if present
   useEffect(() => {
-    const planId = searchParams.get("plan_id");
-    const planName = searchParams.get("plan_name");
-    const price = searchParams.get("price");
-    if (planId && planName && price) {
-      setSelectedPlan({ id: planId, plan_name: planName, price: parseFloat(price) });
-      setFinalPrice(parseFloat(price));
-    }
-    
     // Check for payment failure redirect
     if (searchParams.get("payment") === "failed") {
       showToast("Payment failed or was cancelled. Please try again.", "error");
@@ -66,13 +52,7 @@ export default function Register() {
   }, [searchParams]);
 
   // Load plans and country codes
-  useEffect(() => {
-    fetch(`${API_BASE}/api/v1/subscription/plans`)
-      .then(r => r.json())
-      .then(data => setPlans(Array.isArray(data) ? data : []))
-      .catch(() => setPlans([]));
-
-    fetch(`${API_BASE}/api/v1/profile/country-codes`)
+  useEffect(() => {    fetch(`${API_BASE}/api/v1/profile/country-codes`)
       .then(r => r.json())
       .then(data => {
         if (data?.data?.country_codes && Array.isArray(data.data.country_codes)) {
@@ -85,15 +65,6 @@ export default function Register() {
         }
       })
       .catch(err => console.error("Failed to load country codes:", err));
-
-    fetch(`${API_BASE}/api/v1/coupon/available`)
-      .then(r => r.json())
-      .then(data => {
-        if (data && Array.isArray(data)) setAvailableCoupons(data);
-        else if (data && data.coupons && Array.isArray(data.coupons)) setAvailableCoupons(data.coupons);
-        else if (data && data.data && Array.isArray(data.data)) setAvailableCoupons(data.data);
-      })
-      .catch(err => console.error("Failed to load coupons:", err));
   }, []);
 
   // Check email async
@@ -150,9 +121,9 @@ export default function Register() {
                   setEmailVerified(false);
                   setPhoneVerified(false);
                   
-                  // If status is past step 1, set step 2
+                  // If status is past step 1, navigate to subscription
                   if (["otp_verified", "user_created", "plan_selected", "payment_initiated"].includes(regData.status)) {
-                    setResumeStep(2);
+                    navigate("/subscription", { state: { email } });
                   }
                 }
               });
@@ -209,7 +180,7 @@ export default function Register() {
       });
 
       showToast("Registration step 1 completed!", "success");
-      setStep(2);
+      navigate("/subscription", { state: { email } });
     } catch (err) {
       showToast(err.message, "error");
     } finally {
@@ -217,137 +188,52 @@ export default function Register() {
     }
   };
 
-  const handlePlanSelect = (plan) => {
-    setSelectedPlan(plan);
-    setFinalPrice(parseFloat(plan.price));
-    setCouponApplied(false);
-    setDiscountAmount(0);
-    setCouponCode("");
-  };
-
-  const handleApplyCoupon = async () => {
-    if (!couponCode.trim()) return;
+  const handleSendEmailOtp = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/api/v1/coupon/preview`, {
+      await fetch(`${API_BASE}/api/v1/onboarding/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan_id: selectedPlan.id, coupon_code: couponCode })
+        body: JSON.stringify({ email })
       });
-      const data = await res.json();
-      if (data.coupon_applied) {
-        setDiscountAmount(data.discount_amount);
-        setFinalPrice(data.final_price);
-        setCouponApplied(true);
-        showToast("Coupon applied!", "success");
-      } else {
-        showToast("Invalid coupon code", "error");
-      }
+      showToast("OTP sent!", "success");
+      setShowEmailOtpModal(true);
     } catch {
-      showToast("Failed to apply coupon", "error");
+      showToast("Failed to send OTP", "error");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCheckout = async () => {
-    if (!selectedPlan) {
-      showToast("Please select a plan", "error");
-      return;
-    }
-
+  const handleSendPhoneOtp = async () => {
     setLoading(true);
     try {
-      // Update registration with plan selection
-      await fetch(`${API_BASE}/api/v1/registration/select-plan`, {
+      await fetch(`${API_BASE}/api/v1/auth/send-phone-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          plan_id: selectedPlan.id,
-          coupon_code: couponApplied ? couponCode : null
-        })
+        body: JSON.stringify({ phone_number: `${countryCode}${phone}` })
       });
-
-      // Get registration record to get user_id
-      const regRes = await fetch(`${API_BASE}/api/v1/registration/resume/${email}`);
-      const regData = await regRes.json();
-
-      if (!regData.found || !regData.user_id) {
-        showToast("User ID not found", "error");
-        return;
-      }
-
-      // Free plan or 100% discount: skip payment
-      if (finalPrice === 0) {
-        showToast(parseFloat(selectedPlan.price) === 0 ? "Free plan activated!" : "100% Discount applied! Plan activated!", "success");
-        setTimeout(() => {
-          if (LOGIN_URL.startsWith("http")) {
-            window.location.href = LOGIN_URL;
-          } else {
-            navigate(LOGIN_URL);
-          }
-        }, 2000);
-        return;
-      }
-
-      // Paid plan: initiate checkout
-      const checkoutRes = await fetch(`${API_BASE}/api/v1/subscription/checkout`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user_id: regData.user_id,
-          plan_id: selectedPlan.id,
-          coupon_code: couponApplied ? couponCode : null
-        })
-      });
-
-      const checkoutData = await checkoutRes.json();
-
-      // Auto-submit form to PayU
-      if (checkoutData.checkout_type === "hosted") {
-        localStorage.setItem("register_resume_email", email);
-        
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = checkoutData.action_url;
-        Object.entries(checkoutData.params).forEach(([key, value]) => {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = key;
-          input.value = value;
-          form.appendChild(input);
-        });
-        document.body.appendChild(form);
-        form.submit();
-      }
-    } catch (err) {
-      showToast("Checkout failed: " + err.message, "error");
+      showToast("OTP sent!", "success");
+      setShowPhoneOtpModal(true);
+    } catch {
+      showToast("Failed to send OTP", "error");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center p-6 pt-32">
-      <div className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl p-8 md:p-12 relative overflow-hidden">
-
-        {/* Progress bar */}
-        <div className="flex items-center justify-between mb-8">
-          <div className={`flex-1 h-2 rounded-full ${step >= 1 ? "bg-blue-600" : "bg-gray-200"}`} />
-          <div className="w-8" />
-          <div className={`flex-1 h-2 rounded-full ${step >= 2 ? "bg-blue-600" : "bg-gray-200"}`} />
-        </div>
+    <div className="min-h-screen bg-white flex items-center justify-center p-6 pt-16">
+      <div className="w-full max-w-2xl bg-white p-8 md:p-12 relative overflow-hidden">
 
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 heading1">
-          {step === 1 ? "Create Your Account" : "Select Your Plan"}
+          Create Your Account
         </h1>
         <p className="text-gray-600 mb-8 bodyText">
-          {step === 1 ? "Fill in your details to get started" : "Choose a plan that fits your needs"}
+          Fill in your details to get started
         </p>
 
-        {step === 1 && (
-          <div className="space-y-6">
+        <div className="space-y-6">
             <Input label="Full Name" value={fullName} onChange={handleFullNameChange} placeholder="John Doe" required />
 
             <div>
@@ -363,8 +249,8 @@ export default function Register() {
               />
               {!emailVerified && emailAvailable && (
                 <button
-                  onClick={() => setShowEmailOtpModal(true)}
-                  className="mt-2 text-sm text-blue-600 hover:underline"
+                  onClick={handleSendEmailOtp}
+                  className="mt-2 text-sm text-blue-600 hover:underline cursor-pointer"
                 >
                   Verify Email →
                 </button>
@@ -377,22 +263,16 @@ export default function Register() {
                 <select
                   value={countryCode}
                   onChange={(e) => setCountryCode(e.target.value)}
-                  className="w-32 px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-[25ch] px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   {countryCodesList.length > 0 ? (
                     countryCodesList.map((c) => (
                       <option key={`${c.code}-${c.dialCode}`} value={c.dialCode}>
-                        {c.dialCode} ({c.code})
+                        {c.name} ({c.code}) {c.dialCode}
                       </option>
                     ))
                   ) : (
-                    <>
-                      <option value="+91">+91 (IN)</option>
-                      <option value="+1">+1 (US)</option>
-                      <option value="+44">+44 (GB)</option>
-                      <option value="+971">+971 (AE)</option>
-                      <option value="+61">+61 (AU)</option>
-                    </>
+                    <option value="+91">Loading...</option>
                   )}
                 </select>
                 <input
@@ -408,8 +288,8 @@ export default function Register() {
               </div>
               {!phoneVerified && phone.length >= 10 && (
                 <button
-                  onClick={() => setShowPhoneOtpModal(true)}
-                  className="mt-2 text-sm text-blue-600 hover:underline"
+                  onClick={handleSendPhoneOtp}
+                  className="mt-2 text-sm text-blue-600 hover:underline cursor-pointer"
                 >
                   Verify Phone →
                 </button>
@@ -452,91 +332,7 @@ export default function Register() {
               </button>
             )}
           </div>
-        )}
 
-        {step === 2 && (
-          <div className="space-y-6">
-            {plans.length === 0 ? (
-              <div className="text-center py-10">Loading plans...</div>
-            ) : (
-              <div className="grid md:grid-cols-2 gap-4">
-                {plans.map(plan => (
-                  <div
-                    key={plan.id}
-                    onClick={() => handlePlanSelect(plan)}
-                    className={`p-6 rounded-2xl border-2 cursor-pointer transition ${selectedPlan?.id === plan.id
-                      ? "border-blue-600 bg-blue-50"
-                      : "border-gray-200 hover:border-blue-300"
-                      }`}
-                  >
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.plan_name}</h3>
-                    <p className="text-3xl font-bold text-blue-600 mb-2">₹{parseFloat(plan.price).toLocaleString("en-IN")}</p>
-                    <p className="text-sm text-gray-600">{plan.description || "Standard plan"}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {selectedPlan && (
-              <div className="bg-gray-50 p-6 rounded-2xl">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Have a Coupon?</h3>
-
-                {availableCoupons.length > 0 && (
-                  <div className="mb-4">
-                    <p className="text-sm font-bold text-gray-700 mb-2">Available Coupons:</p>
-                    <div className="flex gap-2 flex-wrap">
-                      {availableCoupons.map(c => (
-                        <span
-                          key={c.code || c.coupon_code || c.id}
-                          onClick={() => setCouponCode(c.code || c.coupon_code)}
-                          className="px-3 py-1 bg-blue-100 text-blue-800 font-medium rounded-full text-sm cursor-pointer hover:bg-blue-200 border border-blue-200"
-                        >
-                          {c.code || c.coupon_code}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                    placeholder="PROMO2024"
-                    disabled={couponApplied}
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 disabled:bg-gray-200"
-                  />
-                  <button
-                    onClick={handleApplyCoupon}
-                    disabled={couponApplied || loading}
-                    className="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
-                  >
-                    {couponApplied ? "Applied" : "Apply"}
-                  </button>
-                </div>
-
-                <div className="mt-4 space-y-2 text-sm">
-                  <div className="flex justify-between"><span>Plan Price:</span><span>₹{parseFloat(selectedPlan.price).toFixed(2)}</span></div>
-                  {couponApplied && <div className="flex justify-between text-green-600"><span>Discount:</span><span>- ₹{discountAmount.toFixed(2)}</span></div>}
-                  <div className="flex justify-between font-bold text-lg border-t pt-2"><span>Total:</span><span>₹{finalPrice.toFixed(2)}</span></div>
-                </div>
-              </div>
-            )}
-
-            <button
-              onClick={handleCheckout}
-              disabled={!selectedPlan || loading}
-              className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
-            >
-              {loading ? "Processing..." : finalPrice === 0 ? "Activate Plan" : "Proceed to Payment →"}
-            </button>
-
-            <button onClick={() => setStep(1)} className="w-full text-gray-600 hover:text-gray-900 font-bold py-3">
-              ← Back
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Email OTP Modal */}
@@ -616,27 +412,7 @@ export default function Register() {
   );
 }
 
-function Input({ label, type = "text", value, onChange, placeholder, required, status, statusMessage, disabled }) {
-  return (
-    <div>
-      <label className="block text-sm font-bold text-gray-700 mb-2">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        disabled={disabled}
-        className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:text-gray-500 ${status === "error" ? "border-red-500" : status === "success" ? "border-green-500" : "border-gray-300"
-          }`}
-      />
-      {statusMessage && (
-        <p className={`mt-1 text-sm ${status === "error" ? "text-red-500" : "text-green-500"}`}>{statusMessage}</p>
-      )}
-    </div>
-  );
-}
+
 
 function OtpModal({ title, subtitle, onClose, onVerify, onResend }) {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);

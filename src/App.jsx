@@ -14,6 +14,7 @@ import  ICP1  from './pages/ICP1';
 import  ICP2  from './pages/ICP2';
 import  ICP3  from './pages/ICP3';
 import Register from './pages/Register';
+import Subscription from './pages/Subscription';
 import PaymentResult from './pages/PaymentResult';
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="icp2" element={<ICP2 />} />
           <Route path="icp3" element={<ICP3 />} />
           <Route path="register" element={<Register />} />
+          <Route path="subscription" element={<Subscription />} />
           <Route path="payment-result" element={<PaymentResult />} />
         </Route>
       </Routes>
