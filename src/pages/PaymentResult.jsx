@@ -118,7 +118,7 @@ export default function PaymentResult() {
               onClick={() => window.location.href = PLATFORM_URL}
               className="px-8 py-3 bg-gray-100 text-gray-900 font-bold rounded-xl hover:bg-gray-200 transition"
             >
-              Go to Onboarding
+              Visit Platform Onboarding
             </button>
           </div>
 
@@ -198,7 +198,7 @@ export default function PaymentResult() {
             onClick={() => navigate("/")}
             className="px-8 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition"
           >
-            Go to Homepage
+            Visit Marketing4Sight Homepage
           </button>
           <button
             onClick={() => navigate("/contact-us")}
