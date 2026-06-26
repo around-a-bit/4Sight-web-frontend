@@ -278,6 +278,7 @@ export default function Subscription() {
               <div className="p-6 border-b border-gray-200 space-y-4">
                 <div className="flex justify-between text-sm text-gray-900 font-semibold">
                   <span>Plan price</span>
+                  {/* Currency has been handeled for en-IN, others will be addressed later */}
                   <span className="font-black">₹{parseFloat(selectedPlan?.price || 0).toLocaleString("en-IN")}</span>
                 </div>
                 <div className="flex justify-between text-sm text-gray-900 font-semibold">
