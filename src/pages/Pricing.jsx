@@ -52,8 +52,8 @@ export default function Pricing() {
             From SEO and content management to GMB optimization and website generation — Marketing4Sight helps businesses manage their digital growth from one platform.
           </p>
           <div className="flex justify-center gap-4 mb-12">
-            <button onClick={() => freePlan ? handlePlanSelect(freePlan) : navigate("/register")} className="primary_bg text-white font-bold py-3 px-8 rounded shadow-lg hover:bg-blue-800 transition">Start Free</button>
-            <Link to="/contact-us" className="bg-white border-2 border-gray-200 text-[#222222] font-bold py-3 px-8 rounded hover:border-[#0859b8] hover:text-[#0859b8] transition">Contact Sales</Link>
+            <button onClick={() => freePlan ? handlePlanSelect(freePlan) : navigate("/register")} className="primary_bg text-white font-bold py-3 px-8 rounded shadow-lg hover:bg-blue-800 transition cursor-pointer">Start Free</button>
+            <Link to="/contact-us" className="bg-white border-2 border-gray-200 text-[#222222] font-bold py-3 px-8 rounded hover:border-[#0859b8] hover:text-[#0859b8] transition cursor-pointer">Contact Sales</Link>
           </div>
           <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
             {["SEO Manager", "Website Builder", "Content Manager", "GMB Manager", "Funnel Manager", "Media Manager"].map((m) => (
@@ -74,16 +74,16 @@ export default function Pricing() {
             /* fallback static cards if API unavailable */
             <StaticPricingCards navigate={navigate} />
           ) : (
-            <div className={`grid gap-8 ${plans.length === 1 ? "md:grid-cols-1 max-w-md mx-auto" : plans.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
+            <div className={`grid gap-8 items-stretch ${plans.length === 1 ? "md:grid-cols-1 max-w-md mx-auto" : plans.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
               {plans.map((plan, idx) => {
                 const isFree = parseFloat(plan.price) === 0;
                 const isPopular = !isFree && idx === (freePlan ? 1 : 0);
                 return (
                   <div
                     key={plan.id}
-                    className={`rounded-3xl p-10 border flex flex-col relative overflow-hidden group transition duration-300 ${
+                    className={`rounded-3xl p-10 border flex flex-col h-full relative overflow-hidden group transition duration-300 ${
                       isPopular
-                        ? "primary_bg border-blue-800 shadow-2xl text-white transform md:-translate-y-4"
+                        ? "primary_bg border-blue-800 shadow-2xl text-white hover:border-blue-400"
                         : "bg-white border-gray-200 shadow-xl hover:border-[#0859b8]"
                     }`}
                   >
@@ -110,10 +110,10 @@ export default function Pricing() {
                     <div className="flex-grow" />
                     <button
                       onClick={() => handlePlanSelect(plan)}
-                      className={`w-full text-center font-bold py-4 rounded-xl transition relative z-10 mt-8 ${
+                      className={`w-full text-center font-bold py-4 rounded-xl transition relative z-10 mt-8 cursor-pointer ${
                         isPopular
-                          ? "bg-[#e7eb90] text-[#222222] hover:bg-yellow-300 shadow-[0_0_20px_rgba(231,235,144,0.4)]"
-                          : "bg-white border-2 border-[#0859b8] primary_color hover:bg-[#0859b8] hover:text-white"
+                          ? "bg-[#e7eb90] text-[#222222] hover:bg-yellow-300 shadow-[0_0_20px_rgba(231,235,144,0.4)] border-2 border-transparent"
+                          : "bg-white border-2 border-[#0859b8] primary_color hover:bg-[#0859b8] hover:!text-white"
                       }`}
                     >
                       {isFree ? "Get Started Free" : "Get Started"}
@@ -135,7 +135,7 @@ export default function Pricing() {
             <p className="text-sm text-gray-500 mb-4 bodyText">You can apply your coupon code on the checkout page after selecting a plan.</p>
             <button
               onClick={() => paidPlans.length > 0 ? handlePlanSelect(paidPlans[0]) : navigate("/register")}
-              className="primary_bg text-white font-bold px-6 py-2.5 rounded-xl hover:bg-blue-800 transition text-sm"
+              className="primary_bg text-white font-bold px-6 py-2.5 rounded-xl hover:bg-blue-800 transition text-sm cursor-pointer"
             >
               Select a Plan to Apply Coupon →
             </button>
@@ -256,8 +256,8 @@ export default function Pricing() {
               <h2 className="text-4xl md:text-5xl heading1 text-[#222222] mb-6">Ready to Grow Your Digital Presence?</h2>
               <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto bodyText">Start with the Free plan or unlock advanced data-driven marketing tools.</p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <button onClick={() => freePlan ? handlePlanSelect(freePlan) : navigate("/register")} className="primary_bg text-white font-bold py-4 px-10 rounded shadow-lg hover:bg-blue-800 transition text-lg">Get Started Free</button>
-                <Link to="/contact-us" className="bg-white border-2 border-gray-200 text-[#222222] font-bold py-4 px-10 rounded hover:border-[#0859b8] hover:text-[#0859b8] transition text-lg">Book a Demo</Link>
+                <button onClick={() => freePlan ? handlePlanSelect(freePlan) : navigate("/register")} className="primary_bg text-white font-bold py-4 px-10 rounded shadow-lg hover:bg-blue-800 transition text-lg cursor-pointer">Get Started Free</button>
+                <Link to="/contact-us" className="bg-white border-2 border-gray-200 text-[#222222] font-bold py-4 px-10 rounded hover:border-[#0859b8] hover:text-[#0859b8] transition text-lg cursor-pointer">Book a Demo</Link>
               </div>
             </div>
           </div>
@@ -272,22 +272,22 @@ export default function Pricing() {
 /* Static fallback if API is down */
 function StaticPricingCards({ navigate }) {
   return (
-    <div className="grid md:grid-cols-2 gap-8">
-      <div className="bg-white rounded-3xl p-10 border border-gray-200 shadow-xl flex flex-col hover:border-[#0859b8] transition duration-300">
+    <div className="grid md:grid-cols-2 gap-8 items-stretch">
+      <div className="bg-white rounded-3xl p-10 border border-gray-200 shadow-xl flex flex-col h-full hover:border-[#0859b8] transition duration-300">
         <div className="bg-blue-50 primary_color text-sm font-bold px-4 py-1.5 rounded-full inline-block mb-6 self-start">Best for Starters</div>
         <h3 className="text-4xl heading1 text-[#222222] mb-4">Free</h3>
         <p className="text-gray-600 mb-8 bodyText">Perfect for startups beginning their digital journey.</p>
         <div className="mb-8"><span className="text-2xl font-bold">₹</span><span className="text-6xl heading1">0</span><span className="text-gray-500 font-bold">/month</span></div>
         <div className="flex-grow" />
-        <button onClick={() => navigate("/register")} className="w-full bg-white border-2 border-[#0859b8] primary_color text-center font-bold py-4 rounded-xl hover:bg-[#0859b8] hover:text-white transition">Get Started Free</button>
+        <button onClick={() => navigate("/register")} className="w-full bg-white border-2 border-[#0859b8] primary_color text-center font-bold py-4 rounded-xl hover:bg-[#0859b8] hover:!text-white transition relative z-10 mt-8 cursor-pointer">Get Started Free</button>
       </div>
-      <div className="primary_bg rounded-3xl p-10 border border-blue-800 shadow-2xl flex flex-col text-white transform md:-translate-y-4">
+      <div className="primary_bg rounded-3xl p-10 border border-blue-800 shadow-2xl flex flex-col h-full text-white hover:border-blue-400 transition duration-300">
         <div className="bg-[#e7eb90] text-[#222222] text-sm font-bold px-4 py-1.5 rounded-full inline-block mb-6 self-start">Most Popular</div>
         <h3 className="text-4xl heading1 mb-4">Enterprise</h3>
         <p className="text-blue-100 mb-8 bodyText">Complete marketing infrastructure for growing brands.</p>
         <div className="mb-8"><span className="text-2xl font-bold">₹</span><span className="text-6xl heading1">4,999</span><span className="text-blue-200 font-bold">/month</span></div>
         <div className="flex-grow" />
-        <button onClick={() => navigate("/register")} className="block w-full bg-[#e7eb90] text-[#222222] text-center font-bold py-4 rounded-xl hover:bg-yellow-300 transition">Get Started</button>
+        <button onClick={() => navigate("/register")} className="block w-full bg-[#e7eb90] text-[#222222] text-center font-bold py-4 rounded-xl hover:bg-yellow-300 transition border-2 border-transparent relative z-10 mt-8 cursor-pointer">Get Started</button>
       </div>
     </div>
   );
