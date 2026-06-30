@@ -121,8 +121,13 @@ export default function PaymentResult() {
               Proceed to Onboarding
             </button>
           </div>
+          <div className="flex flex-col py-3 sm:flex-row gap-4 justify-center">
+           <p>Use the same <strong>Registration Email</strong> for your Onboarding</p>
+           </div>
         </div>
+         
       </div>
+      
     );
   }
 
