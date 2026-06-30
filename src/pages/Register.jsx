@@ -293,6 +293,10 @@ export default function Register() {
       showToast("Please enter a valid GSTIN", "error");
       return;
     }
+    if (!address.trim()) {
+      showToast("Please enter your billing address", "error");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -512,7 +516,7 @@ export default function Register() {
 
                 <div className="space-y-2" ref={taxCountryDropdownRef}>
                   <label className="font-bold text-gray-700 text-sm block">
-                    {taxRegexRegistry[taxCountryCode]?.label || "GSTIN"}<span className="text-red-500 ml-1">*</span>
+                    {taxRegexRegistry[taxCountryCode]?.label || "GSTIN"}
                   </label>
                   <div className="flex gap-2">
                     <div className="relative w-[12ch]">
