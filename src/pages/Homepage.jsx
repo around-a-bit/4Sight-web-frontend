@@ -55,7 +55,7 @@ export default function Homepage() {
                     <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
                         <div>
                             <h1 className="text-5xl  lg:text-7xl heading1 primary_color leading-tight mb-6">
-                                The Data-Driven <br /><span className="secondary_color">Marketing OS.</span>
+                                Structured Marketing <br /><span className="secondary_color">Execution & Visibility.</span>
                             </h1>
                             <p className="text-xl text-gray-600 mb-8 leading-relaxed bodyText">
                                 A structured system to plan, execute, track, and optimize marketing — in one place. Where Strategy, Execution, and Performance are connected, not fragmented.
