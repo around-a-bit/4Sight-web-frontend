@@ -314,8 +314,12 @@ export default function Register() {
       showToast("Please verify your phone number", "error");
       return;
     }
-    if (taxNumber && !taxValid) {
-      showToast("Please enter a valid GSTIN", "error");
+    if (!taxNumber.trim()) {
+      showToast(`Please enter your ${taxRegexRegistry[taxCountryCode]?.label || "GSTIN"}`, "error");
+      return;
+    }
+    if (!taxValid) {
+      showToast(`Please enter a valid ${taxRegexRegistry[taxCountryCode]?.label || "GSTIN"}`, "error");
       return;
     }
     if (!address.trim()) {
@@ -557,7 +561,7 @@ export default function Register() {
 
                 <div className="space-y-2" ref={taxCountryDropdownRef}>
                   <label className="font-bold text-gray-700 text-sm block">
-                    {taxRegexRegistry[taxCountryCode]?.label || "GSTIN"}
+                    {taxRegexRegistry[taxCountryCode]?.label || "GSTIN"}<span className="text-red-500 ml-1">*</span>
                   </label>
                   <div className="flex gap-2">
                     <div className="relative w-[12ch]">
@@ -644,15 +648,15 @@ export default function Register() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <label className="font-bold text-gray-700 text-sm block">City</label>
+                    <label className="font-bold text-gray-700 text-sm block">City<span className="text-red-500 ml-1">*</span></label>
                     <Input placeholder="Enter city" value={city} onChange={(e) => setCity(e.target.value)} className="h-11 px-4 border border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="font-bold text-gray-700 text-sm block">State</label>
+                    <label className="font-bold text-gray-700 text-sm block">State<span className="text-red-500 ml-1">*</span></label>
                     <Input placeholder="Enter state" value={stateRegion} onChange={(e) => setStateRegion(e.target.value)} className="h-11 px-4 border border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="font-bold text-gray-700 text-sm block">Postal Code</label>
+                    <label className="font-bold text-gray-700 text-sm block">Postal Code<span className="text-red-500 ml-1">*</span></label>
                     <Input placeholder="Enter postal code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} className="h-11 px-4 border border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" />
                   </div>
                 </div>
