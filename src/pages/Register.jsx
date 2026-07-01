@@ -9,7 +9,7 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { OtpModal } from "@/components/ui/otp-modal";
 import { taxRegexRegistry } from "../lib/validations/taxSchemas";
-import { getAddressAutocomplete } from "../services/addressAutocomplete";
+import { getAddressAutocomplete, getPlaceDetails } from "../services/addressAutocomplete";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
 const LOGIN_URL = import.meta.env.VITE_LOGIN_URL || "/";
@@ -65,6 +65,10 @@ export default function Register() {
 
   // Address
   const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [stateRegion, setStateRegion] = useState("");
+  const [addressCountry, setAddressCountry] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const debounceTimeoutRef = useRef(null);
@@ -117,10 +121,22 @@ export default function Register() {
     }, 300);
   };
 
-  const handleSelectSuggestion = (description) => {
-    setAddress(description);
+  const handleSelectSuggestion = async (suggestion) => {
+    setAddress(suggestion.description);
     setSuggestions([]);
     setShowSuggestions(false);
+    
+    try {
+      const res = await getPlaceDetails(suggestion.place_id);
+      if (res && res.details) {
+        setCity(res.details.city || "");
+        setStateRegion(res.details.state || "");
+        setAddressCountry(res.details.country || "");
+        setPostalCode(res.details.postal_code || "");
+      }
+    } catch (error) {
+      console.error("Failed to fetch place details", error);
+    }
   };
 
   useEffect(() => {
@@ -254,6 +270,10 @@ export default function Register() {
                   if (regData.tax_country_code) setTaxCountryCode(regData.tax_country_code);
                   if (regData.tax_number) validateTaxNumber(regData.tax_number, regData.tax_country_code || "IN");
                   setAddress(regData.business_address || "");
+                  setCity(regData.city || "");
+                  setStateRegion(regData.state || "");
+                  setAddressCountry(regData.country || "");
+                  setPostalCode(regData.postal_code || "");
 
                   setEmailVerified(false);
                   setPhoneVerified(false);
@@ -310,7 +330,11 @@ export default function Register() {
           business_name: values.businessName,
           tax_number: taxNumber,
           tax_country_code: taxCountryCode,
-          business_address: address
+          business_address: address,
+          city: city,
+          state: stateRegion,
+          country: addressCountry,
+          postal_code: postalCode
         })
       });
       if (!res.ok) throw new Error("Registration failed");
@@ -592,7 +616,7 @@ export default function Register() {
                         <div
                           key={suggestion.place_id}
                           className="px-4 py-3 hover:bg-slate-50 cursor-pointer text-sm border-b border-gray-100 last:border-0 flex items-start gap-3"
-                          onClick={() => handleSelectSuggestion(suggestion.description)}
+                          onClick={() => handleSelectSuggestion(suggestion)}
                         >
                           <span className="text-slate-700">{suggestion.description}</span>
                         </div>
