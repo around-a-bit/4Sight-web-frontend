@@ -15,6 +15,17 @@ export default function Layout() {
     }, 10);
   }, [pathname]);
 
+  useEffect(() => {
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    const cleanPath = pathname === '/' ? '' : pathname;
+    canonicalLink.setAttribute('href', `https://www.marketing4sight.com${cleanPath}`);
+  }, [pathname]);
+
   return (
     <div className="min-h-screen flex flex-col relative">
       <Header />

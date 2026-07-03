@@ -28,6 +28,7 @@ export default function App() {
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="pricing" element={<Pricing />} />
           <Route path="solutions" element={<SolutionsHub />} />
+          <Route path="solutions/:tab" element={<SolutionsHub />} />
           <Route path="compliance" element={<Compliance />} />
           <Route path="resources" element={<Resources />} />
           <Route path="resources/:slug" element={<BlogDetail />} />
