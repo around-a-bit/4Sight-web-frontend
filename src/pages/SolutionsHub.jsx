@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 import strategyDashboard from '../assets/strategy-dashboard.png';
@@ -249,24 +249,24 @@ const useCasesData = {
 export default function SolutionsHub() {
     const [activeSolution, setActiveSolution] = useState('strategy-planning');
     const [isFading, setIsFading] = useState(false);
-    const location = useLocation();
+    const { tab } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const tab = searchParams.get('tab');
-        if (tab && useCasesData[tab] && tab !== activeSolution) {
-            handleSolutionChange(tab);
+        const selectedTab = tab || 'strategy-planning';
+        if (selectedTab && useCasesData[selectedTab] && selectedTab !== activeSolution) {
+            setIsFading(true);
+            setTimeout(() => {
+                setActiveSolution(selectedTab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setIsFading(false);
+            }, 400);
         }
-    }, [location.search]);
+    }, [tab]);
 
     const handleSolutionChange = (key) => {
         if (key === activeSolution) return;
-        setIsFading(true);
-        setTimeout(() => {
-            setActiveSolution(key);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            setIsFading(false);
-        }, 400);
+        navigate(`/solutions/${key}`);
     };
 
     const data = useCasesData[activeSolution];
