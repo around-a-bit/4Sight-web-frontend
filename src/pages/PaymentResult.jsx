@@ -12,7 +12,7 @@ export default function PaymentResult() {
 
   useEffect(() => {
     const isFreePlan = searchParams.get("free_plan") === "true";
-    
+
     if (isFreePlan) {
       setStatus("success");
       setPaymentData({
@@ -110,23 +110,24 @@ export default function PaymentResult() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => navigate("/")}
-              className="px-8 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition"
+              className="px-8 py-3 bg-gray-100 text-gray-900 font-bold rounded-xl hover:bg-gray-200 transition"
             >
-              Go to Homepage
+              Visit Marketing4Sight Homepage
             </button>
             <button
               onClick={() => window.location.href = PLATFORM_URL}
-              className="px-8 py-3 bg-gray-100 text-gray-900 font-bold rounded-xl hover:bg-gray-200 transition"
+              className="px-8 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition"
             >
-              Visit Platform Onboarding
+              Proceed to Onboarding
             </button>
           </div>
-
-          <p className="text-sm text-gray-500 mt-8">
-            Important: Use the email <strong>{paymentData?.email || "you registered with"}</strong> for your Onboarding.
-          </p>
+          <div className="flex flex-col py-3 sm:flex-row gap-4 justify-center">
+           <p>Use the same <strong>Registration Email</strong> for your Onboarding</p>
+           </div>
         </div>
+         
       </div>
+      
     );
   }
 
