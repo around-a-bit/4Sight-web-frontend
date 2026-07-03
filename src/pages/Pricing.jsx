@@ -52,7 +52,7 @@ export default function Pricing() {
             From SEO and content management to GMB optimization and website generation — Marketing4Sight helps businesses manage their digital growth from one platform.
           </p>
           <div className="flex justify-center gap-4 mb-12">
-            <button onClick={() => freePlan ? handlePlanSelect(freePlan) : navigate("/register")} className="primary_bg text-white font-bold py-3 px-8 rounded shadow-lg hover:bg-blue-800 transition cursor-pointer">Start Free</button>
+            {/* <button onClick={() => freePlan ? handlePlanSelect(freePlan) : navigate("/register")} className="primary_bg text-white font-bold py-3 px-8 rounded shadow-lg hover:bg-blue-800 transition cursor-pointer">Start Free</button> */}
             <Link to="/contact-us" className="bg-white border-2 border-gray-200 text-[#222222] font-bold py-3 px-8 rounded hover:border-[#0859b8] hover:text-[#0859b8] transition cursor-pointer">Contact Sales</Link>
           </div>
           <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
@@ -71,8 +71,7 @@ export default function Pricing() {
               <div className="w-10 h-10 border-4 border-[#0859b8] border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : plans.length === 0 ? (
-            /* fallback static cards if API unavailable */
-            <StaticPricingCards navigate={navigate} />
+            <div className="text-center py-20 text-gray-500 bodyText text-lg">No plans available at the moment.</div>
           ) : (
             <div className={`grid gap-8 items-stretch ${plans.length === 1 ? "md:grid-cols-1 max-w-md mx-auto" : plans.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
               {plans.map((plan, idx) => {
@@ -269,26 +268,3 @@ export default function Pricing() {
   );
 }
 
-/* Static fallback if API is down */
-function StaticPricingCards({ navigate }) {
-  return (
-    <div className="grid md:grid-cols-2 gap-8 items-stretch">
-      <div className="bg-white rounded-3xl p-10 border border-gray-200 shadow-xl flex flex-col h-full hover:border-[#0859b8] transition duration-300">
-        <div className="bg-blue-50 primary_color text-sm font-bold px-4 py-1.5 rounded-full inline-block mb-6 self-start">Best for Starters</div>
-        <h3 className="text-4xl heading1 text-[#222222] mb-4">Free</h3>
-        <p className="text-gray-600 mb-8 bodyText">Perfect for startups beginning their digital journey.</p>
-        <div className="mb-8"><span className="text-2xl font-bold">₹</span><span className="text-6xl heading1">0</span><span className="text-gray-500 font-bold">/month</span></div>
-        <div className="flex-grow" />
-        <button onClick={() => navigate("/register")} className="w-full bg-white border-2 border-[#0859b8] primary_color text-center font-bold py-4 rounded-xl hover:bg-[#0859b8] hover:!text-white transition relative z-10 mt-8 cursor-pointer">Get Started Free</button>
-      </div>
-      <div className="primary_bg rounded-3xl p-10 border border-blue-800 shadow-2xl flex flex-col h-full text-white hover:border-blue-400 transition duration-300">
-        <div className="bg-[#e7eb90] text-[#222222] text-sm font-bold px-4 py-1.5 rounded-full inline-block mb-6 self-start">Most Popular</div>
-        <h3 className="text-4xl heading1 mb-4">Enterprise</h3>
-        <p className="text-blue-100 mb-8 bodyText">Complete marketing infrastructure for growing brands.</p>
-        <div className="mb-8"><span className="text-2xl font-bold">₹</span><span className="text-6xl heading1">4,999</span><span className="text-blue-200 font-bold">/month</span></div>
-        <div className="flex-grow" />
-        <button onClick={() => navigate("/register")} className="block w-full bg-[#e7eb90] text-[#222222] text-center font-bold py-4 rounded-xl hover:bg-yellow-300 transition border-2 border-transparent relative z-10 mt-8 cursor-pointer">Get Started</button>
-      </div>
-    </div>
-  );
-}

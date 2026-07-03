@@ -41,6 +41,7 @@ venv.bak/
 **/*_credentials.json
 **/*_token.json
 **/*_tokens.json
+.env
 
 # Storage directories with sensitive data
 **/storage/credentials/
