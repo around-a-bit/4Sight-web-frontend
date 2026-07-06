@@ -1,52 +1,44 @@
 import React, { useEffect, useRef } from 'react';
-import Swiper from 'swiper';
-import { EffectCoverflow, Navigation, Autoplay, Mousewheel } from 'swiper/modules';
-import VanillaTilt from 'vanilla-tilt';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/navigation';
 import './ICP1.css';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function ICP1() {
   const clientSwiperRef = useRef(null);
 
   useEffect(() => {
-    // Custom Cursor Interaction
-    const cursorDot = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
-    const interactives = document.querySelectorAll('.interactive, button');
-
-    const moveCursor = (e) => {
-        const posX = e.clientX; const posY = e.clientY;
-        if (cursorDot) {
-            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
-        }
-        if (cursorOutline) {
-            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 150, fill: "forwards" });
-        }
-    };
-    
-    window.addEventListener('mousemove', moveCursor);
-    
-    interactives.forEach(el => {
-        el.addEventListener('mouseenter', () => cursorOutline?.classList.add('cursor-hover'));
-        el.addEventListener('mouseleave', () => cursorOutline?.classList.remove('cursor-hover'));
-    });
-
-    // Initialize VanillaTilt
-    VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
-
-    // Swiper Modules loaded per instance
-
     let problemSwiper = null;
     let verticalSwiper = null;
     let clientSwiper = null;
+    let ctx = null;
+    let isDestroyed = false;
 
-    let ctx = gsap.context(() => {
+    // Dynamically load heavy animation & slider libraries only when mounting
+    Promise.all([
+      import('gsap'),
+      import('gsap/ScrollTrigger'),
+      import('swiper'),
+      import('swiper/modules'),
+      import('vanilla-tilt')
+    ]).then(([
+      { default: gsap },
+      { default: ScrollTrigger },
+      { default: Swiper },
+      { EffectCoverflow, Navigation, Autoplay, Mousewheel },
+      { default: VanillaTilt }
+    ]) => {
+      if (isDestroyed) return;
+
+      // Register ScrollTrigger
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Initialize VanillaTilt
+      const tiltElements = document.querySelectorAll("[data-tilt]");
+      VanillaTilt.init(tiltElements);
+
+      // Initialize GSAP & Swiper within the GSAP context
+      ctx = gsap.context(() => {
         // GSAP Scroll Animations
         gsap.from(".hero-text > *", { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" });
         gsap.from(".hero-cards > div", { x: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.3 });
@@ -182,21 +174,25 @@ export default function ICP1() {
         }
 
         clientSwiperRef.current = clientSwiper;
+      });
     });
 
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
+      isDestroyed = true;
       if (problemSwiper) problemSwiper.destroy();
       if (verticalSwiper) verticalSwiper.destroy();
       if (clientSwiper) clientSwiper.destroy();
-      ctx.revert();
+      if (ctx) ctx.revert();
+      
+      const tiltElements = document.querySelectorAll("[data-tilt]");
+      tiltElements.forEach(el => {
+        if (el.vanillaTilt) el.vanillaTilt.destroy();
+      });
     };
   }, []);
 
   return (
     <div className="backgroupnd_color bodyText antialiased text_color">
-      <div className="cursor-dot"></div>
-      <div className="cursor-outline"></div>
       {/* 1. HERO SECTION */}
     <section className="relative min-h-screen flex items-center pt-24 pb-20 px-6 overflow-hidden hero-section">
         <div className="mesh-bg"></div>
