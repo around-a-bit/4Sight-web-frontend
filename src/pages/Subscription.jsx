@@ -18,6 +18,9 @@ export default function Subscription() {
   const [discountAmount, setDiscountAmount] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
   const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+  
+  const [isAutoPay, setIsAutoPay] = useState(false);
+  const [showConsentModal, setShowConsentModal] = useState(false);
 
   useEffect(() => {
     if (!email) {
@@ -105,7 +108,7 @@ export default function Subscription() {
     }
   };
 
-  const handleCheckout = async () => {
+  const executePayment = async () => {
     if (!selectedPlan) {
       showToast("Please select a plan", "error");
       return;
@@ -146,7 +149,8 @@ export default function Subscription() {
         body: JSON.stringify({
           user_id: regData.user_id,
           plan_id: selectedPlan.id,
-          coupon_code: couponApplied ? couponCode : null
+          coupon_code: couponApplied ? couponCode : null,
+          is_auto_pay: isAutoPay
         })
       });
 
@@ -173,6 +177,18 @@ export default function Subscription() {
       showToast("Checkout failed: " + err.message, "error");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCheckout = () => {
+    if (!selectedPlan) {
+      showToast("Please select a plan", "error");
+      return;
+    }
+    if (isAutoPay) {
+      setShowConsentModal(true);
+    } else {
+      executePayment();
     }
   };
 
@@ -301,6 +317,19 @@ export default function Subscription() {
                 <p className="text-xs text-gray-500 leading-relaxed font-medium">
                   By proceeding, I express my consent to complete this transaction securely via PayU.
                 </p>
+                <div className="flex items-start gap-3 p-3 border border-blue-600/20 rounded-xl bg-blue-50/50 cursor-pointer hover:bg-blue-50 transition-colors" onClick={() => setIsAutoPay(!isAutoPay)}>
+                  <input 
+                    type="checkbox" 
+                    checked={isAutoPay}
+                    onChange={(e) => setIsAutoPay(e.target.checked)}
+                    className="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-blue-600 border-gray-300"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-gray-900">Enable AutoPay for future renewals</span>
+                    <span className="text-xs text-gray-500">You will be automatically charged based on your selected billing cycle.</span>
+                  </div>
+                </div>
                 <button
                   onClick={handleCheckout}
                   disabled={!selectedPlan || loading}
@@ -313,6 +342,51 @@ export default function Subscription() {
           </div>
         </div>
       </div>
+      
+      {/* AutoPay Consent Modal */}
+      {showConsentModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6">
+              <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4 mx-auto">
+                <i className="fa-solid fa-shield-check text-2xl"></i>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">AutoPay Consent</h3>
+              <p className="text-gray-600 text-sm mb-4">
+                By enabling AutoPay, you authorize 4Sight to securely store your payment method and automatically charge you for future renewals based on your selected plan.
+              </p>
+              <ul className="text-sm text-gray-600 mb-6 space-y-2 list-disc list-inside">
+                <li>You will be notified before each automatic deduction.</li>
+                <li>You can cancel or manage AutoPay anytime from your Profile Settings.</li>
+                <li>The initial payment confirms your mandate setup.</li>
+              </ul>
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={() => setShowConsentModal(false)}
+                  className="px-6 py-2 rounded-xl text-gray-600 hover:bg-gray-100 font-semibold transition-colors"
+                  disabled={loading}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    setShowConsentModal(false);
+                    executePayment();
+                  }}
+                  className="px-6 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 font-semibold transition-colors flex items-center gap-2"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : null}
+                  Agree & Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {toast.show && (
         <div className={`fixed bottom-6 right-6 px-6 py-4 rounded-xl shadow-lg text-white font-bold ${toast.type === "success" ? "bg-green-500" : toast.type === "error" ? "bg-yellow-500" : "bg-blue-500"}`}>
           {toast.message}
