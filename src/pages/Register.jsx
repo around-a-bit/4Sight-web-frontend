@@ -8,7 +8,7 @@ import { fullNameSchema, businessNameSchema } from "../lib/validations/commonSch
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { OtpModal } from "@/components/ui/otp-modal";
-import { taxRegexRegistry } from "../lib/validations/taxSchemas";
+import { taxRegexRegistry, postalCodeRegistry } from "../lib/validations/taxSchemas";
 import { getAddressAutocomplete, getPlaceDetails } from "../services/addressAutocomplete";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
@@ -54,7 +54,7 @@ export default function Register() {
 
   const debounceTimer = useRef(null);
 
-  // Tax / GSTIN
+  // Tax / Tax Number
   const [taxNumber, setTaxNumber] = useState("");
   const [taxCountryCode, setTaxCountryCode] = useState("IN");
   const [taxValid, setTaxValid] = useState(null);
@@ -69,6 +69,30 @@ export default function Register() {
   const [stateRegion, setStateRegion] = useState("");
   const [addressCountry, setAddressCountry] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  const [postalCodeError, setPostalCodeError] = useState("");
+
+  const validatePostalCode = (value, countryCode) => {
+    if (!value.trim()) {
+      setPostalCodeError("");
+      return true;
+    }
+    const rule = postalCodeRegistry[countryCode];
+    if (!rule) {
+      setPostalCodeError("");
+      return true;
+    }
+    const isValid = rule.regex.test(value.trim());
+    setPostalCodeError(isValid ? "" : rule.errorMessage);
+    return isValid;
+  };
+
+  const handlePostalCodeChange = (val, countryCode) => {
+    const isAlphanumeric = ['GB', 'CA'].includes(countryCode);
+    const cleaned = isAlphanumeric ? val.replace(/[^a-zA-Z0-9\s]/g, "") : val.replace(/\D/g, "");
+    setPostalCode(cleaned);
+    validatePostalCode(cleaned, countryCode);
+  };
+
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const debounceTimeoutRef = useRef(null);
@@ -134,10 +158,14 @@ export default function Register() {
         } else {
           setAddress(suggestion.description);
         }
-        setCity(res.details.city || "");
-        setStateRegion(res.details.state || "");
+        setCity((res.details.city || "").replace(/[^a-zA-Z\s]/g, ""));
+        setStateRegion((res.details.state || "").replace(/[^a-zA-Z\s]/g, ""));
         setAddressCountry(res.details.country || "");
-        setPostalCode(res.details.postal_code || "");
+        const rawZip = res.details.postal_code || "";
+        const isAlphanumeric = ['GB', 'CA'].includes(taxCountryCode);
+        const cleanedZip = isAlphanumeric ? rawZip.replace(/[^a-zA-Z0-9\s]/g, "") : rawZip.replace(/\D/g, "");
+        setPostalCode(cleanedZip);
+        validatePostalCode(cleanedZip, taxCountryCode);
       }
     } catch (error) {
       console.error("Failed to fetch place details", error);
@@ -162,6 +190,15 @@ export default function Register() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (postalCode) {
+      validatePostalCode(postalCode, taxCountryCode);
+    }
+    if (taxNumber) {
+      validateTaxNumber(taxNumber, taxCountryCode);
+    }
+  }, [taxCountryCode]);
 
   useEffect(() => {
     return () => {
@@ -315,11 +352,11 @@ export default function Register() {
       return;
     }
     if (!taxNumber.trim()) {
-      showToast(`Please enter your ${taxRegexRegistry[taxCountryCode]?.label || "GSTIN"}`, "error");
+      showToast(`Please enter your ${taxRegexRegistry[taxCountryCode]?.label || "Tax Number"}`, "error");
       return;
     }
     if (!taxValid) {
-      showToast(`Please enter a valid ${taxRegexRegistry[taxCountryCode]?.label || "GSTIN"}`, "error");
+      showToast(`Please enter a valid ${taxRegexRegistry[taxCountryCode]?.label || "Tax Number"}`, "error");
       return;
     }
     if (!address.trim()) {
@@ -336,6 +373,11 @@ export default function Register() {
     }
     if (!postalCode.trim()) {
       showToast("Please enter your postal code", "error");
+      return;
+    }
+    const postalRule = postalCodeRegistry[taxCountryCode];
+    if (postalRule && !postalRule.regex.test(postalCode.trim())) {
+      showToast(postalRule.errorMessage, "error");
       return;
     }
 
@@ -561,7 +603,7 @@ export default function Register() {
 
                 <div className="space-y-2" ref={taxCountryDropdownRef}>
                   <label className="font-bold text-gray-700 text-sm block">
-                    {taxRegexRegistry[taxCountryCode]?.label || "GSTIN"}<span className="text-red-500 ml-1">*</span>
+                    {taxRegexRegistry[taxCountryCode]?.label || "Tax Number"}<span className="text-red-500 ml-1">*</span>
                   </label>
                   <div className="flex gap-2">
                     <div className="relative w-[12ch]">
@@ -609,7 +651,7 @@ export default function Register() {
                       )}
                     </div>
                     <Input
-                      placeholder={taxRegexRegistry[taxCountryCode]?.placeholder || "Enter GSTIN"}
+                      placeholder={taxRegexRegistry[taxCountryCode] ? `Enter ${taxRegexRegistry[taxCountryCode].label} (e.g. ${taxRegexRegistry[taxCountryCode].placeholder})` : "Enter Tax Number"}
                       value={taxNumber}
                       maxLength={taxRegexRegistry[taxCountryCode]?.maxLength || 25}
                       onChange={handleTaxNumberChange}
@@ -649,15 +691,21 @@ export default function Register() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="space-y-2">
                     <label className="font-bold text-gray-700 text-sm block">City<span className="text-red-500 ml-1">*</span></label>
-                    <Input placeholder="Enter city" value={city} onChange={(e) => setCity(e.target.value)} className="h-11 px-4 border border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" />
+                    <Input placeholder="Enter city" value={city} onChange={(e) => setCity(e.target.value.replace(/[^a-zA-Z\s]/g, ""))} className="h-11 px-4 border border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" />
                   </div>
                   <div className="space-y-2">
                     <label className="font-bold text-gray-700 text-sm block">State<span className="text-red-500 ml-1">*</span></label>
-                    <Input placeholder="Enter state" value={stateRegion} onChange={(e) => setStateRegion(e.target.value)} className="h-11 px-4 border border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" />
+                    <Input placeholder="Enter state" value={stateRegion} onChange={(e) => setStateRegion(e.target.value.replace(/[^a-zA-Z\s]/g, ""))} className="h-11 px-4 border border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" />
                   </div>
                   <div className="space-y-2">
                     <label className="font-bold text-gray-700 text-sm block">Postal Code<span className="text-red-500 ml-1">*</span></label>
-                    <Input placeholder="Enter postal code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} className="h-11 px-4 border border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" />
+                    <Input
+                      placeholder="Enter postal code"
+                      value={postalCode}
+                      onChange={(e) => handlePostalCodeChange(e.target.value, taxCountryCode)}
+                      className={`h-11 px-4 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${postalCodeError ? 'border-red-500 text-red-250' : 'border-blue-300'}`}
+                    />
+                    {postalCodeError && <p className="mt-1 text-[0.8rem] font-medium text-red-500">{postalCodeError}</p>}
                   </div>
                 </div>
 
@@ -683,7 +731,7 @@ export default function Register() {
             ) : isResumeMode ? (
               <button
                 type="submit"
-                disabled={loading || !emailVerified || !phoneVerified}
+                disabled={loading || !emailVerified || !phoneVerified || taxValid !== true || !!postalCodeError}
                 className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {!emailVerified || !phoneVerified ? "Verify Contacts to Resume →" : loading ? "Processing..." : "Save & Resume Registration →"}
@@ -691,7 +739,7 @@ export default function Register() {
             ) : (
               <button
                 type="submit"
-                disabled={loading || !emailVerified || !phoneVerified}
+                disabled={loading || !emailVerified || !phoneVerified || taxValid !== true || !!postalCodeError}
                 className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {loading ? "Processing..." : "Continue to Plan Selection →"}
