@@ -317,7 +317,7 @@ export default function Subscription() {
                 <p className="text-xs text-gray-500 leading-relaxed font-medium">
                   By proceeding, I express my consent to complete this transaction securely via PayU.
                 </p>
-                <div className="flex items-start gap-3 p-3 border border-blue-600/20 rounded-xl bg-blue-50/50 cursor-pointer hover:bg-blue-50 transition-colors" onClick={() => setIsAutoPay(!isAutoPay)}>
+                {/* <div className="flex items-start gap-3 p-3 border border-blue-600/20 rounded-xl bg-blue-50/50 cursor-pointer hover:bg-blue-50 transition-colors" onClick={() => setIsAutoPay(!isAutoPay)}>
                   <input 
                     type="checkbox" 
                     checked={isAutoPay}
@@ -329,11 +329,11 @@ export default function Subscription() {
                     <span className="text-sm font-bold text-gray-900">Enable AutoPay for future renewals</span>
                     <span className="text-xs text-gray-500">You will be automatically charged based on your selected billing cycle.</span>
                   </div>
-                </div>
+                </div> */}
                 <button
                   onClick={handleCheckout}
                   disabled={!selectedPlan || loading}
-                  className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50 uppercase tracking-wider"
+                  className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50 uppercase tracking-wider cursor-pointer disabled:cursor-not-allowed"
                 >
                   {loading ? "Processing..." : finalPrice === 0 ? "Activate Plan" : `Pay ₹${finalPrice.toLocaleString("en-IN")}`}
                 </button>
