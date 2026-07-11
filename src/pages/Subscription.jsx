@@ -11,12 +11,20 @@ export default function Subscription() {
   const [loading, setLoading] = useState(false);
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
+
+  const [planTypes, setPlanTypes] = useState([]);
+  const [selectedPlanType, setSelectedPlanType] = useState(null);
   
   const [availableCoupons, setAvailableCoupons] = useState([]);
   const [couponCode, setCouponCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const [discountAmount, setDiscountAmount] = useState(0);
+  const [basePrice, setBasePrice] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
+  const [couponError, setCouponError] = useState("");
+  
+  const [loadingPlans, setLoadingPlans] = useState(true);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
   const [toast, setToast] = useState({ show: false, message: "", type: "success" });
   
   const [isAutoPay, setIsAutoPay] = useState(false);
@@ -29,82 +37,135 @@ export default function Subscription() {
   }, [email, navigate]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/v1/subscription/plans`)
-      .then(r => r.json())
-      .then(data => {
-        const plansList = Array.isArray(data) ? data : [];
-        setPlans(plansList);
-        if (plansList.length > 0 && !selectedPlan) {
-          setSelectedPlan(plansList[0]);
-          setFinalPrice(parseFloat(plansList[0].price));
-        }
-      })
-      .catch(() => setPlans([]));
+    const loadData = async () => {
+      try {
+        const [plansRes, couponsRes, planTypesRes] = await Promise.all([
+          fetch(`${API_BASE}/api/v1/subscription/plans`),
+          fetch(`${API_BASE}/api/v1/coupon/available`),
+          fetch(`${API_BASE}/api/v1/subscription/plan-types`)
+        ]);
 
-    fetch(`${API_BASE}/api/v1/coupon/available`)
-      .then(r => r.json())
-      .then(data => {
-        if (data && Array.isArray(data)) setAvailableCoupons(data);
-        else if (data && data.coupons && Array.isArray(data.coupons)) setAvailableCoupons(data.coupons);
-        else if (data && data.data && Array.isArray(data.data)) setAvailableCoupons(data.data);
-      })
-      .catch(err => console.error("Failed to load coupons:", err));
+        const plansData = await plansRes.json();
+        const couponsData = await couponsRes.json();
+        const planTypesData = await planTypesRes.json();
+
+        const plansList = Array.isArray(plansData) ? plansData : [];
+        setPlans(plansList);
+        
+        let initialPlan = null;
+        if (plansList.length > 0) {
+          initialPlan = plansList[0];
+          setSelectedPlan(initialPlan);
+        }
+
+        const typesList = Array.isArray(planTypesData) ? planTypesData : [];
+        setPlanTypes(typesList);
+        if (typesList.length > 0) {
+          setSelectedPlanType(typesList[0]);
+        }
+
+        let couponsList = [];
+        if (couponsData && Array.isArray(couponsData)) couponsList = couponsData;
+        else if (couponsData && couponsData.coupons && Array.isArray(couponsData.coupons)) couponsList = couponsData.coupons;
+        else if (couponsData && couponsData.data && Array.isArray(couponsData.data)) couponsList = couponsData.data;
+        setAvailableCoupons(couponsList);
+
+      } catch (err) {
+        console.error("Failed to load checkout data:", err);
+      } finally {
+        setLoadingPlans(false);
+      }
+    };
+    
+    loadData();
   }, []);
 
   useEffect(() => {
-    if (selectedPlan) {
+    if (selectedPlan && selectedPlanType) {
       setCouponCode("");
       setCouponApplied(false);
       setDiscountAmount(0);
-      setFinalPrice(parseFloat(selectedPlan.price));
+      setCouponError("");
+      
+      // Preview with no coupon to get base price
+      fetch(`${API_BASE}/api/v1/coupon/preview`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          plan_id: selectedPlan.id, 
+          coupon_code: null,
+          plan_type_id: selectedPlanType.id
+        })
+      })
+      .then(r => r.json())
+      .then(data => {
+        setBasePrice(data.original_price || 0);
+        setFinalPrice(data.final_price || 0);
+      })
+      .catch(() => {});
     }
-  }, [selectedPlan]);
+  }, [selectedPlan, selectedPlanType]);
 
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
     setTimeout(() => setToast({ show: false, message: "", type: "success" }), 4000);
   };
 
-  const handleApplyCoupon = async (code) => {
+  const applyCouponCode = async (code) => {
     if (!selectedPlan) return;
-    setLoading(true);
+    
     try {
+      setApplyingCoupon(true);
       const res = await fetch(`${API_BASE}/api/v1/coupon/preview`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan_id: selectedPlan.id, coupon_code: code })
+        body: JSON.stringify({ 
+          plan_id: selectedPlan.id, 
+          coupon_code: code,
+          plan_type_id: selectedPlanType?.id
+        })
       });
       const data = await res.json();
+      
+      setCouponCode(code);
+      setDiscountAmount(data.discount_amount);
+      setBasePrice(data.original_price);
+      setFinalPrice(data.final_price);
+      setCouponApplied(data.coupon_applied);
+      setCouponError("");
+
       if (data.coupon_applied) {
-        setCouponCode(code);
-        setDiscountAmount(data.discount_amount);
-        setFinalPrice(data.final_price);
-        setCouponApplied(true);
         showToast("Coupon applied!", "success");
       } else {
+        setCouponError("Invalid or expired promo code.");
         showToast("Invalid coupon code", "error");
-        setCouponCode("");
-        setCouponApplied(false);
-        setDiscountAmount(0);
-        setFinalPrice(parseFloat(selectedPlan.price));
       }
-    } catch {
+    } catch (err) {
+      setCouponError("Invalid or expired promo code.");
+      setCouponApplied(false);
+      setDiscountAmount(0);
+      setFinalPrice(basePrice);
       showToast("Failed to apply coupon", "error");
     } finally {
-      setLoading(false);
+      setApplyingCoupon(false);
+    }
+  };
+
+  const handleSkipCoupon = () => {
+    if (selectedPlan) {
+      setCouponApplied(false);
+      setCouponCode("");
+      setDiscountAmount(0);
+      setFinalPrice(basePrice);
+      setCouponError("");
     }
   };
 
   const toggleCoupon = (code) => {
     if (couponApplied && couponCode === code) {
-      // Unselect
-      setCouponCode("");
-      setCouponApplied(false);
-      setDiscountAmount(0);
-      setFinalPrice(parseFloat(selectedPlan.price));
+      handleSkipCoupon();
     } else {
-      // Apply new
-      handleApplyCoupon(code);
+      applyCouponCode(code);
     }
   };
 
@@ -123,7 +184,8 @@ export default function Subscription() {
         body: JSON.stringify({
           email,
           plan_id: selectedPlan.id,
-          coupon_code: couponApplied ? couponCode : null
+          coupon_code: couponApplied ? couponCode : null,
+          plan_type_id: selectedPlanType?.id
         })
       });
 
@@ -149,29 +211,33 @@ export default function Subscription() {
         body: JSON.stringify({
           user_id: regData.user_id,
           plan_id: selectedPlan.id,
-          coupon_code: couponApplied ? couponCode : null,
-          is_auto_pay: isAutoPay
+          plan_type_id: selectedPlanType?.id,
+          coupon_code: couponApplied ? couponCode : null
         })
       });
 
       const checkoutData = await checkoutRes.json();
 
       // Auto-submit form to PayU
-      if (checkoutData.checkout_type === "hosted") {
+      if (checkoutData.checkout_type === "merchant_hosted" || checkoutData.checkout_type === "hosted" || checkoutData.action_url) {
         localStorage.setItem("register_resume_email", email);
 
         const form = document.createElement("form");
         form.method = "POST";
         form.action = checkoutData.action_url;
-        Object.entries(checkoutData.params).forEach(([key, value]) => {
+        
+        const formFields = checkoutData.checkout_payload || checkoutData.params;
+        Object.entries(formFields).forEach(([key, value]) => {
           const input = document.createElement("input");
           input.type = "hidden";
           input.name = key;
-          input.value = value;
+          input.value = String(value);
           form.appendChild(input);
         });
         document.body.appendChild(form);
         form.submit();
+      } else {
+         showToast("Checkout failed: Invalid payload", "error");
       }
     } catch (err) {
       showToast("Checkout failed: " + err.message, "error");
@@ -194,14 +260,26 @@ export default function Subscription() {
 
   const isFreePlan = parseFloat(selectedPlan?.price || 0) === 0;
 
+  if (loadingPlans) {
+    return (
+      <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center">
+        <div className="flex items-center gap-3 text-gray-500">
+          <div className="animate-spin rounded-full h-6 w-6 border-2 border-[#0859B8] border-t-transparent"></div>
+          <span className="font-semibold text-[#222222]">Loading Checkout...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-6 pt-16 font-sans">
-      <div className="w-full max-w-[1400px] mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center heading1">Select Your Subscription Plan</h1>
+    <div className="min-h-screen bg-white text-gray-900 font-sans p-6 pt-16">
+      <div className="max-w-[1400px] mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center heading1">Secure Checkout</h1>
+        
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Card 1: Select Plan */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <h2 className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-widest flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">1</span>
               Select Plan
@@ -224,21 +302,53 @@ export default function Subscription() {
                       </span>
                       <span className="font-black text-gray-900 text-base">₹{parseFloat(plan.price).toLocaleString("en-IN")}</span>
                     </div>
-                    <div className="text-sm font-medium text-gray-500">{plan.description || "Standard plan"}</div>
+                    <div className="text-sm font-medium text-gray-500">{plan.duration_days} Days Access</div>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Card 2: Apply Offers */}
-          <div className="lg:col-span-4">
+          {/* Card 2: Plan Type */}
+          <div className="lg:col-span-3">
             <h2 className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-widest flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-[#E7EB90] text-gray-900 flex items-center justify-center text-xs">2</span>
+              Plan Type
+            </h2>
+            <div className={`bg-transparent flex flex-col space-y-3 pr-2 custom-scrollbar ${selectedPlan && Number(selectedPlan.price) === 0 ? 'opacity-50 pointer-events-none' : ''}`}>
+              {planTypes.map((type) => {
+                const isSelected = selectedPlanType?.id === type.id;
+                
+                return (
+                  <div 
+                    key={type.id} 
+                    onClick={() => setSelectedPlanType(type)}
+                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${isSelected ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200 bg-white hover:border-gray-300'}`}
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-black text-sm text-gray-900 uppercase tracking-wider bg-gray-100 px-2 py-1 rounded border border-gray-200 border-dashed">{type.name}</span>
+                      {isSelected && (
+                        <span className="text-xs font-bold text-blue-600 flex items-center gap-1 uppercase tracking-widest">
+                          <i className="fa-solid fa-check"></i> Selected
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-700 font-medium">
+                      Billed for {type.duration_months} month{type.duration_months > 1 ? 's' : ''}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Card 3: Apply Offers */}
+          <div className="lg:col-span-3">
+            <h2 className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-widest flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-gray-300 text-gray-900 flex items-center justify-center text-xs">3</span>
               Apply Offers
             </h2>
-            <div className={`bg-transparent flex flex-col ${isFreePlan ? 'opacity-50 pointer-events-none' : ''}`}>
-              <h3 className="text-xs font-bold text-gray-400 mb-3 uppercase tracking-widest border-b border-gray-100 pb-2">Available Coupons</h3>
+            <div className={`bg-transparent flex flex-col ${selectedPlan && Number(selectedPlan.price) === 0 ? 'opacity-50 pointer-events-none' : ''}`}>
               
               <div className="space-y-3 overflow-y-auto pr-2 custom-scrollbar">
                 {availableCoupons.length === 0 ? (
@@ -248,7 +358,7 @@ export default function Subscription() {
                     const cCode = coupon.code || coupon.coupon_code;
                     const cType = coupon.discount_type;
                     const cVal = coupon.discount_value;
-                    const isDisabled = cType === "FIXED" && selectedPlan && cVal > parseFloat(selectedPlan.price);
+                    const isDisabled = cType === "FIXED" && selectedPlan && cVal > basePrice;
                     const isApplied = couponApplied && couponCode === cCode;
                     
                     return (
@@ -266,7 +376,7 @@ export default function Subscription() {
                           )}
                         </div>
                         <p className="text-sm text-gray-700 font-medium">
-                          {cType === 'PERCENT' ? `Get ${cVal}% off` : `Flat ₹${cVal} off`} on your current plan.
+                          {cType === 'PERCENT' ? `Get ${cVal}% off` : `Flat ₹${cVal} off`} on the total plan amount.
                         </p>
                       </div>
                     );
@@ -276,10 +386,10 @@ export default function Subscription() {
             </div>
           </div>
 
-          {/* Card 3: Order Summary */}
-          <div className="lg:col-span-4 space-y-4">
+          {/* Card 4: Order Summary */}
+          <div className="lg:col-span-3 space-y-4">
             <h2 className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-widest flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-gray-300 text-gray-900 flex items-center justify-center text-xs">3</span>
+              <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs">4</span>
               Order Summary
             </h2>
             <div className="bg-transparent flex flex-col">
@@ -287,15 +397,14 @@ export default function Subscription() {
               <div className="p-6 border-b border-gray-200 bg-gray-50/50 rounded-t-xl">
                 <h3 className="text-xl font-black text-gray-900 mb-1">{selectedPlan?.plan_name || "Select a Plan"}</h3>
                 <p className="text-sm font-bold text-gray-500 flex items-center gap-1.5 uppercase tracking-widest">
-                  <i className="fa-regular fa-calendar"></i> {selectedPlan?.duration_days || "30"} Days Access
+                  <i className="fa-regular fa-calendar"></i> {selectedPlanType ? selectedPlanType.name : "30 Days"} Access
                 </p>
               </div>
 
               <div className="p-6 border-b border-gray-200 space-y-4">
                 <div className="flex justify-between text-sm text-gray-900 font-semibold">
-                  <span>Plan price</span>
-                  {/* Currency has been handeled for en-IN, others will be addressed later */}
-                  <span className="font-black">₹{parseFloat(selectedPlan?.price || 0).toLocaleString("en-IN")}</span>
+                  <span>Base price (x{selectedPlanType?.duration_months || 1} months)</span>
+                  <span className="font-black">₹{(basePrice || 0).toLocaleString("en-IN")}</span>
                 </div>
                 <div className="flex justify-between text-sm text-gray-900 font-semibold">
                   <span>Convenience fees</span>
@@ -304,12 +413,12 @@ export default function Subscription() {
                 {couponApplied && (
                   <div className="flex justify-between text-sm text-blue-600 font-bold">
                     <span className="flex items-center gap-1"><i className="fa-solid fa-percent"></i> Offer ({couponCode})</span>
-                    <span>- ₹{discountAmount.toLocaleString("en-IN")}</span>
+                    <span>- ₹{(discountAmount || 0).toLocaleString("en-IN")}</span>
                   </div>
                 )}
                 <div className="pt-5 border-t-2 border-gray-200 border-dashed flex justify-between items-center">
                   <span className="font-black text-gray-900 text-lg">Order total</span>
-                  <span className="font-black text-blue-600 text-2xl">₹{finalPrice.toLocaleString("en-IN")}</span>
+                  <span className="font-black text-blue-600 text-2xl">₹{(finalPrice || 0).toLocaleString("en-IN")}</span>
                 </div>
               </div>
 
@@ -332,14 +441,25 @@ export default function Subscription() {
                 </div> */}
                 <button
                   onClick={handleCheckout}
-                  disabled={!selectedPlan || loading}
-                  className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50 uppercase tracking-wider cursor-pointer disabled:cursor-not-allowed"
+                  disabled={!selectedPlan || loading || applyingCoupon}
+                  className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50 uppercase tracking-wider flex items-center justify-center gap-2"
                 >
-                  {loading ? "Processing..." : finalPrice === 0 ? "Activate Plan" : `Pay ₹${finalPrice.toLocaleString("en-IN")}`}
+                  {loading ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <i className="fa-solid fa-lock"></i>
+                      {finalPrice === 0 ? "Activate Plan" : `Pay ₹${(finalPrice || 0).toLocaleString("en-IN")}`}
+                    </>
+                  )}
                 </button>
               </div>
             </div>
           </div>
+
         </div>
       </div>
       
