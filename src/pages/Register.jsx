@@ -421,15 +421,19 @@ export default function Register() {
   const handleSendEmailOtp = async () => {
     setLoading(true);
     try {
-      await fetch(`${API_BASE}/api/v1/onboarding/send-otp`, {
+      const res = await fetch(`${API_BASE}/api/v1/onboarding/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: emailValue })
       });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.detail || errData.message || "Failed to send OTP");
+      }
       showToast("OTP sent!", "success");
       setShowEmailOtpModal(true);
-    } catch {
-      showToast("Failed to send OTP", "error");
+    } catch (err) {
+      showToast(err.message || "Failed to send OTP", "error");
     } finally {
       setLoading(false);
     }
@@ -438,15 +442,19 @@ export default function Register() {
   const handleSendPhoneOtp = async () => {
     setLoading(true);
     try {
-      await fetch(`${API_BASE}/api/v1/auth/send-phone-otp`, {
+      const res = await fetch(`${API_BASE}/api/v1/auth/send-phone-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone_number: `${countryCodeValue}${phoneValue}` })
       });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.detail || errData.message || "Failed to send OTP");
+      }
       showToast("OTP sent!", "success");
       setShowPhoneOtpModal(true);
-    } catch {
-      showToast("Failed to send OTP", "error");
+    } catch (err) {
+      showToast(err.message || "Failed to send OTP", "error");
     } finally {
       setLoading(false);
     }
