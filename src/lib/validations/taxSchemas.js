@@ -80,6 +80,16 @@ export const taxRegexRegistry = {
         maxLength: 18
     }
 };
+import { z } from "zod";
+
+export const createTaxSchema = (countryCode) => {
+    const rule = taxRegexRegistry[countryCode];
+    if (!rule) {
+        // Fallback for unknown country
+        return z.string().min(5, "Tax number is too short").max(25, "Tax number is too long");
+    }
+    return z.string().trim().regex(rule.regex, rule.errorMessage);
+};
 
 export const postalCodeRegistry = {
     IN: {

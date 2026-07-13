@@ -153,11 +153,44 @@ export default function Register() {
     try {
       const res = await getPlaceDetails(suggestion.place_id);
       if (res && res.details) {
-        if (res.details.street) {
-          setAddress(res.details.street);
-        } else {
-          setAddress(suggestion.description);
+        let finalAddress = suggestion.description;
+        let parts = finalAddress.split(',').map(s => s.trim());
+        const cityStr = (res.details.city || '').toLowerCase().trim();
+        const stateStr = (res.details.state || '').toLowerCase().trim();
+        const countryStr = (res.details.country || '').toLowerCase().trim();
+        const zipStr = (res.details.postal_code || '').toLowerCase().trim();
+
+        const dropCandidates = [
+            cityStr, stateStr, countryStr, zipStr,
+            'us', 'usa', 'uk', 'gb', 'in', 'india', 'united states', 'united kingdom'
+        ].filter(Boolean);
+
+        while (parts.length > 1) {
+            let lastPart = parts[parts.length - 1].toLowerCase().trim();
+            let matchFound = dropCandidates.includes(lastPart);
+            
+            if (!matchFound && zipStr && lastPart.endsWith(zipStr)) {
+                const prefix = lastPart.slice(0, -zipStr.length).trim();
+                if (!prefix || prefix === stateStr || prefix === cityStr || prefix.length <= 3) {
+                    matchFound = true;
+                }
+            }
+            
+            if (!matchFound && stateStr && lastPart.length <= 3 && stateStr.startsWith(lastPart.charAt(0))) {
+                matchFound = true;
+            }
+
+            if (!matchFound && cityStr && stateStr && lastPart === `${cityStr} ${stateStr}`) {
+                matchFound = true;
+            }
+
+            if (matchFound) {
+                parts.pop();
+            } else {
+                break;
+            }
         }
+        setAddress(parts.join(', '));
         setCity((res.details.city || "").replace(/[^a-zA-Z\s]/g, ""));
         setStateRegion((res.details.state || "").replace(/[^a-zA-Z\s]/g, ""));
         setAddressCountry(res.details.country || "");
