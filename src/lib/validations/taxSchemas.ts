@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const taxRegexRegistry: Record<string, { label: string; placeholder: string; regex: RegExp; errorMessage: string; minLength?: number; maxLength?: number }> = {
+export const taxRegexRegistry: Record<string, { label: string; placeholder: string; regex: RegExp; errorMessage: string }> = {
     IN: {
         label: 'GSTIN',
         placeholder: '27ABCDE1234F1Z5',
@@ -70,52 +70,4 @@ export const createTaxSchema = (countryCode: string) => {
         return z.string().min(5, "Tax number is too short").max(25, "Tax number is too long");
     }
     return z.string().trim().regex(rule.regex, rule.errorMessage);
-};
-
-export const postalCodeRegistry: Record<string, { regex: RegExp; errorMessage: string; placeholder: string }> = {
-    IN: {
-        regex: /^\d{6}$/,
-        errorMessage: 'Postal code must be exactly 6 digits (e.g. 400001)',
-        placeholder: '400001'
-    },
-    US: {
-        regex: /^\d{5}(-\d{4})?$/,
-        errorMessage: 'ZIP code must be 5 digits or 5+4 format (e.g. 90210 or 90210-1234)',
-        placeholder: '90210'
-    },
-    GB: {
-        regex: /^[A-Z]{1,2}[0-9][0-9A-Z]?\s*[0-9][A-Z]{2}$/i,
-        errorMessage: 'Invalid UK postcode format (e.g. EC1A 1BB)',
-        placeholder: 'EC1A 1BB'
-    },
-    CA: {
-        regex: /^[A-Z]\d[A-Z]\s*\d[A-Z]\d$/i,
-        errorMessage: 'Invalid Canadian postal code format (e.g. K1A 0B1)',
-        placeholder: 'K1A 0B1'
-    },
-    AU: {
-        regex: /^\d{4}$/,
-        errorMessage: 'Postal code must be exactly 4 digits (e.g. 2000)',
-        placeholder: '2000'
-    },
-    DE: {
-        regex: /^\d{5}$/,
-        errorMessage: 'Postal code must be exactly 5 digits (e.g. 10115)',
-        placeholder: '10115'
-    },
-    FR: {
-        regex: /^\d{5}$/,
-        errorMessage: 'Postal code must be exactly 5 digits (e.g. 75001)',
-        placeholder: '75001'
-    },
-    BR: {
-        regex: /^\d{5}-?\d{3}$/,
-        errorMessage: 'Postal code must be 8 digits (e.g. 01000-000)',
-        placeholder: '01000-000'
-    },
-    SG: {
-        regex: /^\d{6}$/,
-        errorMessage: 'Postal code must be exactly 6 digits (e.g. 189064)',
-        placeholder: '189064'
-    }
 };
