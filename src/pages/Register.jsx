@@ -49,6 +49,8 @@ export default function Register() {
   // Modals
   const [showEmailOtpModal, setShowEmailOtpModal] = useState(false);
   const [showPhoneOtpModal, setShowPhoneOtpModal] = useState(false);
+  const [emailOtpLoading, setEmailOtpLoading] = useState(false);
+  const [phoneOtpLoading, setPhoneOtpLoading] = useState(false);
 
   const [toast, setToast] = useState({ show: false, message: "", type: "success" });
 
@@ -370,6 +372,10 @@ export default function Register() {
     setPhoneVerified(false);
   }, [phoneValue, countryCodeValue]);
 
+  useEffect(() => {
+    setEmailVerified(false);
+  }, [emailValue]);
+
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
     setTimeout(() => setToast({ show: false, message: "", type: "success" }), 4000);
@@ -452,7 +458,7 @@ export default function Register() {
   };
 
   const handleSendEmailOtp = async () => {
-    setLoading(true);
+    setEmailOtpLoading(true);
     try {
       const res = await fetch(`${API_BASE}/api/v1/onboarding/send-otp`, {
         method: "POST",
@@ -468,12 +474,12 @@ export default function Register() {
     } catch (err) {
       showToast(err.message || "Failed to send OTP", "error");
     } finally {
-      setLoading(false);
+      setEmailOtpLoading(false);
     }
   };
 
   const handleSendPhoneOtp = async () => {
-    setLoading(true);
+    setPhoneOtpLoading(true);
     try {
       const res = await fetch(`${API_BASE}/api/v1/auth/send-phone-otp`, {
         method: "POST",
@@ -489,7 +495,7 @@ export default function Register() {
     } catch (err) {
       showToast(err.message || "Failed to send OTP", "error");
     } finally {
-      setLoading(false);
+      setPhoneOtpLoading(false);
     }
   };
 
@@ -566,9 +572,20 @@ export default function Register() {
                             <button
                               type="button"
                               onClick={handleSendEmailOtp}
-                              className="mt-1 text-sm text-blue-600 hover:underline cursor-pointer"
+                              disabled={emailOtpLoading}
+                              className="mt-1 text-sm text-blue-600 hover:underline cursor-pointer disabled:opacity-50 disabled:no-underline flex items-center gap-1"
                             >
-                              Verify Email →
+                              {emailOtpLoading ? (
+                                <>
+                                  <svg className="w-3 h-3 animate-spin" viewBox="0 0 24 24" fill="none">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                  Sending...
+                                </>
+                              ) : (
+                                "Verify Email →"
+                              )}
                             </button>
                           )}
                           {emailVerified && <p className="mt-1 text-sm text-green-600">✓ Verified</p>}
@@ -631,9 +648,20 @@ export default function Register() {
                         <button
                           type="button"
                           onClick={handleSendPhoneOtp}
-                          className="mt-1 text-sm text-blue-600 hover:underline cursor-pointer"
+                          disabled={phoneOtpLoading}
+                          className="mt-1 text-sm text-blue-600 hover:underline cursor-pointer disabled:opacity-50 disabled:no-underline flex items-center gap-1"
                         >
-                          Verify Phone →
+                          {phoneOtpLoading ? (
+                            <>
+                              <svg className="w-3 h-3 animate-spin" viewBox="0 0 24 24" fill="none">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              Sending...
+                            </>
+                          ) : (
+                            "Verify Phone →"
+                          )}
                         </button>
                       )}
                       {phoneVerified && <p className="mt-1 text-sm text-green-600">✓ Verified</p>}
