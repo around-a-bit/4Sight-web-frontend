@@ -372,6 +372,10 @@ export default function Register() {
     setPhoneVerified(false);
   }, [phoneValue, countryCodeValue]);
 
+  useEffect(() => {
+    setEmailVerified(false);
+  }, [emailValue]);
+
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
     setTimeout(() => setToast({ show: false, message: "", type: "success" }), 4000);
