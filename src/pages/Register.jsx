@@ -64,6 +64,7 @@ export default function Register() {
   const [taxCountryDropdownOpen, setTaxCountryDropdownOpen] = useState(false);
   const [taxCountrySearch, setTaxCountrySearch] = useState("");
   const taxCountryDropdownRef = useRef(null);
+  const taxDebounceTimer = useRef(null);
 
   // Address
   const [address, setAddress] = useState("");
@@ -253,9 +254,38 @@ export default function Register() {
       regex: /^[A-Z0-9\-\/\.]{5,25}$/i
     };
 
-    const isValid = rule.regex.test(value);
-    setTaxValid(isValid);
-    setTaxError(isValid ? "" : `Invalid ${rule.label} format`);
+    const isValidFormat = rule.regex.test(value);
+    if (!isValidFormat) {
+      setTaxValid(false);
+      setTaxError(`Invalid ${rule.label} format`);
+      return;
+    }
+
+    // Assume valid until backend responds
+    setTaxValid(true);
+    setTaxError("");
+
+    if (taxDebounceTimer.current) clearTimeout(taxDebounceTimer.current);
+
+    taxDebounceTimer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/v1/registration/validate-tax`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ country_code: countryCode, tax_number: value })
+        });
+        const data = await res.json();
+        if (data && data.success === false) {
+          setTaxValid(false);
+          setTaxError(`Invalid ${rule.label} checksum`);
+        } else if (data && data.success === true) {
+          setTaxValid(true);
+          setTaxError("");
+        }
+      } catch (err) {
+        console.error("Tax validation failed", err);
+      }
+    }, 500);
   };
 
   const handleTaxNumberChange = (e) => {
