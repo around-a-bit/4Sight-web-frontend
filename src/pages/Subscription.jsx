@@ -275,7 +275,7 @@ export default function Subscription() {
                 return (
                   <button
                     key={plan.id}
-                    onClick={() = className="cursor-pointer"> setSelectedPlan(plan)}
+                    onClick={() => setSelectedPlan(plan)}
                     className={`
                       text-left px-5 py-5 border-b border-gray-200 last:border-b-0 transition-all
                       ${isSelected ? 'bg-blue-50/50 border-l-4 border-l-blue-600 pl-4' : 'hover:bg-gray-50 border-l-4 border-l-transparent pl-4'}
@@ -307,7 +307,7 @@ export default function Subscription() {
                 return (
                   <div 
                     key={type.id} 
-                    onClick={() = className="cursor-pointer"> setSelectedPlanType(type)}
+                    onClick={() => setSelectedPlanType(type)}
                     className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${isSelected ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200 bg-white hover:border-gray-300'}`}
                   >
                     <div className="flex justify-between items-center mb-2">
@@ -349,7 +349,7 @@ export default function Subscription() {
                     return (
                       <div 
                         key={coupon.id || cCode} 
-                        onClick={() = className="cursor-pointer"> { if (!isDisabled) toggleCoupon(cCode); }}
+                        onClick={() => { if (!isDisabled) toggleCoupon(cCode); }}
                         className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${isApplied ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200 bg-white hover:border-gray-300'} ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
                       >
                         <div className="flex justify-between items-center mb-2">

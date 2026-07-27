@@ -708,7 +708,7 @@ export default function Register() {
                     <div className="relative w-[12ch]">
                       <button
                         type="button"
-                        onClick={() = className="cursor-pointer"> setTaxCountryDropdownOpen(!taxCountryDropdownOpen)}
+                        onClick={() => setTaxCountryDropdownOpen(!taxCountryDropdownOpen)}
                         className="w-full h-11 px-4 border border-blue-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white shadow-sm hover:border-blue-400 text-left flex justify-between items-center"
                       >
                         <span className="text-slate-800 font-semibold truncate mr-2">{countryCodesList.find(c => c.code === taxCountryCode)?.code || taxCountryCode}</span>
@@ -732,7 +732,7 @@ export default function Register() {
                                 <button
                                   key={country.code}
                                   type="button"
-                                  onClick={() = className="cursor-pointer"> {
+                                  onClick={() => {
                                     setTaxCountryCode(country.code);
                                     setTaxNumber("");
                                     setTaxValid(null);
@@ -814,7 +814,7 @@ export default function Register() {
             {emailAvailable === false && !isResumeMode ? (
               <button
                 type="button"
-                onClick={() = className="cursor-pointer"> {
+                onClick={() => {
                   if (LOGIN_URL.startsWith("http")) {
                     window.location.href = LOGIN_URL;
                   } else {
