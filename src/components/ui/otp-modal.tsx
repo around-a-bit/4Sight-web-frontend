@@ -225,7 +225,7 @@ export function OtpModal({
                     <Button 
                         onClick={() => triggerVerify(otp.join(''))}
                         disabled={otp.join('').length < length || combinedLoading}
-                        className="w-full h-12 text-base font-medium rounded-xl bg-[#0859B8] hover:bg-[#06428a]"
+                        className="cursor-pointer w-full h-12 text-base font-medium rounded-xl bg-[#0859B8] hover:bg-[#06428a]"
                     >
                         {isVerifying || isLoading ? "Verifying..." : "Verify Code"}
                     </Button>

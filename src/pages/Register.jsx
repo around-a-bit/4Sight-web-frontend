@@ -708,7 +708,7 @@ export default function Register() {
                     <div className="relative w-[12ch]">
                       <button
                         type="button"
-                        onClick={() => setTaxCountryDropdownOpen(!taxCountryDropdownOpen)}
+                        onClick={() = className="cursor-pointer"> setTaxCountryDropdownOpen(!taxCountryDropdownOpen)}
                         className="w-full h-11 px-4 border border-blue-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white shadow-sm hover:border-blue-400 text-left flex justify-between items-center"
                       >
                         <span className="text-slate-800 font-semibold truncate mr-2">{countryCodesList.find(c => c.code === taxCountryCode)?.code || taxCountryCode}</span>
@@ -732,7 +732,7 @@ export default function Register() {
                                 <button
                                   key={country.code}
                                   type="button"
-                                  onClick={() => {
+                                  onClick={() = className="cursor-pointer"> {
                                     setTaxCountryCode(country.code);
                                     setTaxNumber("");
                                     setTaxValid(null);
@@ -814,7 +814,7 @@ export default function Register() {
             {emailAvailable === false && !isResumeMode ? (
               <button
                 type="button"
-                onClick={() => {
+                onClick={() = className="cursor-pointer"> {
                   if (LOGIN_URL.startsWith("http")) {
                     window.location.href = LOGIN_URL;
                   } else {
@@ -831,7 +831,7 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={loading || !emailVerified || !phoneVerified || taxValid !== true || !!postalCodeError}
-                className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
+                className="cursor-pointer w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {!emailVerified || !phoneVerified ? "Verify Contacts to Resume →" : loading ? "Processing..." : "Save & Resume Registration →"}
               </button>
@@ -839,7 +839,7 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={loading || !emailVerified || !phoneVerified || taxValid !== true || !!postalCodeError}
-                className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
+                className="cursor-pointer w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {loading ? "Processing..." : "Continue to Plan Selection →"}
               </button>
