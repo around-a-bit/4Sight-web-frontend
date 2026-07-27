@@ -26,7 +26,14 @@ export function OtpModal({
     const [otp, setOtp] = useState<string[]>(Array(length).fill(''));
     const [isVerifying, setIsVerifying] = useState(false);
     const [error, setError] = useState('');
+    const [timeLeft, setTimeLeft] = useState(0);
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+    const startTimer = () => {
+        const duration = 300; // 5 minutes
+        setTimeLeft(duration);
+        sessionStorage.setItem('otpExpiryTime', (Date.now() + duration * 1000).toString());
+    };
 
     useEffect(() => {
         if (isOpen) {
@@ -35,8 +42,31 @@ export function OtpModal({
             setTimeout(() => {
                 inputRefs.current[0]?.focus();
             }, 100);
+
+            const storedExpiry = sessionStorage.getItem('otpExpiryTime');
+            if (storedExpiry) {
+                const expiryTime = parseInt(storedExpiry, 10);
+                const now = Date.now();
+                if (expiryTime > now) {
+                    setTimeLeft(Math.floor((expiryTime - now) / 1000));
+                } else {
+                    startTimer();
+                }
+            } else {
+                startTimer();
+            }
+        } else {
+            setTimeLeft(0);
         }
     }, [isOpen, length]);
+
+    useEffect(() => {
+        if (timeLeft <= 0) return;
+        const timerId = setInterval(() => {
+            setTimeLeft((prev) => prev - 1);
+        }, 1000);
+        return () => clearInterval(timerId);
+    }, [timeLeft]);
 
     if (!isOpen) return null;
 
@@ -121,10 +151,11 @@ export function OtpModal({
     };
 
     const handleResend = async () => {
-        if (resendOtp && !combinedLoading) {
+        if (resendOtp && !combinedLoading && timeLeft === 0) {
             setError('');
             try {
                 await resendOtp();
+                startTimer();
             } catch (err: any) {
                 setError(err?.message || 'Failed to resend code.');
             }
@@ -194,15 +225,25 @@ export function OtpModal({
                     </Button>
 
                     {resendOtp && (
-                        <p className="text-sm text-slate-500 font-medium mt-2">
+                        <p className="text-sm text-slate-500 font-medium mt-2 flex items-center justify-center gap-1">
                             Didn't receive code?{' '}
                             <button
                                 onClick={handleResend}
-                                disabled={combinedLoading}
-                                className="text-[#0859B8] hover:text-[#06428a] hover:underline disabled:opacity-50 disabled:hover:no-underline cursor-pointer"
+                                disabled={combinedLoading || timeLeft > 0}
+                                className={cn(
+                                    "font-semibold transition-colors",
+                                    (combinedLoading || timeLeft > 0)
+                                        ? "text-slate-400 cursor-not-allowed"
+                                        : "text-[#0859B8] hover:text-[#06428a] hover:underline cursor-pointer"
+                                )}
                             >
                                 Resend
                             </button>
+                            {timeLeft > 0 && (
+                                <span className="ml-1 text-slate-500 font-mono">
+                                    ({Math.floor(timeLeft / 60).toString().padStart(2, '0')}:{(timeLeft % 60).toString().padStart(2, '0')})
+                                </span>
+                            )}
                         </p>
                     )}
                 </div>
