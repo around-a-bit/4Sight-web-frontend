@@ -26,21 +26,52 @@ export function OtpModal({
     const [otp, setOtp] = useState<string[]>(Array(length).fill(''));
     const [isVerifying, setIsVerifying] = useState(false);
     const [error, setError] = useState('');
+    const [resendCooldown, setResendCooldown] = useState(60);
+    const [isResending, setIsResending] = useState(false);
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
     useEffect(() => {
         if (isOpen) {
             setOtp(Array(length).fill(''));
             setError('');
+            setResendCooldown(60);
             setTimeout(() => {
                 inputRefs.current[0]?.focus();
             }, 100);
+        } else {
+            setResendCooldown(0);
         }
     }, [isOpen, length]);
 
+    useEffect(() => {
+        if (!isOpen) return;
+        const timerId = setInterval(() => {
+            setResendCooldown(prev => (prev > 0 ? prev - 1 : 0));
+        }, 1000);
+        return () => clearInterval(timerId);
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setOtp(Array(length).fill(''));
+                setError('');
+                inputRefs.current[0]?.focus();
+            }, 10000);
+            return () => clearTimeout(timer);
+        }
+    }, [error, length]);
+
     if (!isOpen) return null;
 
-    const combinedLoading = isLoading || isVerifying;
+    const combinedLoading = isLoading || isVerifying || isResending;
+
+    const isTwilio = title?.toLowerCase().includes('phone') ||
+        title?.toLowerCase().includes('mobile') ||
+        title?.toLowerCase().includes('sms') ||
+        description?.toLowerCase().includes('phone') ||
+        description?.toLowerCase().includes('mobile') ||
+        description?.toLowerCase().includes('sms');
 
     const triggerVerify = async (fullOtp: string) => {
         setIsVerifying(true);
@@ -110,10 +141,10 @@ export function OtpModal({
                 newOtp[i] = pastedData[i];
             }
             setOtp(newOtp);
-            
+
             const nextFocus = Math.min(pastedData.length, length - 1);
             inputRefs.current[nextFocus]?.focus();
-            
+
             if (pastedData.length === length) {
                 triggerVerify(pastedData);
             }
@@ -121,12 +152,16 @@ export function OtpModal({
     };
 
     const handleResend = async () => {
-        if (resendOtp && !combinedLoading) {
+        if (resendOtp && !combinedLoading && resendCooldown === 0) {
             setError('');
+            setIsResending(true);
             try {
                 await resendOtp();
+                setResendCooldown(60);
             } catch (err: any) {
                 setError(err?.message || 'Failed to resend code.');
+            } finally {
+                setIsResending(false);
             }
         }
     };
@@ -136,14 +171,16 @@ export function OtpModal({
             <div className="bg-white rounded-3xl w-full max-w-md p-8 shadow-2xl relative animate-in zoom-in-95 duration-200">
                 <button
                     onClick={onClose}
-                    className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors"
+                    className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
 
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">{title}</h3>
+                <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-2xl font-bold text-slate-900">{title}</h3>
+                </div>
                 {description && (
                     <p className="text-slate-500 mb-8 leading-relaxed">
                         {description}
@@ -188,21 +225,41 @@ export function OtpModal({
                     <Button 
                         onClick={() => triggerVerify(otp.join(''))}
                         disabled={otp.join('').length < length || combinedLoading}
-                        className="w-full h-12 text-base font-medium rounded-xl bg-[#0859B8] hover:bg-[#06428a]"
+                        className="cursor-pointer w-full h-12 text-base font-medium rounded-xl bg-[#0859B8] hover:bg-[#06428a]"
                     >
-                        {combinedLoading ? "Verifying..." : "Verify Code"}
+                        {isVerifying || isLoading ? "Verifying..." : "Verify Code"}
                     </Button>
 
                     {resendOtp && (
-                        <p className="text-sm text-slate-500 font-medium mt-2">
+                        <p className="text-sm text-slate-500 font-medium mt-2 flex items-center justify-center gap-1">
                             Didn't receive code?{' '}
                             <button
                                 onClick={handleResend}
-                                disabled={combinedLoading}
-                                className="text-[#0859B8] hover:text-[#06428a] hover:underline disabled:opacity-50 disabled:hover:no-underline cursor-pointer"
+                                disabled={combinedLoading || resendCooldown > 0}
+                                className={cn(
+                                    "font-semibold transition-colors cursor-pointer",
+                                    (combinedLoading || resendCooldown > 0)
+                                        ? "text-slate-400 cursor-not-allowed"
+                                        : "text-[#0859B8] hover:text-[#06428a] hover:underline"
+                                )}
                             >
-                                Resend
+                                {isResending ? 'Sending...' : 'Resend'}
                             </button>
+                            {resendCooldown > 0 && (
+                                <span className="ml-1 text-slate-500 font-mono">
+                                    ({Math.floor(resendCooldown / 60).toString().padStart(2, '0')}:{(resendCooldown % 60).toString().padStart(2, '0')})
+                                </span>
+                            )}
+                        </p>
+                    )}
+
+                    {isTwilio ? (
+                        <p className="text-xs text-slate-400 mt-2 text-center">
+                            Note: OTP is valid for 10 minutes.
+                        </p>
+                    ) : (
+                        <p className="text-xs text-slate-400 mt-2 text-center">
+                            Note: OTP is valid for 5 minutes.
                         </p>
                     )}
                 </div>
