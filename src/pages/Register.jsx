@@ -831,7 +831,7 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={loading || !emailVerified || !phoneVerified || taxValid !== true || !!postalCodeError}
-                className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
+                className="cursor-pointer w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {!emailVerified || !phoneVerified ? "Verify Contacts to Resume →" : loading ? "Processing..." : "Save & Resume Registration →"}
               </button>
@@ -839,7 +839,7 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={loading || !emailVerified || !phoneVerified || taxValid !== true || !!postalCodeError}
-                className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
+                className="cursor-pointer w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {loading ? "Processing..." : "Continue to Plan Selection →"}
               </button>

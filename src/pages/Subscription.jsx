@@ -414,7 +414,7 @@ export default function Subscription() {
                 <button
                   onClick={handleCheckout}
                   disabled={!selectedPlan || loading || applyingCoupon}
-                  className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50 uppercase tracking-wider flex items-center justify-center gap-2"
+                  className="cursor-pointer w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-50 uppercase tracking-wider flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
